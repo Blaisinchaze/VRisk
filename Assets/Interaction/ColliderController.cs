@@ -7,17 +7,17 @@ using UnityEngine;
 public class ColliderController : MonoBehaviour
 {
     public Transform head;
-    private Transform collider;
+    private Transform collider_transform;
 
     private void Awake()
     {
-        collider = this.GetComponent<Collider>().transform;
+        collider_transform = this.GetComponent<Collider>().transform;
     }
 
     private void FixedUpdate()
     {
-        collider.position = new Vector3(head.transform.position.x, 
-                                                    collider.transform.position.y,
-                                                        head.position.z);
+        collider_transform.position = new Vector3(head.transform.position.x, 
+                                    collider_transform.transform.position.y,
+                                    head.position.z);
     }
 }
