@@ -1,0 +1,195 @@
+{
+    "name": "Input",
+    "maps": [
+        {
+            "name": "InputActionMap",
+            "id": "5e1e67e7-5ece-4866-91f1-ed181fb0a924",
+            "actions": [
+                {
+                    "name": "Move(Key/Stick)",
+                    "type": "Value",
+                    "id": "da85b0a9-3f2f-42a7-a561-54dbc31626eb",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Move(Left_Hand)",
+                    "type": "Value",
+                    "id": "bf24ebfe-6159-49ae-a9a2-7719e326feee",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Move(Right_Hand)",
+                    "type": "Value",
+                    "id": "e4e8096c-7042-41c0-8d61-78d43282b789",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Keyboard [WASD]",
+                    "id": "d2a782ae-abb5-45d0-89ff-af40a4c71206",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move(Key/Stick)",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Keyboard [Arrows]",
+                    "id": "c1aadacd-a12e-417a-a1fa-3776071b7576",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move(Key/Stick)",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "98151641-72db-4efa-8b4c-8a3663cec05d",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move(Key/Stick)",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "b8df71b8-f720-4d3d-8478-42e5ad1bfdbe",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move(Key/Stick)",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "a2d04f24-af27-4553-9d62-adef606c7177",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move(Key/Stick)",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "0368fcfc-e360-4999-9f3a-45dc0ce54d31",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move(Key/Stick)",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "up",
+                    "id": "301d4ccb-926f-4c42-bb6c-95c84e39fb46",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move(Key/Stick)",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "9eb9cb12-40c5-40bd-b5ea-90f2bd718828",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move(Key/Stick)",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "0c42012e-ac85-44ef-b791-95203cc6d477",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move(Key/Stick)",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "fb0ddd10-4255-4a6f-8197-6ac79006d137",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move(Key/Stick)",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "ef4953eb-a8b8-4e08-9175-9188d2ca7d20",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move(Key/Stick)",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3515ffd1-20b0-43c9-a3a7-a45223967b97",
+                    "path": "<XRController>{LeftHand}/joystick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move(Key/Stick)",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "66f06ed1-08fa-48dd-9677-fe49dbbde511",
+                    "path": "<XRController>{LeftHand}/deviceAcceleration",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move(Left_Hand)",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d8d4ed35-5abc-4e4f-afcf-3d99fc818823",
+                    "path": "<XRController>{RightHand}/deviceAcceleration",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move(Right_Hand)",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
