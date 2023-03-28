@@ -191,7 +191,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""66f06ed1-08fa-48dd-9677-fe49dbbde511"",
-                    ""path"": ""<XRController>{LeftHand}/deviceAcceleration"",
+                    ""path"": ""<XRController>{LeftHand}/devicePosition"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -202,7 +202,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d8d4ed35-5abc-4e4f-afcf-3d99fc818823"",
-                    ""path"": ""<XRController>{RightHand}/deviceAcceleration"",
+                    ""path"": ""<XRController>{RightHand}/devicePosition"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
