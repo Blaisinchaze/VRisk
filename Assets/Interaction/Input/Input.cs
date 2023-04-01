@@ -53,119 +53,18 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""RotateView"",
+                    ""type"": ""Value"",
+                    ""id"": ""525df89a-6a02-4f38-bf2b-696098166f5d"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": ""Keyboard [WASD]"",
-                    ""id"": ""d2a782ae-abb5-45d0-89ff-af40a4c71206"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move(Key/Stick)"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""Keyboard [Arrows]"",
-                    ""id"": ""c1aadacd-a12e-417a-a1fa-3776071b7576"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move(Key/Stick)"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""98151641-72db-4efa-8b4c-8a3663cec05d"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move(Key/Stick)"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""b8df71b8-f720-4d3d-8478-42e5ad1bfdbe"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move(Key/Stick)"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""a2d04f24-af27-4553-9d62-adef606c7177"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move(Key/Stick)"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""0368fcfc-e360-4999-9f3a-45dc0ce54d31"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move(Key/Stick)"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""301d4ccb-926f-4c42-bb6c-95c84e39fb46"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move(Key/Stick)"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""9eb9cb12-40c5-40bd-b5ea-90f2bd718828"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move(Key/Stick)"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""0c42012e-ac85-44ef-b791-95203cc6d477"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move(Key/Stick)"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""fb0ddd10-4255-4a6f-8197-6ac79006d137"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move(Key/Stick)"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
                 {
                     ""name"": """",
                     ""id"": ""ef4953eb-a8b8-4e08-9175-9188d2ca7d20"",
@@ -189,6 +88,61 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
+                    ""name"": ""WASD"",
+                    ""id"": ""cd144505-980c-42b6-a914-0c0283407e3f"",
+                    ""path"": ""2DVector(mode=1)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move(Key/Stick)"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""bdd9e0a5-0e24-489d-9d43-c3c788acde77"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move(Key/Stick)"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""1c396b30-00a6-40b8-8660-7e97a9eb6bd5"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move(Key/Stick)"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""5b3ac1e7-7a4e-4f2e-92ae-f43fed9c5947"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move(Key/Stick)"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""2311dceb-df13-4b76-8788-e0bdb0f736e7"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move(Key/Stick)"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""66f06ed1-08fa-48dd-9677-fe49dbbde511"",
                     ""path"": ""<XRController>{LeftHand}/deviceAcceleration"",
@@ -209,6 +163,83 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""action"": ""Move(Right_Hand)"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Keyboard [Arrows]"",
+                    ""id"": ""c1aadacd-a12e-417a-a1fa-3776071b7576"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateView"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""98151641-72db-4efa-8b4c-8a3663cec05d"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""b8df71b8-f720-4d3d-8478-42e5ad1bfdbe"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""a2d04f24-af27-4553-9d62-adef606c7177"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""0368fcfc-e360-4999-9f3a-45dc0ce54d31"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b81e212f-80b1-4eb7-a8f8-c64025cbf7b5"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4dcb823d-80ea-441f-b5a5-210807114008"",
+                    ""path"": ""<XRController>{RightHand}/joystick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -220,6 +251,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         m_InputActionMap_MoveKeyStick = m_InputActionMap.FindAction("Move(Key/Stick)", throwIfNotFound: true);
         m_InputActionMap_MoveLeft_Hand = m_InputActionMap.FindAction("Move(Left_Hand)", throwIfNotFound: true);
         m_InputActionMap_MoveRight_Hand = m_InputActionMap.FindAction("Move(Right_Hand)", throwIfNotFound: true);
+        m_InputActionMap_RotateView = m_InputActionMap.FindAction("RotateView", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -282,6 +314,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
     private readonly InputAction m_InputActionMap_MoveKeyStick;
     private readonly InputAction m_InputActionMap_MoveLeft_Hand;
     private readonly InputAction m_InputActionMap_MoveRight_Hand;
+    private readonly InputAction m_InputActionMap_RotateView;
     public struct InputActionMapActions
     {
         private @Input m_Wrapper;
@@ -289,6 +322,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         public InputAction @MoveKeyStick => m_Wrapper.m_InputActionMap_MoveKeyStick;
         public InputAction @MoveLeft_Hand => m_Wrapper.m_InputActionMap_MoveLeft_Hand;
         public InputAction @MoveRight_Hand => m_Wrapper.m_InputActionMap_MoveRight_Hand;
+        public InputAction @RotateView => m_Wrapper.m_InputActionMap_RotateView;
         public InputActionMap Get() { return m_Wrapper.m_InputActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -307,6 +341,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @MoveRight_Hand.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveRight_Hand;
                 @MoveRight_Hand.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveRight_Hand;
                 @MoveRight_Hand.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveRight_Hand;
+                @RotateView.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnRotateView;
+                @RotateView.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnRotateView;
+                @RotateView.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnRotateView;
             }
             m_Wrapper.m_InputActionMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -320,6 +357,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @MoveRight_Hand.started += instance.OnMoveRight_Hand;
                 @MoveRight_Hand.performed += instance.OnMoveRight_Hand;
                 @MoveRight_Hand.canceled += instance.OnMoveRight_Hand;
+                @RotateView.started += instance.OnRotateView;
+                @RotateView.performed += instance.OnRotateView;
+                @RotateView.canceled += instance.OnRotateView;
             }
         }
     }
@@ -329,5 +369,6 @@ public partial class @Input : IInputActionCollection2, IDisposable
         void OnMoveKeyStick(InputAction.CallbackContext context);
         void OnMoveLeft_Hand(InputAction.CallbackContext context);
         void OnMoveRight_Hand(InputAction.CallbackContext context);
+        void OnRotateView(InputAction.CallbackContext context);
     }
 }
