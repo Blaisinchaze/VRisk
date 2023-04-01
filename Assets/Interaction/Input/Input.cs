@@ -229,17 +229,6 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""action"": ""RotateView"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4dcb823d-80ea-441f-b5a5-210807114008"",
-                    ""path"": ""<XRController>{RightHand}/joystick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RotateView"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }

@@ -11,11 +11,11 @@ public class InputHandler : MonoBehaviour
     private static InputHandler instance;
     
     public static InputHandler Instance
-    {
+    { 
         get { return instance;}
     }
 
-    public Input input { get; private set; }
+    public Input input_asset { get; private set; }
 
     private void Awake()
     {
@@ -28,16 +28,16 @@ public class InputHandler : MonoBehaviour
             instance = this;
         }
         
-        input = new Input();
+        input_asset = new Input();
     }
 
     private void OnEnable()
     {
-        input.Enable();
+        input_asset.Enable();
     }
 
     private void OnDisable()
     {
-        input.Disable();
+        input_asset.Disable();
     }
 }
