@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "HeadMoved",
+                    "type": "Value",
+                    "id": "e30677f2-09ef-42b5-959a-31e3d1211ce0",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -123,7 +132,7 @@
                 {
                     "name": "",
                     "id": "66f06ed1-08fa-48dd-9677-fe49dbbde511",
-                    "path": "<XRController>{LeftHand}/deviceAcceleration",
+                    "path": "<XRController>{LeftHand}/devicePosition",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -134,7 +143,7 @@
                 {
                     "name": "",
                     "id": "d8d4ed35-5abc-4e4f-afcf-3d99fc818823",
-                    "path": "<XRController>{RightHand}/deviceAcceleration",
+                    "path": "<XRController>{RightHand}/devicePosition",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -205,6 +214,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "RotateView",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "48dcd8b4-c2b4-4739-80c9-d0c3ef6f16e0",
+                    "path": "<XRHMD>/devicePosition",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HeadMoved",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

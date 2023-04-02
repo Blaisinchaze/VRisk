@@ -15,6 +15,22 @@ public class MovementController : MonoBehaviour
     public float min_run_input_mag = 0.7f;
     public float walk_speed = 0.5f;
     public float run_speed = 1.0f;
+    
+    private Vector3 prev_controller_r; 
+    private Vector3 prev_controller_l;
+
+    [SerializeField] private float sensibility = 3;
+    private const float threshold = 0.10f;
+
+    private bool left_mov = false;
+    private bool right_mov = false;
+
+    private float timer = 0.0f;
+
+    private float speed_multiplier = 100.0f;
+    public float ratio_of_motion = 0.0f;               
+    
+    public bool moving = false;
 
     void Start()
     {
@@ -25,6 +41,8 @@ public class MovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        GestureControl();
+        
         if (move_action.ReadValue<Vector2>() != Vector2.zero)
         {
             movePlayer(move_action.ReadValue<Vector2>());
@@ -44,8 +62,98 @@ public class MovementController : MonoBehaviour
         float speed = input_vect.magnitude <= min_run_input_mag ? walk_speed : run_speed;
         Vector3 direction = rotated_vector.normalized * speed;
         
-        Debug.Log(direction);
         Vector3 new_pos = rig_rb.position + direction;
         rig_rb.MovePosition(new_pos);
     }
+
+    private void GestureControl()
+    {
+        timer += Time.fixedDeltaTime;
+
+        Vector3 controller_r = InputHandler.Instance.input_asset.InputActionMap.MoveRight_Hand.ReadValue<Vector3>();
+        Vector3 controller_l = InputHandler.Instance.input_asset.InputActionMap.MoveLeft_Hand.ReadValue<Vector3>();
+
+        Vector3 controller_delta_r = (controller_r - prev_controller_r) * sensibility;
+        Vector3 controller_delta_l = (controller_l - prev_controller_l) * sensibility;
+
+        left_mov = controller_delta_l.y is > threshold or < -threshold;
+        right_mov = controller_delta_r.y is > threshold or < -threshold;
+
+        //If both controllers are being moved at a certain intensity calculate we are moving
+        if (right_mov && left_mov)
+        {
+            ratio_of_motion = ((controller_delta_r.y + controller_delta_l.y) / 2) * speed_multiplier;
+            ratio_of_motion = ratio_of_motion < 0 ? ratio_of_motion * -1 : ratio_of_motion;
+            timer = 0;
+        }
+
+        if (timer < 0.5f)
+        {
+            moving = true;
+        }
+        else
+        {
+            moving = false;
+        }
+
+
+        if (moving)
+        {
+            movePlayer(new Vector2(0, 1));
+        }
+
+        prev_controller_r = controller_r;
+        prev_controller_l = controller_l;
+    }
 }
+
+
+/*
+ * public class GestureController : MonoBehaviour
+{
+    private Vector3 prev_controller_r; 
+    private Vector3 prev_controller_l;
+
+    private float sensibility = 3;
+    private const float threshold = 0.10f;
+
+    private bool left_mov = false;
+    private bool right_mov = false;
+
+    private float timer = 0.0f;
+
+    private float speed_multiplier = 100.0f;
+    public float speed = 0.0f;               
+    
+    public bool moving = false;
+
+    // Update is called once per frame
+    private void FixedUpdate()
+    {
+        timer += Time.fixedDeltaTime;
+        
+        Vector3 controller_r = InputHandler.Instance.input.InputActionMap.MoveRight_Hand.ReadValue<Vector3>();
+        Vector3 controller_l = InputHandler.Instance.input.InputActionMap.MoveLeft_Hand.ReadValue<Vector3>();
+
+        Vector3 controller_delta_r = (controller_r - prev_controller_r) * sensibility;
+        Vector3 controller_delta_l = (controller_l - prev_controller_l) * sensibility;
+
+        left_mov = controller_delta_l.y is > threshold or < -threshold;
+        right_mov = controller_delta_r.y is > threshold or < -threshold;
+
+        //If both controllers are being moved at a certain intensity calculate we are moving
+        if (right_mov && left_mov)
+        {
+            speed = ((controller_delta_r.y + controller_delta_l.y) / 2) * speed_multiplier;
+            speed = speed < 0 ? speed * -1 : speed;
+            timer = 0;
+        }
+
+        //If running is true reset the timer
+        moving = timer < 0.5f;
+
+        prev_controller_r = controller_r;
+        prev_controller_l = controller_l;
+    }
+}
+ */

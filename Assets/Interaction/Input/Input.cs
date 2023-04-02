@@ -62,6 +62,15 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""HeadMoved"",
+                    ""type"": ""Value"",
+                    ""id"": ""e30677f2-09ef-42b5-959a-31e3d1211ce0"",
+                    ""expectedControlType"": ""Vector3"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -145,7 +154,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""66f06ed1-08fa-48dd-9677-fe49dbbde511"",
-                    ""path"": ""<XRController>{LeftHand}/deviceAcceleration"",
+                    ""path"": ""<XRController>{LeftHand}/devicePosition"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -156,7 +165,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d8d4ed35-5abc-4e4f-afcf-3d99fc818823"",
-                    ""path"": ""<XRController>{RightHand}/deviceAcceleration"",
+                    ""path"": ""<XRController>{RightHand}/devicePosition"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -229,6 +238,17 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""action"": ""RotateView"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""48dcd8b4-c2b4-4739-80c9-d0c3ef6f16e0"",
+                    ""path"": ""<XRHMD>/devicePosition"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HeadMoved"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -241,6 +261,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         m_InputActionMap_MoveLeft_Hand = m_InputActionMap.FindAction("Move(Left_Hand)", throwIfNotFound: true);
         m_InputActionMap_MoveRight_Hand = m_InputActionMap.FindAction("Move(Right_Hand)", throwIfNotFound: true);
         m_InputActionMap_RotateView = m_InputActionMap.FindAction("RotateView", throwIfNotFound: true);
+        m_InputActionMap_HeadMoved = m_InputActionMap.FindAction("HeadMoved", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -304,6 +325,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
     private readonly InputAction m_InputActionMap_MoveLeft_Hand;
     private readonly InputAction m_InputActionMap_MoveRight_Hand;
     private readonly InputAction m_InputActionMap_RotateView;
+    private readonly InputAction m_InputActionMap_HeadMoved;
     public struct InputActionMapActions
     {
         private @Input m_Wrapper;
@@ -312,6 +334,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         public InputAction @MoveLeft_Hand => m_Wrapper.m_InputActionMap_MoveLeft_Hand;
         public InputAction @MoveRight_Hand => m_Wrapper.m_InputActionMap_MoveRight_Hand;
         public InputAction @RotateView => m_Wrapper.m_InputActionMap_RotateView;
+        public InputAction @HeadMoved => m_Wrapper.m_InputActionMap_HeadMoved;
         public InputActionMap Get() { return m_Wrapper.m_InputActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -333,6 +356,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @RotateView.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnRotateView;
                 @RotateView.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnRotateView;
                 @RotateView.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnRotateView;
+                @HeadMoved.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnHeadMoved;
+                @HeadMoved.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnHeadMoved;
+                @HeadMoved.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnHeadMoved;
             }
             m_Wrapper.m_InputActionMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -349,6 +375,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @RotateView.started += instance.OnRotateView;
                 @RotateView.performed += instance.OnRotateView;
                 @RotateView.canceled += instance.OnRotateView;
+                @HeadMoved.started += instance.OnHeadMoved;
+                @HeadMoved.performed += instance.OnHeadMoved;
+                @HeadMoved.canceled += instance.OnHeadMoved;
             }
         }
     }
@@ -359,5 +388,6 @@ public partial class @Input : IInputActionCollection2, IDisposable
         void OnMoveLeft_Hand(InputAction.CallbackContext context);
         void OnMoveRight_Hand(InputAction.CallbackContext context);
         void OnRotateView(InputAction.CallbackContext context);
+        void OnHeadMoved(InputAction.CallbackContext context);
     }
 }
