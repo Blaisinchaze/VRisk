@@ -11,13 +11,13 @@ public class ColliderController : MonoBehaviour
 
     private void Awake()
     {
-        collider_transform = this.GetComponent<Collider>().transform;
+        collider_transform = GetComponent<Collider>().transform;
     }
 
     private void FixedUpdate()
     {
-        collider_transform.position = new Vector3(head.transform.position.x, 
-                                    collider_transform.transform.position.y,
+        collider_transform.position = new Vector3(head.position.x, 
+                                    collider_transform.position.y,
                                     head.position.z);
     }
 }
