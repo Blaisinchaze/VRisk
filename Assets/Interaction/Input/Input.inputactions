@@ -219,6 +219,17 @@
                 },
                 {
                     "name": "",
+                    "id": "d0a25883-ef0c-480b-b22a-6a8625fc1e5f",
+                    "path": "<XRController>{RightHand}/joystick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateView",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "48dcd8b4-c2b4-4739-80c9-d0c3ef6f16e0",
                     "path": "<XRHMD>/devicePosition",
                     "interactions": "",
