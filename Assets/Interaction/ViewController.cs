@@ -24,10 +24,12 @@ public class ViewController : MonoBehaviour
         
         if (input_vect.y != 0)
         {
+            /*
             Quaternion cam_y_rotation = Quaternion.Euler(0, cam_trans.eulerAngles.y, 0);
             Vector3 rotated_x_axis = cam_y_rotation * Vector3.right;
 
             rotation_parent_trans.RotateAround(cam_trans.position, rotated_x_axis, input_vect.y * rotate_speed * -1); 
+            */
         }
 
         if (input_vect.x != 0)
