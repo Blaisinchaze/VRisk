@@ -17,20 +17,16 @@ public class HapticFeedbackHandler : MonoBehaviour
 
     public void triggerHapticFeedback(HapticFeedbackControllerID _controller, float _intensity, float _duration)
     {
-        Debug.Log("hnjguowsrlaeazgnrojeakgnhjrjoea[h");
         switch (_controller)
         {
             case HapticFeedbackControllerID.LEFT:
             {
                 left_controller.SendHapticImpulse(_intensity, _duration);
-                Debug.Log("LEFT");
                 break;
             }
             case HapticFeedbackControllerID.RIGHT:
             {
                 right_controller.SendHapticImpulse(_intensity, _duration);
-                Debug.Log("RIGHT");
-
                 break;
             }
 

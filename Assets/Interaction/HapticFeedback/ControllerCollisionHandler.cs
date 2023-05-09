@@ -17,7 +17,7 @@ public class ControllerCollisionHandler : MonoBehaviour
 
     public void OnCollisionEnter(Collision other)
     {
-        if (!other.transform.CompareTag(transform.tag))
+        if (!other.transform.CompareTag(transform.tag) && !other.transform.CompareTag("Player"))
         {
             feedback_handler.triggerHapticFeedback(id, haptic_intensity, haptic_duration);
         }
