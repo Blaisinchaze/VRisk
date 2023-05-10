@@ -25,6 +25,7 @@ public class TimelineManager : MonoBehaviour
         
         if (timeline.First().second < timer)
         {
+            Debug.Log(timeline.First().first);
             timeline.RemoveAt(0);
         }
     }
