@@ -4,6 +4,7 @@ using System.Collections.Generic;
 /**
  * General Data Container to hold 3 T values
  */
+[System.Serializable]
 public struct Triple<T1, T2, T3>
 {
     public T1 first;
@@ -21,6 +22,7 @@ public struct Triple<T1, T2, T3>
 /**
  * General Data Container to hold 2 T values
  */
+[System.Serializable]
 public struct Pair<T1, T2>
 {
     public T1 first;

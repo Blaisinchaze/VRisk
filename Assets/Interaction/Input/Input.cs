@@ -71,6 +71,15 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Debug"",
+                    ""type"": ""Button"",
+                    ""id"": ""5e7f13b5-9339-49a7-9553-3cd787378f81"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -260,6 +269,17 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""action"": ""HeadMoved"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""efd7be45-5109-4a9c-b65b-b84960c8b3a4"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Debug"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -273,6 +293,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         m_InputActionMap_MoveRight_Hand = m_InputActionMap.FindAction("Move(Right_Hand)", throwIfNotFound: true);
         m_InputActionMap_RotateView = m_InputActionMap.FindAction("RotateView", throwIfNotFound: true);
         m_InputActionMap_HeadMoved = m_InputActionMap.FindAction("HeadMoved", throwIfNotFound: true);
+        m_InputActionMap_Debug = m_InputActionMap.FindAction("Debug", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -337,6 +358,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
     private readonly InputAction m_InputActionMap_MoveRight_Hand;
     private readonly InputAction m_InputActionMap_RotateView;
     private readonly InputAction m_InputActionMap_HeadMoved;
+    private readonly InputAction m_InputActionMap_Debug;
     public struct InputActionMapActions
     {
         private @Input m_Wrapper;
@@ -346,6 +368,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         public InputAction @MoveRight_Hand => m_Wrapper.m_InputActionMap_MoveRight_Hand;
         public InputAction @RotateView => m_Wrapper.m_InputActionMap_RotateView;
         public InputAction @HeadMoved => m_Wrapper.m_InputActionMap_HeadMoved;
+        public InputAction @Debug => m_Wrapper.m_InputActionMap_Debug;
         public InputActionMap Get() { return m_Wrapper.m_InputActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -370,6 +393,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @HeadMoved.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnHeadMoved;
                 @HeadMoved.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnHeadMoved;
                 @HeadMoved.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnHeadMoved;
+                @Debug.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnDebug;
+                @Debug.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnDebug;
+                @Debug.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnDebug;
             }
             m_Wrapper.m_InputActionMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -389,6 +415,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @HeadMoved.started += instance.OnHeadMoved;
                 @HeadMoved.performed += instance.OnHeadMoved;
                 @HeadMoved.canceled += instance.OnHeadMoved;
+                @Debug.started += instance.OnDebug;
+                @Debug.performed += instance.OnDebug;
+                @Debug.canceled += instance.OnDebug;
             }
         }
     }
@@ -400,5 +429,6 @@ public partial class @Input : IInputActionCollection2, IDisposable
         void OnMoveRight_Hand(InputAction.CallbackContext context);
         void OnRotateView(InputAction.CallbackContext context);
         void OnHeadMoved(InputAction.CallbackContext context);
+        void OnDebug(InputAction.CallbackContext context);
     }
 }
