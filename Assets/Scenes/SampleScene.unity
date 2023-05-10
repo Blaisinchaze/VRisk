@@ -6523,7 +6523,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!43 &718294466
 Mesh:
@@ -12784,22 +12784,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &1415855737
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1475515579}
-  m_Layer: 0
-  m_Name: 'Recovery GameObject for Transform (ID in file: 1475515579)'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!43 &1431167994
 Mesh:
   m_ObjectHideFlags: 0
@@ -12965,21 +12949,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!4 &1475515579
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1415855737}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1491371047
 Mesh:
   m_ObjectHideFlags: 0
@@ -13875,7 +13844,7 @@ Transform:
   - {fileID: 1310967019}
   - {fileID: 1539034536}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1594829171
 MonoBehaviour:
@@ -15847,7 +15816,6 @@ GameObject:
   - component: {fileID: 1824460712}
   - component: {fileID: 1824460711}
   - component: {fileID: 1824460710}
-  - component: {fileID: 1824460714}
   m_Layer: 0
   m_Name: PlaneColor
   m_TagString: Untagged
@@ -15932,20 +15900,8 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1824460714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1824460709}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70559a4f16b28ca43bc67fe1c04250df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!43 &1843610037
 Mesh:
   m_ObjectHideFlags: 0
@@ -16111,6 +16067,52 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1861535353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1861535354}
+  - component: {fileID: 1861535355}
+  m_Layer: 0
+  m_Name: TimelineManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1861535354
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861535353}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1929960735}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1861535355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861535353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76dc443b4aa4d7b46b0981ab9d4c65db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CSV_timeline: {fileID: 4900000, guid: 4e043b694da47984d85e332d33a2f4c1, type: 3}
+  timer: 0
 --- !u!1 &1873737599 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4121202504103836520, guid: 8eaa911eb86ca8e4a8d4664d02b2524f,
@@ -16390,7 +16392,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1909823447 stripped
 GameObject:
@@ -16644,8 +16646,9 @@ Transform:
   m_Children:
   - {fileID: 952064869}
   - {fileID: 1078785967}
+  - {fileID: 1861535354}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1943820208 stripped
 GameObject:
@@ -21007,7 +21010,7 @@ PrefabInstance:
     - target: {fileID: 9113075384118139954, guid: 8eaa911eb86ca8e4a8d4664d02b2524f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9113075384118139954, guid: 8eaa911eb86ca8e4a8d4664d02b2524f,
         type: 3}
