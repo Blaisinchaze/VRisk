@@ -86,7 +86,7 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
-    private void damageBuilding(int _building_id)
+    public void damageBuilding(int _building_id)
     {
         var building = buildings[_building_id];
 

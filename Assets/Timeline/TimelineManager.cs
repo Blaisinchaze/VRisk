@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class TimelineManager : MonoBehaviour
 {
+    public BuildingManager building_manager;
+    
     public TextAsset CSV_timeline;
     public List<Pair<int, float>> timeline;
 
@@ -25,6 +27,9 @@ public class TimelineManager : MonoBehaviour
         
         if (timeline.First().second < timer)
         {
+            //Prompts building manager!
+            building_manager.damageBuilding(timeline.First().first);
+            
             Debug.Log(timeline.First().first);
             timeline.RemoveAt(0);
         }
