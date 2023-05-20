@@ -17,7 +17,7 @@ public class ColliderController : MonoBehaviour
     {
         collider = GetComponent<Collider>();
         collider_transform = collider.transform;
-        InputHandler.Instance.input_asset.InputActionMap.HeadMoved.performed += ScaleCollider;
+        GameManager.Instance.InputHandler.input_asset.InputActionMap.HeadMoved.performed += ScaleCollider;
     }
 
     private void FixedUpdate()

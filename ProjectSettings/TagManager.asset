@@ -8,15 +8,16 @@ TagManager:
   - Red
   - Beige
   - Black
+  - Controller
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Red layer
+  - 
   - Water
   - UI
-  - Yellow layer
-  - Beige layer
+  - Buildings Layer
+  - 
   - 
   - 
   - 
