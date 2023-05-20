@@ -75,7 +75,18 @@ public class BuildingManager : MonoBehaviour
     void trigger(InputAction.CallbackContext context)
     {
         Debug.Log("triggered");
-        damageBuilding(1, 0.2f, 0.05f, 4);
+        //damageBuilding(1, 0.2f, 0.05f, 4);
+        var building = buildings[1];
+
+        // If building is not collapsed, initiate damage transition.
+        if (building.third.state > 0)
+        {
+            Debug.Log("started");
+            building.third.transitioning = true;
+
+            StartCoroutine(ShakeBuildingBuildingCollapseVersion(building.second, building.third, 0.2f, 0.05f, 4));
+            // trigger particles
+        }
     }
 
     private void FixedUpdate()
@@ -120,7 +131,7 @@ public class BuildingManager : MonoBehaviour
             Debug.Log("started");
             building.third.transitioning = true;
 
-            StartCoroutine(ShakeBuilding(building.second, building.third, _intensity, _shaking_reposition_interval, _duration));
+            StartCoroutine(ShakeBuildingSeismicVersion(building.second, building.third, _intensity, _shaking_reposition_interval, _duration));
             // trigger particles
         }
     }
@@ -136,7 +147,7 @@ public class BuildingManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Shakes a given building.
+    /// Shakes a given building - this version builds in intensity and then diminishes.
     /// </summary>
     /// <param name="_building"> The building to shake. </param>
     /// <param name="_building_data"> The BuildingData instance associated with the building. </param>
@@ -144,7 +155,7 @@ public class BuildingManager : MonoBehaviour
     /// <param name="_shaking_reposition_interval"> The time between movements. </param>
     /// <param name="_duration"> The time in seconds for the building to be shaking. </param>
     /// <returns></returns>
-    private IEnumerator ShakeBuilding(GameObject _building, BuildingData _building_data, float _max_intensity, float _shaking_reposition_interval, float _duration)
+    private IEnumerator ShakeBuildingSeismicVersion(GameObject _building, BuildingData _building_data, float _max_intensity, float _shaking_reposition_interval, float _duration)
     {
         float elapsed = 0.0f;
         float reposition_timer = 0.0f;
@@ -155,6 +166,45 @@ public class BuildingManager : MonoBehaviour
             {
                 float progress = elapsed / _duration;
                 float intensity = _max_intensity * MathF.Sin(0.5f * progress * Mathf.PI);
+
+                float x = Random.Range(-1f, 1f) * intensity + _building_data.original_position.x;
+                float y = _building.transform.position.y;
+                float z = Random.Range(-1f, 1f) * intensity + _building_data.original_position.z;
+
+                _building.transform.position = new Vector3(x, y, z);
+
+                reposition_timer = 0.0f;
+            }
+
+            reposition_timer += Time.deltaTime;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // bring back to original position after shaking
+        _building.transform.position = _building_data.original_position;
+    }
+    
+    /// <summary>
+    /// Shakes a given building - This version does not build in intensity, but it does diminish over time.
+    /// </summary>
+    /// <param name="_building"> The building to shake. </param>
+    /// <param name="_building_data"> The BuildingData instance associated with the building. </param>
+    /// <param name="_max_intensity"> The maximum distance from the original position for shaking movement. </param>
+    /// <param name="_shaking_reposition_interval"> The time between movements. </param>
+    /// <param name="_duration"> The time in seconds for the building to be shaking. </param>
+    /// <returns></returns>
+    private IEnumerator ShakeBuildingBuildingCollapseVersion(GameObject _building, BuildingData _building_data, float _max_intensity, float _shaking_reposition_interval, float _duration)
+    {
+        float elapsed = 0.0f;
+        float reposition_timer = 0.0f;
+
+        while (elapsed < _duration)
+        {
+            if (reposition_timer > _shaking_reposition_interval)
+            {
+                float progress = elapsed / _duration;
+                float intensity = _max_intensity * Mathf.Cos(0.5f * progress * Mathf.PI);
 
                 float x = Random.Range(-1f, 1f) * intensity + _building_data.original_position.x;
                 float y = _building.transform.position.y;
