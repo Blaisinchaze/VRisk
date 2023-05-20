@@ -101,7 +101,7 @@ public class BuildingManager : MonoBehaviour
                 // Temporary - Above is the code for swapping meshes and colliders, but don't have meshes yet.
                 // Below like is temp until we have meshes. 
                 building.Value.second.gameObject.transform.Translate(0, -2, 0);
-                triggerLocalisedShake(building.Value.second, 0.2f, 0.05f, 3, 20);
+                triggerLocalisedShake(building.Value.second, 0.2f, 0.05f, 2, 40);
 
                 building.Value.third.transition_timer = 0;
                 building.Value.third.transitioning = false;
@@ -143,13 +143,13 @@ public class BuildingManager : MonoBehaviour
             if (distance < _affect_radius)
             {
                 float building_specific_intensity = _max_intensity * MathF.Sin(0.5f * distance * Mathf.PI);
-                
-                if (distance == 0)
+
+                if (distance < 1)
                 {
                     building_specific_intensity = _max_intensity;
                 }
 
-                if (building_specific_intensity < 0.05)
+                if (building_specific_intensity > 0.05)
                 {
                     StartCoroutine(ShakeBuildingBuildingCollapseVersion(building.Value.second, building.Value.third,
                         building_specific_intensity, _shaking_reposition_interval, _duration));
@@ -177,7 +177,7 @@ public class BuildingManager : MonoBehaviour
             if (reposition_timer > _shaking_reposition_interval)
             {
                 float progress = elapsed / _duration;
-                float intensity = _max_intensity * MathF.Sin(0.2f * progress * Mathf.PI);
+                float intensity = _max_intensity * MathF.Sin(progress * Mathf.PI);
 
                 float x = Random.Range(-1f, 1f) * intensity + _building_data.original_position.x;
                 float y = _building.transform.position.y;
