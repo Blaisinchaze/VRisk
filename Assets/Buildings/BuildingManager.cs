@@ -1,12 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.ProBuilder.MeshOperations;
 using Random = UnityEngine.Random;
 
 public class BuildingManager : MonoBehaviour
@@ -31,11 +27,9 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] private string low_risk_tag = "Beige";
     [SerializeField] private string mid_risk_tag = "Yellow";
     [SerializeField] private string high_risk_tag = "Red";
-
-    public Dictionary<int, Triple<RiskLevel, GameObject, BuildingData>> buildings =
-        new Dictionary<int, Triple<RiskLevel, GameObject, BuildingData>>();
-
-    public bool shaking = false;
+    
+    public Dictionary<int, Triple<RiskLevel, GameObject, BuildingData>> buildings = new Dictionary<int, Triple<RiskLevel, GameObject, BuildingData>>();
+    public bool shaking;
 
     private void Awake()
     {
@@ -74,17 +68,15 @@ public class BuildingManager : MonoBehaviour
     // Debug - to be removed. 
     void trigger(InputAction.CallbackContext context)
     {
-        Debug.Log("triggered");
         //damageBuilding(1, 0.2f, 0.05f, 4);
         var building = buildings[1];
 
         // If building is not collapsed, initiate damage transition.
         if (building.third.state > 0)
         {
-            Debug.Log("started");
             building.third.transitioning = true;
-
-            StartCoroutine(ShakeBuildingBuildingCollapseVersion(building.second, building.third, 0.2f, 0.05f, 4));
+            
+            //StartCoroutine(ShakeBuildingBuildingCollapseVersion(building.second, building.third, 0.2f, 0.05f, 4));
             // trigger particles
         }
     }
@@ -100,17 +92,16 @@ public class BuildingManager : MonoBehaviour
                     building.Value.third.transition_timer += Time.fixedDeltaTime;
                     continue;
                 }
-                
-                Debug.Log("fall");
 
-                building.Value.third.mesh_filter.mesh =
+                /*building.Value.third.mesh_filter.mesh =
                     building.Value.third.building_map.states[(int) building.Value.third.state].second;
                 building.Value.third.collider.sharedMesh = building.Value.third.building_map
-                    .states[(int) building.Value.third.state].second;
+                    .states[(int) building.Value.third.state].second;*/
                 
                 // Temporary - Above is the code for swapping meshes and colliders, but don't have meshes yet.
                 // Below like is temp until we have meshes. 
-                //building.Value.second.gameObject.transform.Translate(0, -2, 0);
+                building.Value.second.gameObject.transform.Translate(0, -2, 0);
+                triggerLocalisedShake(building.Value.second, 0.2f, 0.05f, 3, 20);
 
                 building.Value.third.transition_timer = 0;
                 building.Value.third.transitioning = false;
@@ -128,22 +119,43 @@ public class BuildingManager : MonoBehaviour
         // If building is not collapsed, initiate damage transition.
         if (building.third.state > 0)
         {
-            Debug.Log("started");
             building.third.transitioning = true;
 
-            StartCoroutine(ShakeBuildingSeismicVersion(building.second, building.third, _intensity, _shaking_reposition_interval, _duration));
+            triggerGlobalShake(_intensity, _shaking_reposition_interval, _duration);
             // trigger particles
         }
     }
 
-    public void triggerGlobalShake(float _intensity, float _duration)
+    public void triggerGlobalShake(float _max_intensity, float _shaking_reposition_interval, float _duration)
     {
-        shaking = true;
+        foreach (var building in buildings)
+        {
+            StartCoroutine(ShakeBuildingSeismicVersion(building.Value.second, building.Value.third, _max_intensity, _shaking_reposition_interval, _duration));
+        }
     }
 
-    private void triggerLocalisedShake(float _intensity, float _duration)
+    private void triggerLocalisedShake(GameObject _building, float _max_intensity, float _shaking_reposition_interval, float _duration, float _affect_radius)
     {
-        
+        foreach (var building in buildings)
+        {
+            float distance = Vector3.Distance(_building.transform.position, building.Value.second.transform.position);
+
+            if (distance < _affect_radius)
+            {
+                float building_specific_intensity = _max_intensity * MathF.Sin(0.5f * distance * Mathf.PI);
+                
+                if (distance == 0)
+                {
+                    building_specific_intensity = _max_intensity;
+                }
+
+                if (building_specific_intensity < 0.05)
+                {
+                    StartCoroutine(ShakeBuildingBuildingCollapseVersion(building.Value.second, building.Value.third,
+                        building_specific_intensity, _shaking_reposition_interval, _duration));
+                }
+            }
+        }
     }
     
     /// <summary>
@@ -165,7 +177,7 @@ public class BuildingManager : MonoBehaviour
             if (reposition_timer > _shaking_reposition_interval)
             {
                 float progress = elapsed / _duration;
-                float intensity = _max_intensity * MathF.Sin(0.5f * progress * Mathf.PI);
+                float intensity = _max_intensity * MathF.Sin(0.2f * progress * Mathf.PI);
 
                 float x = Random.Range(-1f, 1f) * intensity + _building_data.original_position.x;
                 float y = _building.transform.position.y;
@@ -182,7 +194,10 @@ public class BuildingManager : MonoBehaviour
         }
 
         // bring back to original position after shaking
-        _building.transform.position = _building_data.original_position;
+        //_building.transform.position = _building_data.original_position;
+        
+        _building.transform.position = new Vector3(_building_data.original_position.x, _building.transform.position.y,
+            _building_data.original_position.z);
     }
     
     /// <summary>
@@ -221,6 +236,9 @@ public class BuildingManager : MonoBehaviour
         }
 
         // bring back to original position after shaking
-        _building.transform.position = _building_data.original_position;
+        //_building.transform.position = _building_data.original_position;
+
+        _building.transform.position = new Vector3(_building_data.original_position.x, _building.transform.position.y,
+            _building_data.original_position.z);
     }
 }
