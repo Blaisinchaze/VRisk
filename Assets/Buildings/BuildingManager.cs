@@ -92,21 +92,20 @@ public class BuildingManager : MonoBehaviour
                     building.Value.third.transition_timer += Time.fixedDeltaTime;
                     continue;
                 }
-
-                /*building.Value.third.mesh_filter.mesh =
-                    building.Value.third.building_map.states[(int) building.Value.third.state].second;
-                building.Value.third.collider.sharedMesh = building.Value.third.building_map
-                    .states[(int) building.Value.third.state].second;*/
                 
-                // Temporary - Above is the code for swapping meshes and colliders, but don't have meshes yet.
-                // Below like is temp until we have meshes. 
-                building.Value.second.gameObject.transform.Translate(0, -2, 0);
-                triggerLocalisedShake(building.Value.second, 0.2f, 0.05f, 2, 40);
-
                 building.Value.third.transition_timer = 0;
                 building.Value.third.transitioning = false;
                 building.Value.third.state--;
 
+                building.Value.third.mesh_filter.mesh =
+                    building.Value.third.building_map.states[(int) building.Value.third.state].second;
+                building.Value.third.collider.sharedMesh = building.Value.third.building_map
+                    .states[(int) building.Value.third.state].second;
+                
+                // Temporary - Above is the code for swapping meshes and colliders, but don't have meshes yet.
+                // Below like is temp until we have meshes. 
+                //building.Value.second.gameObject.transform.Translate(0, -2, 0);
+                triggerLocalisedShake(building.Value.second, 0.2f, 0.05f, 2, 40);
             }
         }
     }
