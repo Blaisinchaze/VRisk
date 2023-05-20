@@ -135,22 +135,23 @@ public class BuildingManager : MonoBehaviour
 
     private void triggerLocalisedShake(GameObject _building, float _max_intensity, float _shaking_reposition_interval, float _duration, float _affect_radius)
     {
-        foreach (var building in buildings)
+        Vector3 centre = _building.transform.position;
+
+        Collider[] hit_colliders = Physics.OverlapSphere(centre, _affect_radius);
+        foreach (var collider in hit_colliders)
         {
-            float distance = Vector3.Distance(_building.transform.position, building.Value.second.transform.position);
-
-            if (distance < _affect_radius)
+            if (collider.gameObject.CompareTag(safe_risk_tag) || collider.gameObject.CompareTag(low_risk_tag)
+                || collider.gameObject.CompareTag(mid_risk_tag) || collider.gameObject.CompareTag(high_risk_tag))
             {
-                float building_specific_intensity = _max_intensity * MathF.Sin(0.5f * distance * Mathf.PI);
+                var building = buildings[collider.GetComponent<BuildingData>().id];
+                
+                float distance = Vector3.Distance(_building.transform.position, building.second.transform.position);
 
-                if (distance < 1)
+                // Linearly decrease intensity with distance
+                float building_specific_intensity = Mathf.Clamp01(1f - distance / _affect_radius) * _max_intensity;
+                if (building_specific_intensity > 0.05f)
                 {
-                    building_specific_intensity = _max_intensity;
-                }
-
-                if (building_specific_intensity > 0.05)
-                {
-                    StartCoroutine(ShakeBuildingBuildingCollapseVersion(building.Value.second, building.Value.third,
+                    StartCoroutine(ShakeBuildingBuildingCollapseVersion(building.second, building.third,
                         building_specific_intensity, _shaking_reposition_interval, _duration));
                 }
             }
