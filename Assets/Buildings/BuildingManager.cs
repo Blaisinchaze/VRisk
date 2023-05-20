@@ -7,6 +7,7 @@ using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.ProBuilder.MeshOperations;
+using Random = UnityEngine.Random;
 
 public class BuildingManager : MonoBehaviour
 {
@@ -74,7 +75,7 @@ public class BuildingManager : MonoBehaviour
     void trigger(InputAction.CallbackContext context)
     {
         Debug.Log("triggered");
-        damageBuilding(1);
+        damageBuilding(1, 0.2f, 0.05f, 4);
     }
 
     private void FixedUpdate()
@@ -91,14 +92,14 @@ public class BuildingManager : MonoBehaviour
                 
                 Debug.Log("fall");
 
-                /*building.Value.third.mesh_filter.mesh =
+                building.Value.third.mesh_filter.mesh =
                     building.Value.third.building_map.states[(int) building.Value.third.state].second;
                 building.Value.third.collider.sharedMesh = building.Value.third.building_map
-                    .states[(int) building.Value.third.state].second;*/
+                    .states[(int) building.Value.third.state].second;
                 
                 // Temporary - Above is the code for swapping meshes and colliders, but don't have meshes yet.
                 // Below like is temp until we have meshes. 
-                building.Value.second.gameObject.transform.Translate(0, -2, 0);
+                //building.Value.second.gameObject.transform.Translate(0, -2, 0);
 
                 building.Value.third.transition_timer = 0;
                 building.Value.third.transitioning = false;
@@ -108,7 +109,7 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
-    public void damageBuilding(int _building_id)
+    public void damageBuilding(int _building_id, float _intensity, float _shaking_reposition_interval, float _duration)
     {
         // Grab reference to desired building. 
         var building = buildings[_building_id];
@@ -118,8 +119,9 @@ public class BuildingManager : MonoBehaviour
         {
             Debug.Log("started");
             building.third.transitioning = true;
-            
-                    // trigger particles
+
+            StartCoroutine(ShakeBuilding(building.second, building.third, _intensity, _shaking_reposition_interval, _duration));
+            // trigger particles
         }
     }
 
@@ -128,8 +130,47 @@ public class BuildingManager : MonoBehaviour
         shaking = true;
     }
 
-    public void triggerLocalisedShake(float _intensity, float _duration)
+    private void triggerLocalisedShake(float _intensity, float _duration)
     {
         
+    }
+    
+    /// <summary>
+    /// Shakes a given building.
+    /// </summary>
+    /// <param name="_building"> The building to shake. </param>
+    /// <param name="_building_data"> The BuildingData instance associated with the building. </param>
+    /// <param name="_max_intensity"> The maximum distance from the original position for shaking movement. </param>
+    /// <param name="_shaking_reposition_interval"> The time between movements. </param>
+    /// <param name="_duration"> The time in seconds for the building to be shaking. </param>
+    /// <returns></returns>
+    private IEnumerator ShakeBuilding(GameObject _building, BuildingData _building_data, float _max_intensity, float _shaking_reposition_interval, float _duration)
+    {
+        float elapsed = 0.0f;
+        float reposition_timer = 0.0f;
+
+        while (elapsed < _duration)
+        {
+            if (reposition_timer > _shaking_reposition_interval)
+            {
+                float progress = elapsed / _duration;
+                float intensity = _max_intensity * MathF.Sin(0.5f * progress * Mathf.PI);
+
+                float x = Random.Range(-1f, 1f) * intensity + _building_data.original_position.x;
+                float y = _building.transform.position.y;
+                float z = Random.Range(-1f, 1f) * intensity + _building_data.original_position.z;
+
+                _building.transform.position = new Vector3(x, y, z);
+
+                reposition_timer = 0.0f;
+            }
+
+            reposition_timer += Time.deltaTime;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // bring back to original position after shaking
+        _building.transform.position = _building_data.original_position;
     }
 }

@@ -28,8 +28,9 @@ public class TimelineManager : MonoBehaviour
         if (timeline.First().second < timer)
         {
             //Prompts building manager!
-            building_manager.damageBuilding(timeline.First().first);
-            
+            // Need to replace with values read in, as opposed to hard coding them.
+            building_manager.damageBuilding(timeline.First().first, 0.2f, 0.05f, 4);
+
             Debug.Log(timeline.First().first);
             timeline.RemoveAt(0);
         }
