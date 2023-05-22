@@ -76,7 +76,6 @@ public class BuildingManager : MonoBehaviour
         {
             building.third.transitioning = true;
             
-            //StartCoroutine(ShakeBuildingBuildingCollapseVersion(building.second, building.third, 0.2f, 0.05f, 4));
             // trigger particles
         }
     }
@@ -219,7 +218,7 @@ public class BuildingManager : MonoBehaviour
             if (reposition_timer > _shaking_reposition_interval)
             {
                 float progress = elapsed / _duration;
-                float intensity = _max_intensity * Mathf.Cos(0.5f * progress * Mathf.PI);
+                float intensity = _max_intensity * Mathf.Cos(progress * Mathf.PI);
 
                 float x = Random.Range(-1f, 1f) * intensity + _building_data.original_position.x;
                 float y = _building.transform.position.y;
