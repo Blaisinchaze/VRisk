@@ -18,7 +18,7 @@ public class ViewController : MonoBehaviour
 
     private void Start()
     {
-        view_action = InputHandler.Instance.input_asset.InputActionMap.RotateView;
+        view_action = GameManager.Instance.InputHandler.input_asset.InputActionMap.RotateView;
     }
 
     private void FixedUpdate()

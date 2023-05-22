@@ -1,10 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 public class BuildingManager : MonoBehaviour
 {
@@ -19,7 +18,7 @@ public class BuildingManager : MonoBehaviour
     public enum BuildingState
     {
         COLLAPSED,
-        VERY_DAMAGED, 
+        VERY_DAMAGED,
         DAMAGED,
         NO_DAMAGE,
     }
@@ -28,38 +27,58 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] private string low_risk_tag = "Beige";
     [SerializeField] private string mid_risk_tag = "Yellow";
     [SerializeField] private string high_risk_tag = "Red";
-
+    
     public Dictionary<int, Triple<RiskLevel, GameObject, BuildingData>> buildings = new Dictionary<int, Triple<RiskLevel, GameObject, BuildingData>>();
+    public bool shaking;
 
-    private void Start()
+    private void Awake()
     {
-        InputHandler.Instance.input_asset.InputActionMap.Debug.started += trigger;
-        GameObject[][] all_building_arr = new GameObject[4][];
+        // Add all buildings to buildings list. 
+        addBuildingsWithTag(safe_risk_tag, RiskLevel.SAFE);
+        addBuildingsWithTag(low_risk_tag, RiskLevel.LOW);
+        addBuildingsWithTag(mid_risk_tag, RiskLevel.MID);
+        addBuildingsWithTag(high_risk_tag, RiskLevel.HIGH);
+    }
+    
+    private void addBuildingsWithTag(string _tag, RiskLevel _risk)
+    {
+        // Grab list of building game objects with provided risk tag. 
+        var game_objects = GameObject.FindGameObjectsWithTag(_tag);
         
-        all_building_arr[(int)RiskLevel.SAFE] = GameObject.FindGameObjectsWithTag(safe_risk_tag);
-        all_building_arr[(int)RiskLevel.LOW]  = GameObject.FindGameObjectsWithTag(low_risk_tag);
-        all_building_arr[(int)RiskLevel.MID]  = GameObject.FindGameObjectsWithTag(mid_risk_tag);
-        all_building_arr[(int)RiskLevel.HIGH] = GameObject.FindGameObjectsWithTag(high_risk_tag);
-
-        foreach (var building_list in all_building_arr)
+        foreach (var game_object in game_objects)
         {
-            foreach (var building in building_list)
+            // Grab building data. 
+            BuildingData building_data = game_object.GetComponent<BuildingData>();
+
+            if (building_data != null)
             {
-                buildings.Add(building.GetComponent<BuildingData>().id, new Triple<RiskLevel, GameObject, BuildingData>(RiskLevel.LOW, building.gameObject, building.GetComponent<BuildingData>()));
-                //buildings[building.GetComponent<BuildingData>().id]
+                // Add building to list of buildings. 
+                // Add instead of directly assigning to avoid overriting if IDs are wrong - will throw error. 
+                buildings.Add(building_data.id, new Triple<RiskLevel, GameObject, BuildingData>(_risk, game_object, building_data));
             }
         }
     }
-
-    void trigger(InputAction.CallbackContext context)
+ 
+    private void Start()
     {
-        Debug.Log("triggered");
-        damageBuilding(1);
+        // debug key for damaging a building.
+        GameManager.Instance.InputHandler.input_asset.InputActionMap.Debug.started += trigger;
     }
 
-    private void Update()
+    // Debug - to be removed. 
+    void trigger(InputAction.CallbackContext context)
     {
+        //damageBuilding(1, 0.2f, 0.05f, 4);
+        var building = buildings[1];
 
+        // If building is not collapsed, initiate damage transition.
+        if (building.third.state > 0)
+        {
+            building.third.transitioning = true;
+            
+            //StartCoroutine(ShakeBuildingBuildingCollapseVersion(building.second, building.third, 0.2f, 0.05f, 4));
+            // trigger particles
+        }
     }
 
     private void FixedUpdate()
@@ -71,45 +90,153 @@ public class BuildingManager : MonoBehaviour
                 if (building.Value.third.transition_timer < building.Value.third.transition_duration)
                 {
                     building.Value.third.transition_timer += Time.fixedDeltaTime;
-                    
-                    Debug.Log("shaking : " + building.Value.third.transition_timer);
                     continue;
                 }
                 
-                Debug.Log("fall");
-                building.Value.second.gameObject.transform.Translate(0,-2, 0);
                 building.Value.third.transition_timer = 0;
                 building.Value.third.transitioning = false;
-                //shake building
-                // move down on Y.
+                building.Value.third.state--;
+
+                building.Value.third.mesh_filter.mesh =
+                    building.Value.third.building_map.states[(int) building.Value.third.state].second;
+                building.Value.third.collider.sharedMesh = building.Value.third.building_map
+                    .states[(int) building.Value.third.state].second;
+                
+                // Temporary - Above is the code for swapping meshes and colliders, but don't have meshes yet.
+                // Below like is temp until we have meshes. 
+                //building.Value.second.gameObject.transform.Translate(0, -2, 0);
+                triggerLocalisedShake(building.Value.second, 0.2f, 0.05f, 2, 40);
+                GameManager.Instance.HapticFeedbackHandler.triggerCosIntensityHapticFeedback(1, 4);
             }
         }
     }
 
-    public void damageBuilding(int _building_id)
+    public void damageBuilding(int _building_id, float _intensity, float _shaking_reposition_interval, float _duration)
     {
+        // Grab reference to desired building. 
         var building = buildings[_building_id];
 
-        /*if (building.third.state > 0 && (int)building.third.state <= (int) BuildingState.NO_DAMAGE)
+        // If building is not collapsed, initiate damage transition.
+        if (building.third.state > 0)
         {
-            building.third.state--;
-
-            building.second.GetComponent<MeshFilter>().mesh = building.third.building_map.states[(int)building.third.state].second;
-        }*/
-
-        if (building.third.state > 0 && (int) building.third.state <= (int) BuildingState.NO_DAMAGE)
-        {
-            Debug.Log("started");
             building.third.transitioning = true;
-            building.third.state--;
+
+            triggerGlobalShake(_intensity, _shaking_reposition_interval, _duration);
+            // trigger particles
+        }
+    }
+
+    public void triggerGlobalShake(float _max_intensity, float _shaking_reposition_interval, float _duration)
+    {
+        foreach (var building in buildings)
+        {
+            StartCoroutine(ShakeBuildingSeismicVersion(building.Value.second, building.Value.third, _max_intensity, _shaking_reposition_interval, _duration));
+            GameManager.Instance.HapticFeedbackHandler.triggerSineIntensityHapticFeedback(1, _duration);
+        }
+    }
+
+    private void triggerLocalisedShake(GameObject _building, float _max_intensity, float _shaking_reposition_interval, float _duration, float _affect_radius)
+    {
+        Vector3 centre = _building.transform.position;
+
+        Collider[] hit_colliders = Physics.OverlapSphere(centre, _affect_radius);
+        foreach (var collider in hit_colliders)
+        {
+            if (collider.gameObject.CompareTag(safe_risk_tag) || collider.gameObject.CompareTag(low_risk_tag)
+                || collider.gameObject.CompareTag(mid_risk_tag) || collider.gameObject.CompareTag(high_risk_tag))
+            {
+                var building = buildings[collider.GetComponent<BuildingData>().id];
+                
+                float distance = Vector3.Distance(_building.transform.position, building.second.transform.position);
+
+                // Linearly decrease intensity with distance
+                float building_specific_intensity = Mathf.Clamp01(1f - distance / _affect_radius) * _max_intensity;
+                if (building_specific_intensity > 0.05f)
+                {
+                    StartCoroutine(ShakeBuildingBuildingCollapseVersion(building.second, building.third,
+                        building_specific_intensity, _shaking_reposition_interval, _duration));
+                }
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Shakes a given building - this version builds in intensity and then diminishes.
+    /// </summary>
+    /// <param name="_building"> The building to shake. </param>
+    /// <param name="_building_data"> The BuildingData instance associated with the building. </param>
+    /// <param name="_max_intensity"> The maximum distance from the original position for shaking movement. </param>
+    /// <param name="_shaking_reposition_interval"> The time between movements. </param>
+    /// <param name="_duration"> The time in seconds for the building to be shaking. </param>
+    /// <returns></returns>
+    private IEnumerator ShakeBuildingSeismicVersion(GameObject _building, BuildingData _building_data, float _max_intensity, float _shaking_reposition_interval, float _duration)
+    {
+        float elapsed = 0.0f;
+        float reposition_timer = 0.0f;
+
+        while (elapsed < _duration)
+        {
+            if (reposition_timer > _shaking_reposition_interval)
+            {
+                float progress = elapsed / _duration;
+                float intensity = _max_intensity * MathF.Sin(progress * Mathf.PI);
+
+                float x = Random.Range(-1f, 1f) * intensity + _building_data.original_position.x;
+                float y = _building.transform.position.y;
+                float z = Random.Range(-1f, 1f) * intensity + _building_data.original_position.z;
+
+                _building.transform.position = new Vector3(x, y, z);
+
+                reposition_timer = 0.0f;
+            }
+
+            reposition_timer += Time.deltaTime;
+            elapsed += Time.deltaTime;
+            yield return null;
         }
 
+        // bring back to original position after shaking
+        _building.transform.position = new Vector3(_building_data.original_position.x, _building.transform.position.y,
+            _building_data.original_position.z);
+    }
+    
+    /// <summary>
+    /// Shakes a given building - This version does not build in intensity, but it does diminish over time.
+    /// </summary>
+    /// <param name="_building"> The building to shake. </param>
+    /// <param name="_building_data"> The BuildingData instance associated with the building. </param>
+    /// <param name="_max_intensity"> The maximum distance from the original position for shaking movement. </param>
+    /// <param name="_shaking_reposition_interval"> The time between movements. </param>
+    /// <param name="_duration"> The time in seconds for the building to be shaking. </param>
+    /// <returns></returns>
+    private IEnumerator ShakeBuildingBuildingCollapseVersion(GameObject _building, BuildingData _building_data, float _max_intensity, float _shaking_reposition_interval, float _duration)
+    {
+        float elapsed = 0.0f;
+        float reposition_timer = 0.0f;
 
+        while (elapsed < _duration)
+        {
+            if (reposition_timer > _shaking_reposition_interval)
+            {
+                float progress = elapsed / _duration;
+                float intensity = _max_intensity * Mathf.Cos(0.5f * progress * Mathf.PI);
 
-        // swap mesh
-        
-        // trigger particles
-        
-        
+                float x = Random.Range(-1f, 1f) * intensity + _building_data.original_position.x;
+                float y = _building.transform.position.y;
+                float z = Random.Range(-1f, 1f) * intensity + _building_data.original_position.z;
+
+                _building.transform.position = new Vector3(x, y, z);
+
+                reposition_timer = 0.0f;
+            }
+
+            reposition_timer += Time.deltaTime;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // bring back to original position after shaking
+        _building.transform.position = new Vector3(_building_data.original_position.x, _building.transform.position.y,
+            _building_data.original_position.z);
     }
 }
