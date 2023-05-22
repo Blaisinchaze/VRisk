@@ -17,7 +17,6 @@ public class ColliderController : MonoBehaviour
     {
         collider = GetComponent<Collider>();
         collider_transform = collider.transform;
-        GameManager.Instance.InputHandler.input_asset.InputActionMap.HeadMoved.performed += ScaleCollider;
     }
 
     private void FixedUpdate()
@@ -27,17 +26,5 @@ public class ColliderController : MonoBehaviour
         collider_transform.position = new Vector3(head.position.x, 
                                     collider_transform.position.y,
                                     head.position.z);
-    }
-
-    private void ScaleCollider(InputAction.CallbackContext context)
-    {
-        if (scale_timer > scale_interval)
-        {
-            scale_timer = 0;
-
-            float head_height = context.ReadValue<Vector3>().y;
-            Vector3 thing = new Vector3(1.0f, head_height, 1.0f);
-            collider.transform.localScale = thing;
-        }
     }
 }

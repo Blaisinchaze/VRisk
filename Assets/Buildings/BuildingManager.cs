@@ -106,6 +106,7 @@ public class BuildingManager : MonoBehaviour
                 // Below like is temp until we have meshes. 
                 //building.Value.second.gameObject.transform.Translate(0, -2, 0);
                 triggerLocalisedShake(building.Value.second, 0.2f, 0.05f, 2, 40);
+                GameManager.Instance.HapticFeedbackHandler.triggerCosIntensityHapticFeedback(1, 4);
             }
         }
     }
@@ -130,6 +131,7 @@ public class BuildingManager : MonoBehaviour
         foreach (var building in buildings)
         {
             StartCoroutine(ShakeBuildingSeismicVersion(building.Value.second, building.Value.third, _max_intensity, _shaking_reposition_interval, _duration));
+            GameManager.Instance.HapticFeedbackHandler.triggerSineIntensityHapticFeedback(1, _duration);
         }
     }
 
@@ -194,8 +196,6 @@ public class BuildingManager : MonoBehaviour
         }
 
         // bring back to original position after shaking
-        //_building.transform.position = _building_data.original_position;
-        
         _building.transform.position = new Vector3(_building_data.original_position.x, _building.transform.position.y,
             _building_data.original_position.z);
     }
@@ -236,8 +236,6 @@ public class BuildingManager : MonoBehaviour
         }
 
         // bring back to original position after shaking
-        //_building.transform.position = _building_data.original_position;
-
         _building.transform.position = new Vector3(_building_data.original_position.x, _building.transform.position.y,
             _building_data.original_position.z);
     }
