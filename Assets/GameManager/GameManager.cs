@@ -23,4 +23,9 @@ public class GameManager : MonoBehaviour
         HapticFeedbackHandler = GetComponentInChildren<HapticFeedbackHandler>();
         InputHandler = GetComponentInChildren<InputHandler>();
     }
+
+    static public float earthquakeIntensityCurve(float _x)
+    {
+        return -15.5f * (float)Math.Pow(_x - 0.48f, 4) + (0.3f * _x) + 0.824f;
+    }
 }

@@ -39,12 +39,12 @@ public class BuildingManager : MonoBehaviour
         addBuildingsWithTag(mid_risk_tag, RiskLevel.MID);
         addBuildingsWithTag(high_risk_tag, RiskLevel.HIGH);
     }
-    
+
     private void addBuildingsWithTag(string _tag, RiskLevel _risk)
     {
         // Grab list of building game objects with provided risk tag. 
         var game_objects = GameObject.FindGameObjectsWithTag(_tag);
-        
+
         foreach (var game_object in game_objects)
         {
             // Grab building data. 
@@ -54,13 +54,15 @@ public class BuildingManager : MonoBehaviour
             {
                 // Add building to list of buildings. 
                 // Add instead of directly assigning to avoid overriting if IDs are wrong - will throw error. 
-                buildings.Add(building_data.id, new Triple<RiskLevel, GameObject, BuildingData>(_risk, game_object, building_data));
+                buildings.Add(building_data.id,
+                    new Triple<RiskLevel, GameObject, BuildingData>(_risk, game_object, building_data));
             }
         }
     }
 
-    private void FixedUpdate()
+    private void Start()
     {
+        triggerGlobalShake(0.2f, 0.05f, 30);
 
     }
 
@@ -81,7 +83,6 @@ public class BuildingManager : MonoBehaviour
         foreach (var building in buildings)
         {
             StartCoroutine(ShakeBuildingSeismicVersion(building.Value.second, building.Value.third, _max_intensity, _shaking_reposition_interval, _duration));
-            GameManager.Instance.HapticFeedbackHandler.triggerSineIntensityHapticFeedback(1, _duration);
         }
     }
 
@@ -107,6 +108,13 @@ public class BuildingManager : MonoBehaviour
                         building_specific_intensity, _shaking_reposition_interval, _duration));
                 }
             }
+            else if (collider.gameObject.CompareTag("Player"))
+            {
+                float distance = Vector3.Distance(_building.transform.position, collider.gameObject.transform.position);
+
+                GameManager.Instance.HapticFeedbackHandler.triggerCosIntensityHapticFeedback(1 - distance/_affect_radius, _duration);
+                Debug.Log(1 - distance/_affect_radius);
+            }
         }
     }
 
@@ -116,6 +124,7 @@ public class BuildingManager : MonoBehaviour
 
         while (elapsed < _transition_duration)
         {
+            elapsed += Time.deltaTime;
              yield return null;      
         }
 
@@ -129,7 +138,6 @@ public class BuildingManager : MonoBehaviour
         _building_data.gameObject.transform.Translate(0, -2, 0);
 
         triggerLocalisedShake(_building_data.gameObject, _intensity, _shaking_reposition_interval, _impact_shake_duration, _affect_radius);
-        GameManager.Instance.HapticFeedbackHandler.triggerCosIntensityHapticFeedback(1, _transition_duration);
     }
 
     /// <summary>
@@ -151,9 +159,7 @@ public class BuildingManager : MonoBehaviour
             if (reposition_timer > _shaking_reposition_interval)
             {
                 float progress = (elapsed / _duration);
-                float intensity = -15.5f * (float)Math.Pow(progress - 0.48f, 4) + (0.3f * progress) + 0.824f; // * (float)Math.Pow(progress - 0.5f, 4) + 1*progress;
-                Debug.Log(intensity);
-                intensity *=_max_intensity;
+                float intensity = _max_intensity * GameManager.earthquakeIntensityCurve(progress);
 
                 float x = Random.Range(-1f, 1f) * intensity + _building_data.original_position.x;
                 float y = _building.transform.position.y;
