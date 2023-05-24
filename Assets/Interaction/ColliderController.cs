@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Collider))]
 public class ColliderController : MonoBehaviour
 {
-    private Collider collider;
+    private Collider player_collider;
     private Transform collider_transform;
     private const float scale_interval = 0.8f;
     private float scale_timer = 0;
@@ -15,8 +15,8 @@ public class ColliderController : MonoBehaviour
 
     private void Start()
     {
-        collider = GetComponent<Collider>();
-        collider_transform = collider.transform;
+        player_collider = GetComponent<Collider>();
+        collider_transform = player_collider.transform;
     }
 
     private void FixedUpdate()
