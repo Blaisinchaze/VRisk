@@ -37,9 +37,9 @@ public class HapticFeedbackHandler : MonoBehaviour
         }
     }
 
-    public void triggerSineIntensityHapticFeedback(float _intensity, float _duration)
+    public void triggerSeismicHapticFeedback(float _intensity, float _duration)
     {
-        StartCoroutine(SineHapticFeedback(_intensity, _duration, 0.03f));
+        StartCoroutine(SeismicHapticFeedback(_intensity, _duration, 0.03f));
     }
 
     public void triggerCosIntensityHapticFeedback(float _intensity, float _duration)
@@ -47,7 +47,7 @@ public class HapticFeedbackHandler : MonoBehaviour
         StartCoroutine(CosHapticFeedback(_intensity, _duration, 0.03f));
     }
     
-    private IEnumerator SineHapticFeedback(float _max_intensity, float _duration, float _alter_intensity_interval)
+    private IEnumerator SeismicHapticFeedback(float _max_intensity, float _duration, float _alter_intensity_interval)
     {
         float elapsed = 0.0f;
         float alter_intensity_timer = 0.0f;
@@ -57,7 +57,7 @@ public class HapticFeedbackHandler : MonoBehaviour
             if (alter_intensity_timer > _alter_intensity_interval)
             {
                 float progress = elapsed / _duration;
-                float intensity = _max_intensity * Mathf.Sin(progress * Mathf.PI);
+                float intensity = _max_intensity * GameManager.earthquakeIntensityCurve(progress);
 
                 left_controller.SendHapticImpulse(intensity, 1);
                 right_controller.SendHapticImpulse(intensity, 1);

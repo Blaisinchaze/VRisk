@@ -30,7 +30,7 @@ public class TimelineManager : MonoBehaviour
         {
             //Prompts building manager!
             // Need to replace with values read in, as opposed to hard coding them.
-            building_manager.damageBuilding(timeline.First().first, 0.2f, 0.05f, 30, 5, 40);
+            building_manager.damageBuilding(timeline.First().first, 0.2f, 0.05f, 1, 5, 40);
 
             timeline.RemoveAt(0);
         }
