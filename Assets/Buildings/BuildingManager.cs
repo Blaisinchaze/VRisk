@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
@@ -29,7 +30,6 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] private string high_risk_tag = "Red";
     
     public Dictionary<int, Triple<RiskLevel, GameObject, BuildingData>> buildings = new Dictionary<int, Triple<RiskLevel, GameObject, BuildingData>>();
-    public bool shaking;
 
     private void Awake()
     {
@@ -58,59 +58,13 @@ public class BuildingManager : MonoBehaviour
             }
         }
     }
- 
-    private void Start()
-    {
-        // debug key for damaging a building.
-        GameManager.Instance.InputHandler.input_asset.InputActionMap.Debug.started += trigger;
-    }
-
-    // Debug - to be removed. 
-    void trigger(InputAction.CallbackContext context)
-    {
-        //damageBuilding(1, 0.2f, 0.05f, 4);
-        var building = buildings[1];
-
-        // If building is not collapsed, initiate damage transition.
-        if (building.third.state > 0)
-        {
-            building.third.transitioning = true;
-            
-            // trigger particles
-        }
-    }
 
     private void FixedUpdate()
     {
-        foreach (var building in buildings)
-        {
-            if (building.Value.third.transitioning)
-            {
-                if (building.Value.third.transition_timer < building.Value.third.transition_duration)
-                {
-                    building.Value.third.transition_timer += Time.fixedDeltaTime;
-                    continue;
-                }
-                
-                building.Value.third.transition_timer = 0;
-                building.Value.third.transitioning = false;
-                building.Value.third.state--;
 
-                building.Value.third.mesh_filter.mesh =
-                    building.Value.third.building_map.states[(int) building.Value.third.state].second;
-                building.Value.third.collider.sharedMesh = building.Value.third.building_map
-                    .states[(int) building.Value.third.state].second;
-                
-                // Temporary - Above is the code for swapping meshes and colliders, but don't have meshes yet.
-                // Below like is temp until we have meshes. 
-                //building.Value.second.gameObject.transform.Translate(0, -2, 0);
-                triggerLocalisedShake(building.Value.second, 0.2f, 0.05f, 2, 40);
-                GameManager.Instance.HapticFeedbackHandler.triggerCosIntensityHapticFeedback(1, 4);
-            }
-        }
     }
 
-    public void damageBuilding(int _building_id, float _intensity, float _shaking_reposition_interval, float _duration)
+    public void damageBuilding(int _building_id, float _intensity, float _shaking_reposition_interval, float _duration, float _impact_shake_duration, float _affect_radius)
     {
         // Grab reference to desired building. 
         var building = buildings[_building_id];
@@ -118,10 +72,7 @@ public class BuildingManager : MonoBehaviour
         // If building is not collapsed, initiate damage transition.
         if (building.third.state > 0)
         {
-            building.third.transitioning = true;
-
-            triggerGlobalShake(_intensity, _shaking_reposition_interval, _duration);
-            // trigger particles
+            StartCoroutine(collapseBuilding(building.third, _intensity, _shaking_reposition_interval, _duration, _impact_shake_duration, _affect_radius));
         }
     }
 
@@ -158,7 +109,29 @@ public class BuildingManager : MonoBehaviour
             }
         }
     }
-    
+
+    private IEnumerator collapseBuilding(BuildingData _building_data, float _intensity, float _shaking_reposition_interval, float _transition_duration, float _impact_shake_duration, float _affect_radius)
+    {
+        float elapsed = 0;
+
+        while (elapsed < _transition_duration)
+        {
+             yield return null;      
+        }
+
+        _building_data.state--;
+
+        //_building_data.mesh_filter.mesh = _building_data.building_map.states[(int) _building_data.state].second;
+        //_building_data.collider.sharedMesh = _building_data.building_map.states[(int) _building_data.state].second;
+
+        // Temporary - Above is the code for swapping meshes and colliders, but don't have meshes yet.
+        // Below like is temp until we have meshes. 
+        _building_data.gameObject.transform.Translate(0, -2, 0);
+
+        triggerLocalisedShake(_building_data.gameObject, _intensity, _shaking_reposition_interval, _impact_shake_duration, _affect_radius);
+        GameManager.Instance.HapticFeedbackHandler.triggerCosIntensityHapticFeedback(1, _transition_duration);
+    }
+
     /// <summary>
     /// Shakes a given building - this version builds in intensity and then diminishes.
     /// </summary>
@@ -177,8 +150,10 @@ public class BuildingManager : MonoBehaviour
         {
             if (reposition_timer > _shaking_reposition_interval)
             {
-                float progress = elapsed / _duration;
-                float intensity = _max_intensity * MathF.Sin(progress * Mathf.PI);
+                float progress = (elapsed / _duration);
+                float intensity = -15.5f * (float)Math.Pow(progress - 0.48f, 4) + (0.3f * progress) + 0.824f; // * (float)Math.Pow(progress - 0.5f, 4) + 1*progress;
+                Debug.Log(intensity);
+                intensity *=_max_intensity;
 
                 float x = Random.Range(-1f, 1f) * intensity + _building_data.original_position.x;
                 float y = _building.transform.position.y;

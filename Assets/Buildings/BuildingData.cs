@@ -12,9 +12,6 @@ public class BuildingData : MonoBehaviour
     public MeshBuildingStateMap building_map;
 
     public BuildingManager.BuildingState state = BuildingManager.BuildingState.NO_DAMAGE;
-    public bool transitioning = false;
-    public float transition_duration = 4;
-    public float transition_timer = 0;
     public Vector3 original_position;
 
     public MeshCollider collider;
