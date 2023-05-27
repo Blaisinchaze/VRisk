@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    [System.Serializable]
+    [Serializable]
     public enum SoundID
     {
         MENU_HOVER, 
@@ -19,7 +19,7 @@ public class AudioManager : MonoBehaviour
     }
 
     [Range(0f, 1f)]
-    public float master_volume = 1;
+    public float master_volume = 5;
 
     public List<Sound> sounds;
     public List<Pair<GameObject, AudioSource>> sources;

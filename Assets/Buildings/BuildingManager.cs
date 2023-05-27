@@ -63,7 +63,6 @@ public class BuildingManager : MonoBehaviour
     private void Start()
     {
         triggerGlobalShake(0.2f, 0.05f, 30);
-
     }
 
     public void damageBuilding(int _building_id, float _intensity, float _shaking_reposition_interval, float _duration, float _impact_shake_duration, float _affect_radius)
@@ -136,6 +135,7 @@ public class BuildingManager : MonoBehaviour
         // Temporary - Above is the code for swapping meshes and colliders, but don't have meshes yet.
         // Below like is temp until we have meshes. 
         _building_data.gameObject.transform.Translate(0, -2, 0);
+        GameManager.Instance.AudioManager.PlaySound(false, _building_data.original_position, AudioManager.SoundID.MENU_CLICK);
 
         triggerLocalisedShake(_building_data.gameObject, _intensity, _shaking_reposition_interval, _impact_shake_duration, _affect_radius);
     }
