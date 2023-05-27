@@ -18,9 +18,6 @@ public class AudioManager : MonoBehaviour
         BUILDING_COLLAPSE
     }
 
-    [Range(0f, 1f)]
-    public float master_volume = 5;
-
     public List<Sound> sounds;
     public List<Pair<GameObject, AudioSource>> sources;
     public int number_of_sources = 8;
@@ -37,18 +34,18 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlaySound(bool two_dimensional, Vector3 position, SoundID sound_id)
+    public void PlaySound(bool _two_dimensional, Vector3 _position, SoundID _sound_id)
     {
         foreach (var source in sources)
         {
             if (!source.second.isPlaying)
             {
-                source.first.transform.position = position;
-                source.second.spatialBlend = two_dimensional ? 0.0f : 1.0f;
+                source.first.transform.position = _position;
+                source.second.spatialBlend = _two_dimensional ? 0.0f : 1.0f;
 
                 foreach (var sound in sounds)
                 {
-                    if (sound.id == sound_id)
+                    if (sound.id == _sound_id)
                     {
                         source.second.clip = sound.clip;
                         source.second.volume = sound.volume;
@@ -59,6 +56,11 @@ public class AudioManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void setMasterVolume(float _volume_value)
+    {
+        AudioListener.volume = _volume_value;
     }
 }
  
