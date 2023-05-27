@@ -14,12 +14,12 @@ public class BuildingData : MonoBehaviour
     public BuildingManager.BuildingState state = BuildingManager.BuildingState.NO_DAMAGE;
     public Vector3 original_position;
 
-    public MeshCollider collider;
+    public MeshCollider building_collider;
     public MeshFilter mesh_filter;
 
     private void Awake()
     {
-        collider = GetComponent<MeshCollider>();
+        building_collider = GetComponent<MeshCollider>();
         mesh_filter = GetComponent<MeshFilter>();
         original_position = transform.position;
     }

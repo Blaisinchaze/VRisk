@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public HapticFeedbackHandler HapticFeedbackHandler { get; private set; }
     public InputHandler InputHandler { get; private set; }
 
+    public AudioManager AudioManager { get; private set; }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -22,6 +24,7 @@ public class GameManager : MonoBehaviour
         BuildingManager = GetComponentInChildren<BuildingManager>();
         HapticFeedbackHandler = GetComponentInChildren<HapticFeedbackHandler>();
         InputHandler = GetComponentInChildren<InputHandler>();
+        AudioManager = GetComponentInChildren<AudioManager>();
     }
 
     static public float earthquakeIntensityCurve(float _x)
