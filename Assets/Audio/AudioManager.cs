@@ -1,9 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine.Audio;
 using UnityEngine;
+
+public delegate float intensityControlFunction(float x);
 
 public class AudioManager : MonoBehaviour
 {
@@ -34,7 +37,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlaySound(bool _two_dimensional, Vector3 _position, SoundID _sound_id)
+    public Pair<AudioSource, Sound> PlaySound(bool _loop, bool _two_dimensional, Vector3 _position, SoundID _sound_id)
     {
         foreach (var source in sources)
         {
@@ -42,6 +45,7 @@ public class AudioManager : MonoBehaviour
             {
                 source.first.transform.position = _position;
                 source.second.spatialBlend = _two_dimensional ? 0.0f : 1.0f;
+                source.second.loop = _loop;
 
                 foreach (var sound in sounds)
                 {
@@ -51,13 +55,55 @@ public class AudioManager : MonoBehaviour
                         source.second.volume = sound.volume;
                         source.second.pitch = sound.pitch;
                         source.second.Play();
-                        return;
+                        return new Pair<AudioSource, Sound>(source.second, sound);
                     }
                 }
             }
         }
+
+        return new Pair<AudioSource, Sound>(null, null);
     }
 
+    public Pair<AudioSource, Sound> PlaySound(bool _loop, bool _two_dimensional, Vector3 _position, Transform _parent, SoundID _sound_id)
+    {
+        var source_sound_pair = PlaySound(_loop, _two_dimensional, _position, _sound_id);
+        source_sound_pair.first.transform.SetParent(_parent);
+        return source_sound_pair;
+    }
+
+    public Pair<AudioSource, Sound> PlaySound(bool _loop, bool _two_dimensional, Vector3 _position, Transform _parent, SoundID _sound_id, intensityControlFunction _volume_control, float _duration)
+    { 
+        var source_sound_pair = PlaySound(_loop, _two_dimensional, _position, _parent, _sound_id);
+        StartCoroutine(volumeControl(source_sound_pair.first, source_sound_pair.second.volume,
+            GameManager.earthquakeIntensityCurve, _duration));
+        return source_sound_pair;
+    }
+
+    private IEnumerator volumeControl(AudioSource _source, float _max_volume, intensityControlFunction _volume_control_function, float _duration)
+    {
+        float elapsed = 0.0f;
+        float vol_change_interval = 0.05f;
+        float vol_change_timer = 0.0f;
+
+        while (elapsed < _duration)
+        {
+            if (vol_change_timer > vol_change_interval)
+            {
+                float progress = (elapsed / _duration);
+                float volume = _max_volume * _volume_control_function(progress);
+                _source.volume = volume;
+
+                vol_change_timer = 0.0f;
+            }
+            
+            elapsed += Time.deltaTime;
+            vol_change_timer += Time.deltaTime;
+            yield return null;
+        }
+        
+        _source.Stop();
+    }
+    
     public void setMasterVolume(float _volume_value)
     {
         AudioListener.volume = _volume_value;

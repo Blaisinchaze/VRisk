@@ -135,7 +135,7 @@ public class BuildingManager : MonoBehaviour
         // Temporary - Above is the code for swapping meshes and colliders, but don't have meshes yet.
         // Below like is temp until we have meshes. 
         _building_data.gameObject.transform.Translate(0, -2, 0);
-        GameManager.Instance.AudioManager.PlaySound(false, _building_data.original_position, AudioManager.SoundID.MENU_CLICK);
+        GameManager.Instance.AudioManager.PlaySound(false, false, _building_data.original_position, AudioManager.SoundID.MENU_CLICK);
 
         triggerLocalisedShake(_building_data.gameObject, _intensity, _shaking_reposition_interval, _impact_shake_duration, _affect_radius);
     }
