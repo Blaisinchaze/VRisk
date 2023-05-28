@@ -64,18 +64,22 @@ public class AudioManager : MonoBehaviour
         return new Pair<AudioSource, Sound>(null, null);
     }
 
-    public Pair<AudioSource, Sound> PlaySound(bool _loop, bool _two_dimensional, Vector3 _position, Transform _parent, SoundID _sound_id)
+    public Pair<AudioSource, Sound> PlaySound(bool _loop, bool _two_dimensional, Vector3 _position, Transform _parent, bool _pos_relative_to_parent, SoundID _sound_id)
     {
         var source_sound_pair = PlaySound(_loop, _two_dimensional, _position, _sound_id);
         source_sound_pair.first.transform.SetParent(_parent);
+        if (_pos_relative_to_parent)
+        {
+            source_sound_pair.first.transform.localPosition = _position;
+        }
+
         return source_sound_pair;
     }
 
-    public Pair<AudioSource, Sound> PlaySound(bool _loop, bool _two_dimensional, Vector3 _position, Transform _parent, SoundID _sound_id, intensityControlFunction _volume_control, float _duration)
+    public Pair<AudioSource, Sound> PlaySound(bool _loop, bool _two_dimensional, Vector3 _position, Transform _parent, bool _pos_relative_to_parent, SoundID _sound_id, intensityControlFunction _volume_control, float _duration)
     { 
-        var source_sound_pair = PlaySound(_loop, _two_dimensional, _position, _parent, _sound_id);
-        StartCoroutine(volumeControl(source_sound_pair.first, source_sound_pair.second.volume,
-            GameManager.earthquakeIntensityCurve, _duration));
+        var source_sound_pair = PlaySound(_loop, _two_dimensional, _position, _parent, _pos_relative_to_parent, _sound_id);
+        StartCoroutine(volumeControl(source_sound_pair.first, source_sound_pair.second.volume, _volume_control, _duration));
         return source_sound_pair;
     }
 

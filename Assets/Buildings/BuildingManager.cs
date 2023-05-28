@@ -63,6 +63,9 @@ public class BuildingManager : MonoBehaviour
     private void Start()
     {
         triggerGlobalShake(0.2f, 0.05f, 30);
+        GameManager.Instance.AudioManager.PlaySound(true, false, Vector3.zero,
+            GameObject.FindGameObjectWithTag("MainCamera").transform, true, AudioManager.SoundID.SEISMIC_RUMBLE, 
+            GameManager.earthquakeIntensityCurve, 30);
     }
 
     public void damageBuilding(int _building_id, float _intensity, float _shaking_reposition_interval, float _duration, float _impact_shake_duration, float _affect_radius)
@@ -112,7 +115,6 @@ public class BuildingManager : MonoBehaviour
                 float distance = Vector3.Distance(_building.transform.position, collider.gameObject.transform.position);
 
                 GameManager.Instance.HapticFeedbackHandler.triggerCosIntensityHapticFeedback(1 - distance/_affect_radius, _duration);
-                Debug.Log(1 - distance/_affect_radius);
             }
         }
     }
