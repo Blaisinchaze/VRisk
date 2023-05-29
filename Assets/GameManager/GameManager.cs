@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
 
     public AudioManager AudioManager { get; private set; }
 
+    public ParticleManager ParticleManager { get; private set; }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -25,6 +27,7 @@ public class GameManager : MonoBehaviour
         HapticFeedbackHandler = GetComponentInChildren<HapticFeedbackHandler>();
         InputHandler = GetComponentInChildren<InputHandler>();
         AudioManager = GetComponentInChildren<AudioManager>();
+        ParticleManager = GetComponentInChildren<ParticleManager>();
     }
 
     static public float earthquakeIntensityCurve(float _x)
