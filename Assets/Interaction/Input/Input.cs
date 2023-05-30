@@ -80,6 +80,42 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact(Left_Hand)"",
+                    ""type"": ""Button"",
+                    ""id"": ""8dbb3863-f493-4af7-9b96-99da8e8f4315"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact(Right_Hand)"",
+                    ""type"": ""Button"",
+                    ""id"": ""07356140-ef73-4426-adae-0aef22a57434"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Touch(Left_Hand)"",
+                    ""type"": ""Button"",
+                    ""id"": ""c6deae18-875d-402d-a75c-d2be2d4171a2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Touch(Right_Hand)"",
+                    ""type"": ""Button"",
+                    ""id"": ""4d79b605-be3a-4ee2-8002-5bc83cef75e7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -280,6 +316,50 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""action"": ""Debug"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""83857e8e-2fdc-4c1c-be32-0e03691b8891"",
+                    ""path"": ""<XRController>{LeftHand}/triggerButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact(Left_Hand)"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c378046f-92be-4944-81a0-faffdac55c42"",
+                    ""path"": ""<XRController>{RightHand}/triggerButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact(Right_Hand)"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""abd17c11-bf8e-4504-9020-5e3bbf9f257c"",
+                    ""path"": ""<XRController>{LeftHand}/triggerTouched"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Touch(Left_Hand)"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""089ceac8-ec0c-400b-843a-3139a102c1dd"",
+                    ""path"": ""<XRController>{RightHand}/triggerTouched"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Touch(Right_Hand)"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -294,6 +374,10 @@ public partial class @Input : IInputActionCollection2, IDisposable
         m_InputActionMap_RotateView = m_InputActionMap.FindAction("RotateView", throwIfNotFound: true);
         m_InputActionMap_HeadMoved = m_InputActionMap.FindAction("HeadMoved", throwIfNotFound: true);
         m_InputActionMap_Debug = m_InputActionMap.FindAction("Debug", throwIfNotFound: true);
+        m_InputActionMap_InteractLeft_Hand = m_InputActionMap.FindAction("Interact(Left_Hand)", throwIfNotFound: true);
+        m_InputActionMap_InteractRight_Hand = m_InputActionMap.FindAction("Interact(Right_Hand)", throwIfNotFound: true);
+        m_InputActionMap_TouchLeft_Hand = m_InputActionMap.FindAction("Touch(Left_Hand)", throwIfNotFound: true);
+        m_InputActionMap_TouchRight_Hand = m_InputActionMap.FindAction("Touch(Right_Hand)", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -359,6 +443,10 @@ public partial class @Input : IInputActionCollection2, IDisposable
     private readonly InputAction m_InputActionMap_RotateView;
     private readonly InputAction m_InputActionMap_HeadMoved;
     private readonly InputAction m_InputActionMap_Debug;
+    private readonly InputAction m_InputActionMap_InteractLeft_Hand;
+    private readonly InputAction m_InputActionMap_InteractRight_Hand;
+    private readonly InputAction m_InputActionMap_TouchLeft_Hand;
+    private readonly InputAction m_InputActionMap_TouchRight_Hand;
     public struct InputActionMapActions
     {
         private @Input m_Wrapper;
@@ -369,6 +457,10 @@ public partial class @Input : IInputActionCollection2, IDisposable
         public InputAction @RotateView => m_Wrapper.m_InputActionMap_RotateView;
         public InputAction @HeadMoved => m_Wrapper.m_InputActionMap_HeadMoved;
         public InputAction @Debug => m_Wrapper.m_InputActionMap_Debug;
+        public InputAction @InteractLeft_Hand => m_Wrapper.m_InputActionMap_InteractLeft_Hand;
+        public InputAction @InteractRight_Hand => m_Wrapper.m_InputActionMap_InteractRight_Hand;
+        public InputAction @TouchLeft_Hand => m_Wrapper.m_InputActionMap_TouchLeft_Hand;
+        public InputAction @TouchRight_Hand => m_Wrapper.m_InputActionMap_TouchRight_Hand;
         public InputActionMap Get() { return m_Wrapper.m_InputActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -396,6 +488,18 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @Debug.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnDebug;
                 @Debug.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnDebug;
                 @Debug.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnDebug;
+                @InteractLeft_Hand.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnInteractLeft_Hand;
+                @InteractLeft_Hand.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnInteractLeft_Hand;
+                @InteractLeft_Hand.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnInteractLeft_Hand;
+                @InteractRight_Hand.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnInteractRight_Hand;
+                @InteractRight_Hand.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnInteractRight_Hand;
+                @InteractRight_Hand.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnInteractRight_Hand;
+                @TouchLeft_Hand.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchLeft_Hand;
+                @TouchLeft_Hand.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchLeft_Hand;
+                @TouchLeft_Hand.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchLeft_Hand;
+                @TouchRight_Hand.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchRight_Hand;
+                @TouchRight_Hand.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchRight_Hand;
+                @TouchRight_Hand.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchRight_Hand;
             }
             m_Wrapper.m_InputActionMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -418,6 +522,18 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @Debug.started += instance.OnDebug;
                 @Debug.performed += instance.OnDebug;
                 @Debug.canceled += instance.OnDebug;
+                @InteractLeft_Hand.started += instance.OnInteractLeft_Hand;
+                @InteractLeft_Hand.performed += instance.OnInteractLeft_Hand;
+                @InteractLeft_Hand.canceled += instance.OnInteractLeft_Hand;
+                @InteractRight_Hand.started += instance.OnInteractRight_Hand;
+                @InteractRight_Hand.performed += instance.OnInteractRight_Hand;
+                @InteractRight_Hand.canceled += instance.OnInteractRight_Hand;
+                @TouchLeft_Hand.started += instance.OnTouchLeft_Hand;
+                @TouchLeft_Hand.performed += instance.OnTouchLeft_Hand;
+                @TouchLeft_Hand.canceled += instance.OnTouchLeft_Hand;
+                @TouchRight_Hand.started += instance.OnTouchRight_Hand;
+                @TouchRight_Hand.performed += instance.OnTouchRight_Hand;
+                @TouchRight_Hand.canceled += instance.OnTouchRight_Hand;
             }
         }
     }
@@ -430,5 +546,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
         void OnRotateView(InputAction.CallbackContext context);
         void OnHeadMoved(InputAction.CallbackContext context);
         void OnDebug(InputAction.CallbackContext context);
+        void OnInteractLeft_Hand(InputAction.CallbackContext context);
+        void OnInteractRight_Hand(InputAction.CallbackContext context);
+        void OnTouchLeft_Hand(InputAction.CallbackContext context);
+        void OnTouchRight_Hand(InputAction.CallbackContext context);
     }
 }

@@ -58,6 +58,42 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Interact(Left_Hand)",
+                    "type": "Button",
+                    "id": "8dbb3863-f493-4af7-9b96-99da8e8f4315",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Interact(Right_Hand)",
+                    "type": "Button",
+                    "id": "07356140-ef73-4426-adae-0aef22a57434",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Touch(Left_Hand)",
+                    "type": "Button",
+                    "id": "c6deae18-875d-402d-a75c-d2be2d4171a2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Touch(Right_Hand)",
+                    "type": "Button",
+                    "id": "4d79b605-be3a-4ee2-8002-5bc83cef75e7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -256,6 +292,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "Debug",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "83857e8e-2fdc-4c1c-be32-0e03691b8891",
+                    "path": "<XRController>{LeftHand}/triggerButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact(Left_Hand)",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c378046f-92be-4944-81a0-faffdac55c42",
+                    "path": "<XRController>{RightHand}/triggerButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact(Right_Hand)",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "abd17c11-bf8e-4504-9020-5e3bbf9f257c",
+                    "path": "<XRController>{LeftHand}/triggerTouched",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Touch(Left_Hand)",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "089ceac8-ec0c-400b-843a-3139a102c1dd",
+                    "path": "<XRController>{RightHand}/triggerTouched",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Touch(Right_Hand)",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
