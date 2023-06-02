@@ -7329,7 +7329,6 @@ MonoBehaviour:
   sounds:
   - {fileID: 11400000, guid: 87881bfe3a820f246868b8cc4ba5c35f, type: 2}
   - {fileID: 11400000, guid: dbf4cc791061a84489ead2a9677b9e97, type: 2}
-  - {fileID: 11400000, guid: 3e5065ce3eb2a2a4ea2d0ea6553d2a63, type: 2}
   sources: []
   number_of_sources: 8
 --- !u!43 &931482538
