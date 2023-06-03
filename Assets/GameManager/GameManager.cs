@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
+    public int seed = 0;
     public static GameManager Instance { get; private set; }
     public BuildingManager BuildingManager { get; private set; }
     public HapticFeedbackHandler HapticFeedbackHandler { get; private set; }
@@ -28,6 +30,8 @@ public class GameManager : MonoBehaviour
         InputHandler = GetComponentInChildren<InputHandler>();
         AudioManager = GetComponentInChildren<AudioManager>();
         ParticleManager = GetComponentInChildren<ParticleManager>();
+
+        Random.InitState(seed);
     }
 
     static public float earthquakeIntensityCurve(float _x)

@@ -16,7 +16,7 @@ public class AudioManager : MonoBehaviour
         MENU_HOVER, 
         MENU_CLICK,
         SEISMIC_RUMBLE, 
-        DEBRIS,
+        DEBRIS_COLLISION,
         BUILDING_DAMAGE, 
         BUILDING_COLLAPSE
     }
