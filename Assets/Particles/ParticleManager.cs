@@ -26,6 +26,8 @@ public class ParticleManager : MonoBehaviour
     public Dictionary<ParticleID, List<ParticleEmitter>> particle_emitters;
     public List<Pair<ParticleEffect, int>> number_of_pooled_effects;
 
+    private ParticleSystem test;
+
     private void Awake()
     {
         particle_emitters = new Dictionary<ParticleID, List<ParticleEmitter>>();
@@ -73,6 +75,11 @@ public class ParticleManager : MonoBehaviour
 
                 emitter.parent.transform.position = _location;
                 emitter.parent.transform.rotation = Quaternion.Euler(_rotation);
+                
+                StartCoroutine(delayedDeactivation(emitter));
+
+                //
+                test = emitter.particle_systems[0];
                 return;
             }
             
@@ -106,6 +113,8 @@ public class ParticleManager : MonoBehaviour
                     emitter.parent.transform.rotation = Quaternion.Euler(_rotation);
                 }
 
+                StartCoroutine(delayedDeactivation(emitter));
+
                 return;
             }
         }
@@ -113,25 +122,21 @@ public class ParticleManager : MonoBehaviour
         Debug.Log("No available " + _id + " particle available in the pool - consider increasing the pool");
     }
 
-    public void Update()
+    IEnumerator delayedDeactivation(ParticleEmitter _emitter)
     {
-        foreach (var set in particle_emitters)
+        yield return new WaitUntil(() => hasEffectStopped(_emitter));
+        _emitter.parent.SetActive(false);
+    }
+
+    private bool hasEffectStopped(ParticleEmitter _emitter)
+    {
+        foreach (var system in _emitter.particle_systems)
         {
-            foreach (var emitter in set.Value)
+            if (system.isPlaying)
             {
-                if (emitter.parent.activeSelf)
-                {
-                    foreach (var system in emitter.particle_systems)
-                    {
-                        if (system.isPlaying)
-                        {
-                            break;
-                        }
-                        
-                        emitter.parent.SetActive(false);
-                    }
-                }
+                return false;
             }
         }
+        return true;
     }
 }
