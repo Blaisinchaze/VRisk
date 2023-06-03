@@ -2,15 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
+    public int seed = 0;
     public static GameManager Instance { get; private set; }
     public BuildingManager BuildingManager { get; private set; }
     public HapticFeedbackHandler HapticFeedbackHandler { get; private set; }
     public InputHandler InputHandler { get; private set; }
 
     public AudioManager AudioManager { get; private set; }
+
+    public ParticleManager ParticleManager { get; private set; }
 
     private void Awake()
     {
@@ -25,6 +29,9 @@ public class GameManager : MonoBehaviour
         HapticFeedbackHandler = GetComponentInChildren<HapticFeedbackHandler>();
         InputHandler = GetComponentInChildren<InputHandler>();
         AudioManager = GetComponentInChildren<AudioManager>();
+        ParticleManager = GetComponentInChildren<ParticleManager>();
+
+        Random.InitState(seed);
     }
 
     static public float earthquakeIntensityCurve(float _x)
