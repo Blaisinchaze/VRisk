@@ -14281,9 +14281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26b08f6c5be724b4799dad3b3f75bb8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  number_of_pooled_effects:
-  - first: {fileID: 11400000, guid: a9318fc6eb846d54e8fbd18a349ee686, type: 2}
-    second: 8
+  effect_map: {fileID: 11400000, guid: a9318fc6eb846d54e8fbd18a349ee686, type: 2}
 --- !u!43 &1987718072
 Mesh:
   m_ObjectHideFlags: 0

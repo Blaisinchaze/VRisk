@@ -10,7 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5deea7b78df88248932eac848a8be86, type: 3}
-  m_Name: ImpactParticleEffect
+  m_Name: ParticleEffectMap
   m_EditorClassIdentifier: 
-  id: 0
-  prefab: {fileID: 5323185050319439508, guid: 8a6fbba201af2ea4c98ece24ed93f8a7, type: 3}
+  elements:
+  - id: 0
+    prefab: {fileID: 5323185050319439508, guid: 8a6fbba201af2ea4c98ece24ed93f8a7,
+      type: 3}
+    count: 8

@@ -24,27 +24,25 @@ public class ParticleManager : MonoBehaviour
     }
     
     public Dictionary<ParticleID, List<ParticleEmitter>> particle_emitters;
-    public List<Pair<ParticleEffect, int>> number_of_pooled_effects;
-
-    private ParticleSystem test;
+    public ParticleEffectMap effect_map;
 
     private void Awake()
     {
         particle_emitters = new Dictionary<ParticleID, List<ParticleEmitter>>();
         
-        foreach (var set in number_of_pooled_effects)
+        foreach (var effect_set in effect_map.elements)
         {
-            for (int i = 0; i < set.second; i++)
+            for (int i = 0; i < effect_set.count; i++)
             {
-                var particle_object = Instantiate(set.first.prefab, transform, true);
+                var particle_object = Instantiate(effect_set.prefab, transform, true);
                 List<ParticleSystem> particle_systems =  new List<ParticleSystem>(particle_object.GetComponentsInChildren<ParticleSystem>());
 
-                if (!particle_emitters.ContainsKey(set.first.id))
+                if (!particle_emitters.ContainsKey(effect_set.id))
                 {
-                    particle_emitters.Add(set.first.id, new List<ParticleEmitter>());
+                    particle_emitters.Add(effect_set.id, new List<ParticleEmitter>());
                 }
                 
-                particle_emitters[set.first.id].Add(new ParticleEmitter(particle_object, particle_systems));
+                particle_emitters[effect_set.id].Add(new ParticleEmitter(particle_object, particle_systems));
             }
         }
     }
@@ -58,36 +56,31 @@ public class ParticleManager : MonoBehaviour
     {
         triggerEffect(ParticleID.DEBRIS_IMPACT, new Vector3(-26.4012032f,10.7600002f,-49.6206245f), new Vector3(0,0,0));
     }
-
-    public void triggerEffect(ParticleID _id, Vector3 _location, Vector3 _rotation)
+    
+    private void activateEffect(ParticleEmitter emitter, Vector3 location, Vector3 rotation, Transform parent = null, bool relativeToParent = false)
     {
-        if (!particle_emitters.ContainsKey(_id))
+        emitter.parent.SetActive(true);
+    
+        if (parent != null)
         {
-            Debug.Log("ParticleEmitters dictionary does not contain key " + _id);
-            return;
+            emitter.parent.transform.SetParent(parent);
         }
 
-        foreach (var emitter in particle_emitters[_id])
+        if (relativeToParent && parent != null)
         {
-            if (!emitter.parent.activeSelf)
-            {
-                emitter.parent.SetActive(true);
-
-                emitter.parent.transform.position = _location;
-                emitter.parent.transform.rotation = Quaternion.Euler(_rotation);
-                
-                StartCoroutine(delayedDeactivation(emitter));
-
-                //
-                test = emitter.particle_systems[0];
-                return;
-            }
-            
-            Debug.Log("No available " + _id + " particle available in the pool - consider increasing the pool");
+            emitter.parent.transform.localPosition = location;
+            emitter.parent.transform.localRotation = Quaternion.Euler(rotation);
         }
+        else
+        {
+            emitter.parent.transform.position = location;
+            emitter.parent.transform.rotation = Quaternion.Euler(rotation);
+        }
+
+        StartCoroutine(delayedDeactivation(emitter));
     }
 
-    public void triggerEffect(ParticleID _id, Vector3 _location, Vector3 _rotation, Transform _parent, bool _relative_to_parent)
+    public void triggerEffect(ParticleID _id, Vector3 _location, Vector3 _rotation, Transform _parent = null, bool _relative_to_parent = false)
     {
         if (!particle_emitters.ContainsKey(_id))
         {
@@ -100,7 +93,11 @@ public class ParticleManager : MonoBehaviour
             if (!emitter.parent.activeSelf)
             {
                 emitter.parent.SetActive(true);
-                emitter.parent.transform.SetParent(_parent);
+                
+                if (_parent != null)
+                {
+                    emitter.parent.transform.SetParent(_parent);
+                }
 
                 if (_relative_to_parent)
                 {
