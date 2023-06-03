@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ParticleManager : MonoBehaviour
 {
@@ -41,6 +43,94 @@ public class ParticleManager : MonoBehaviour
                 }
                 
                 particle_emitters[set.first.id].Add(new ParticleEmitter(particle_object, particle_systems));
+            }
+        }
+    }
+
+    private void Start()
+    {
+        GameManager.Instance.InputHandler.input_asset.InputActionMap.Debug.started += Test;
+    }
+
+    private void Test(InputAction.CallbackContext _context)
+    {
+        triggerEffect(ParticleID.DEBRIS_IMPACT, new Vector3(-26.4012032f,10.7600002f,-49.6206245f), new Vector3(0,0,0));
+    }
+
+    public void triggerEffect(ParticleID _id, Vector3 _location, Vector3 _rotation)
+    {
+        if (!particle_emitters.ContainsKey(_id))
+        {
+            Debug.Log("ParticleEmitters dictionary does not contain key " + _id);
+            return;
+        }
+
+        foreach (var emitter in particle_emitters[_id])
+        {
+            if (!emitter.parent.activeSelf)
+            {
+                emitter.parent.SetActive(true);
+
+                emitter.parent.transform.position = _location;
+                emitter.parent.transform.rotation = Quaternion.Euler(_rotation);
+                return;
+            }
+            
+            Debug.Log("No available " + _id + " particle available in the pool - consider increasing the pool");
+        }
+    }
+
+    public void triggerEffect(ParticleID _id, Vector3 _location, Vector3 _rotation, Transform _parent, bool _relative_to_parent)
+    {
+        if (!particle_emitters.ContainsKey(_id))
+        {
+            Debug.Log("ParticleEmitters dictionary does not contain key " + _id);
+            return;
+        }
+
+        foreach (var emitter in particle_emitters[_id])
+        {
+            if (!emitter.parent.activeSelf)
+            {
+                emitter.parent.SetActive(true);
+                emitter.parent.transform.SetParent(_parent);
+
+                if (_relative_to_parent)
+                {
+                    emitter.parent.transform.localPosition = _location;
+                    emitter.parent.transform.localRotation = Quaternion.Euler(_rotation);
+                }
+                else
+                {
+                    emitter.parent.transform.position = _location;
+                    emitter.parent.transform.rotation = Quaternion.Euler(_rotation);
+                }
+
+                return;
+            }
+        }
+        
+        Debug.Log("No available " + _id + " particle available in the pool - consider increasing the pool");
+    }
+
+    public void Update()
+    {
+        foreach (var set in particle_emitters)
+        {
+            foreach (var emitter in set.Value)
+            {
+                if (emitter.parent.activeSelf)
+                {
+                    foreach (var system in emitter.particle_systems)
+                    {
+                        if (system.isPlaying)
+                        {
+                            break;
+                        }
+                        
+                        emitter.parent.SetActive(false);
+                    }
+                }
             }
         }
     }

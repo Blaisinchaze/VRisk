@@ -2849,7 +2849,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &322595381
 Mesh:
@@ -13918,7 +13918,7 @@ GameObject:
   - component: {fileID: 1908456638}
   - component: {fileID: 1908456642}
   m_Layer: 0
-  m_Name: Ball
+  m_Name: GameManagerBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13998,9 +13998,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1929960735}
-  m_RootOrder: -1
+  m_Children:
+  - {fileID: 1929960735}
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1908456642
 MonoBehaviour:
@@ -14209,7 +14210,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1929960734}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14220,9 +14221,8 @@ Transform:
   - {fileID: 1861535354}
   - {fileID: 919420094}
   - {fileID: 1971010058}
-  - {fileID: 1908456641}
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_Father: {fileID: 1908456641}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1929960736
 MonoBehaviour:
@@ -17651,7 +17651,7 @@ PrefabInstance:
     - target: {fileID: 4812789149508068982, guid: 8eaa911eb86ca8e4a8d4664d02b2524f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4812789149508068982, guid: 8eaa911eb86ca8e4a8d4664d02b2524f,
         type: 3}
