@@ -56,29 +56,6 @@ public class ParticleManager : MonoBehaviour
     {
         triggerEffect(ParticleID.DEBRIS_IMPACT, new Vector3(-26.4012032f,10.7600002f,-49.6206245f), new Vector3(0,0,0));
     }
-    
-    private void activateEffect(ParticleEmitter emitter, Vector3 location, Vector3 rotation, Transform parent = null, bool relativeToParent = false)
-    {
-        emitter.parent.SetActive(true);
-    
-        if (parent != null)
-        {
-            emitter.parent.transform.SetParent(parent);
-        }
-
-        if (relativeToParent && parent != null)
-        {
-            emitter.parent.transform.localPosition = location;
-            emitter.parent.transform.localRotation = Quaternion.Euler(rotation);
-        }
-        else
-        {
-            emitter.parent.transform.position = location;
-            emitter.parent.transform.rotation = Quaternion.Euler(rotation);
-        }
-
-        StartCoroutine(delayedDeactivation(emitter));
-    }
 
     public void triggerEffect(ParticleID _id, Vector3 _location, Vector3 _rotation, Transform _parent = null, bool _relative_to_parent = false)
     {
