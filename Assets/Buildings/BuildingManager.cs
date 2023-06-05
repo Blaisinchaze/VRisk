@@ -50,7 +50,7 @@ public class BuildingManager : MonoBehaviour
             if (building_data != null)
             {
                 // Add building to list of buildings. 
-                // Add instead of directly assigning to avoid overriting if IDs are wrong - will throw error. 
+                // Add instead of directly assigning to avoid overwriting if IDs are wrong - will throw error. 
                 buildings.Add(building_data.id,
                     new Triple<RiskLevel, GameObject, BuildingData>(_risk, game_object, building_data));
             }
