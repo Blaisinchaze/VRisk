@@ -17,9 +17,16 @@ public class DebrisHandler : MonoBehaviour
     }
 
     public Pair<DebrisType, GameObject> debris_prefabs;
+    public ParticleSystem test;
 
     public void createDebris(DebrisType _type, int _building_id)
     {
+        if (!GameManager.Instance.BuildingManager.buildings.ContainsKey(_building_id))
+        {
+            var building = GameManager.Instance.BuildingManager.buildings[_building_id];
+            
+        }
+        
         /*
          * Notes:
          * need to selected building by id.
