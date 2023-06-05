@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Unity.Profiling.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
-using Random = System.Random;
-
 namespace Editor
 {
     public struct Triangle
@@ -41,7 +38,8 @@ namespace Editor
 
         public float spawnPointInterval = 1f;
         public Vector3 forceDirection = Vector3.forward;
-        public float forceMagnitude = 10f;
+
+        public DebrisTimeline timeline_to_populate;
 
         [MenuItem("Window/Debris Spawn Point Generator")]
         public static void ShowWindow()
@@ -53,7 +51,7 @@ namespace Editor
         {
             GUILayout.Label("Generate Debris Spawn Points", EditorStyles.boldLabel);
             
-            EditorGUILayout.Space(40);
+            EditorGUILayout.Space(20);
             
             safe_risk_tag = EditorGUILayout.TextField("Safe Risk Tag: ", safe_risk_tag);
             low_risk_tag = EditorGUILayout.TextField("Low Risk Tag: ", low_risk_tag);
@@ -78,17 +76,28 @@ namespace Editor
             
             spawnPointInterval = EditorGUILayout.FloatField("Spawn Point Interval", spawnPointInterval);
             forceDirection = EditorGUILayout.Vector3Field("Force Direction", forceDirection);
-            forceMagnitude = EditorGUILayout.FloatField("Force Magnitude", forceMagnitude);
             
-            EditorGUILayout.Space(40);
-
+            EditorGUILayout.Space(20);
+            
+            timeline_to_populate = EditorGUILayout.ObjectField("Timeline to Populate", timeline_to_populate, typeof(DebrisTimeline), true) as DebrisTimeline;
+            
+            EditorGUILayout.Space(20);
             if (GUILayout.Button("Generate Spawn Points"))
             {
                 generateSpawnPoints();
             }
+            if (GUILayout.Button("Wipe Timeline"))
+            {
+                wipeTimeline();
+            }
         }
 
-        void generateSpawnPoints()
+        public void wipeTimeline()
+        {
+            timeline_to_populate.timeline.Clear();
+        }
+
+        public void generateSpawnPoints()
         {
             Dictionary<BuildingManager.RiskLevel, GameObject[]> risk_buildings_sets = new Dictionary<BuildingManager.RiskLevel, GameObject[]>();
 
@@ -125,6 +134,7 @@ namespace Editor
                             throw new ArgumentOutOfRangeException();
                     }
 
+                    // get triangles - return if there is none
                     List<Triangle> triangles = getTriangles(building);
                     if (triangles.Count == 0) return;
 
@@ -142,6 +152,7 @@ namespace Editor
                         GameObject spawnPoint = new GameObject("Debris Spawn Point");
                         spawnPoint.transform.position = spawn_point_position;
                         spawnPoint.transform.rotation = spawn_point_rotation;
+                        timeline_to_populate.timeline.Add(new Pair<float, TimelineDebrisTrigger>(10, new TimelineDebrisTrigger(spawn_point_position, new Vector3(0,0,0), DebrisHandler.DebrisType.BRICK)));
                     }
                 }
             }
