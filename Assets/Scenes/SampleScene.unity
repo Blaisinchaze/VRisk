@@ -10903,8 +10903,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris_prefabs:
     first: 0
-    second: {fileID: 0}
-  test: {fileID: 0}
+    second: {fileID: 116248, guid: 2444c7dd66e0d4d4e9b54c9a4ef85de2, type: 3}
 --- !u!43 &1491371047
 Mesh:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ public class DebrisHandler : MonoBehaviour
     public enum DebrisType
     {
         BRICK,
+        COUNT
     }
 
     public enum Direction
@@ -17,7 +18,6 @@ public class DebrisHandler : MonoBehaviour
     }
 
     public Pair<DebrisType, GameObject> debris_prefabs;
-    public ParticleSystem test;
 
     public void createDebris(DebrisType _type, int _building_id)
     {

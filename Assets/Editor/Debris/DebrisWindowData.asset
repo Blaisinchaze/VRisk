@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26fc66f224e6cd544ab30ae32c4ea459, type: 3}
+  m_Name: DebrisWindowData
+  m_EditorClassIdentifier: 
+  safe_risk_tag: Black
+  low_risk_tag: Beige
+  mid_risk_tag: Yellow
+  high_risk_tag: Red
+  safe_risk_debris_max: 0
+  low_risk_debris_max: 0
+  mid_risk_debris_max: 0
+  high_risk_debris_max: 0
+  safe_risk_debris_min: 0
+  low_risk_debris_min: 0
+  mid_risk_debris_min: 0
+  high_risk_debris_min: 0
+  direction_range_around_normal_y: 0
+  direction_range_around_normal_x: 0
+  timeline: {fileID: 0}
+  generate_debug_game_objects: 0
+  debris_normals: []
+  object_direction_map: []
+  debug_prefab: {fileID: 0}
