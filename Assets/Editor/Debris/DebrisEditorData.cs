@@ -29,4 +29,5 @@ public class DebrisEditorData : ScriptableObject
     public List<Pair<GameObject, Vector3>> object_direction_map;
 
     public GameObject debug_prefab;
+    public GameObject debug_parent_prefab;
 }

@@ -1,14 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
 using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.VersionControl;
-using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.ProBuilder;
-using Random = System.Random;
 
 namespace Editor
 {
@@ -54,6 +48,7 @@ namespace Editor
         private static List<Pair<GameObject, Vector3>> object_direction_map;
 
         private static GameObject debug_prefab;
+        private static GameObject debug_parent_prefab;
         private static GameObject debug_objects_parent;
 
         [MenuItem("Window/Debris Spawn Point Generator")]
@@ -95,6 +90,8 @@ namespace Editor
             object_direction_map = data.object_direction_map;
 
             debug_prefab = data.debug_prefab;
+            debug_parent_prefab = data.debug_parent_prefab;
+            debug_objects_parent = GameObject.FindGameObjectWithTag("DebrisDebugParent");
         }
 
         private void OnDisable()
@@ -123,6 +120,7 @@ namespace Editor
             data.object_direction_map = object_direction_map;
 
             data.debug_prefab = debug_prefab;
+            data.debug_parent_prefab = debug_parent_prefab;
         }
 
         void OnGUI()
@@ -158,7 +156,8 @@ namespace Editor
             EditorGUILayout.Space(20);
             
             timeline = EditorGUILayout.ObjectField("Debris Timeline", timeline, typeof(DebrisTimeline), true) as DebrisTimeline;
-            debug_prefab = EditorGUILayout.ObjectField("Debug Prefab", debug_prefab, typeof(GameObject)) as GameObject;
+            debug_prefab = EditorGUILayout.ObjectField("Debug Prefab", debug_prefab, typeof(GameObject), true) as GameObject;
+            debug_parent_prefab = EditorGUILayout.ObjectField("Debug Parent Prefab", debug_parent_prefab, typeof(GameObject), true) as GameObject;
             generate_debug_game_objects = EditorGUILayout.Toggle("Generate Debug Objects", generate_debug_game_objects);
             
             EditorGUILayout.Space(20);
@@ -187,19 +186,17 @@ namespace Editor
         {
             for (int i = 0; i < timeline.timeline.Count; i++)
             {
-                float x_rotation = UnityEngine.Random.Range(0, direction_range_around_normal_x * 2) -
-                                   debris_normals[i].x;
-                float y_rotation = UnityEngine.Random.Range(0, direction_range_around_normal_y * 2) -
-                                   debris_normals[i].y;
+                float x_rotation = UnityEngine.Random.Range(0, direction_range_around_normal_x * 2) - debris_normals[i].x;
+                float y_rotation = UnityEngine.Random.Range(0, direction_range_around_normal_y * 2) - debris_normals[i].y;
                 float z_rotation = debris_normals[i].z;
                 
                 Vector3 direction = new Vector3(x_rotation, y_rotation, z_rotation);
 
                 timeline.timeline[i].second.direction = direction;
 
-                if (object_direction_map.Count > 0)
+                if (!object_direction_map.IsUnityNull() && object_direction_map.Count > 0)
                 {
-                    object_direction_map[i].second = direction;
+                    object_direction_map[i].first.GetComponent<DebugPrefabScript>().direction = direction;
                 }
             }
         }
@@ -218,9 +215,12 @@ namespace Editor
             timeline.timeline.Clear();
             debris_normals.Clear();
             object_direction_map.Clear();
-            
-            DestroyImmediate(debug_objects_parent);
-            debug_objects_parent = null;
+
+            if (!debug_objects_parent.IsUnityNull())
+            {
+                DestroyImmediate(debug_objects_parent);
+                debug_objects_parent = null;
+            }
         }
 
         private void generateSpawnPoints()
@@ -278,7 +278,7 @@ namespace Editor
                         {
                             if (debug_objects_parent.IsUnityNull())
                             {
-                                debug_objects_parent = new GameObject("Debris Debug Visuals");
+                                debug_objects_parent = Instantiate(debug_parent_prefab);
                             }
                             
                             GameObject spawn_point;
