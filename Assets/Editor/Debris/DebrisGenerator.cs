@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -38,14 +37,19 @@ namespace Editor
         private static int low_risk_debris_min;
         private static int mid_risk_debris_min;
         private static int high_risk_debris_min;
-
-        private static float direction_range_around_normal_y;
-        private static float direction_range_around_normal_x;
+        
+        private static float direction_range_around_normal;
 
         private static DebrisTimeline timeline;
         private static bool generate_debug_game_objects = false;
         private static List<Vector3> debris_normals;
-        private static List<Pair<GameObject, Vector3>> object_direction_map;
+        private static List<GameObject> object_direction_map;
+
+        private static float max_force;
+        private static float min_force;
+
+        private static float debris_timeline_start;
+        private static float debris_timeline_end;
 
         private static GameObject debug_prefab;
         private static GameObject debug_parent_prefab;
@@ -80,9 +84,14 @@ namespace Editor
             low_risk_debris_min = data.low_risk_debris_min;
             mid_risk_debris_min = data.mid_risk_debris_min;
             high_risk_debris_min = data.high_risk_debris_min;
+            
+            direction_range_around_normal = data.direction_range_around_normal;
 
-            direction_range_around_normal_y = data.direction_range_around_normal_y;
-            direction_range_around_normal_x = data.direction_range_around_normal_x;
+            max_force = data.max_force;
+            min_force = data.min_force;
+
+            debris_timeline_start = data.debris_timeline_start;
+            debris_timeline_end = data.debris_timeline_end;
 
             timeline = data.timeline;
             generate_debug_game_objects = data.generate_debug_game_objects;
@@ -111,8 +120,13 @@ namespace Editor
             data.mid_risk_debris_min = mid_risk_debris_min;
             data.high_risk_debris_min = high_risk_debris_min;
 
-            data.direction_range_around_normal_y = direction_range_around_normal_y;
-            data.direction_range_around_normal_x = direction_range_around_normal_x;
+            data.direction_range_around_normal = direction_range_around_normal;
+
+            data.max_force = max_force;
+            data.min_force = min_force;
+
+            data.debris_timeline_start = debris_timeline_start;
+            data.debris_timeline_end = debris_timeline_end;
 
             data.timeline = timeline;
             data.generate_debug_game_objects = generate_debug_game_objects;
@@ -150,16 +164,26 @@ namespace Editor
 
             EditorGUILayout.Space(20);
 
-            direction_range_around_normal_y = EditorGUILayout.FloatField("Direction Range Around Normal Y", direction_range_around_normal_y);
-            direction_range_around_normal_x = EditorGUILayout.FloatField("Direction Range Around Normal X", direction_range_around_normal_x);
+            max_force = EditorGUILayout.FloatField("Max Force", max_force);
+            min_force = EditorGUILayout.FloatField("Min Force", min_force);
             
             EditorGUILayout.Space(20);
+
+            direction_range_around_normal = EditorGUILayout.FloatField("Direction Range Around Normal", direction_range_around_normal);
             
+            EditorGUILayout.Space(20);
+
+            debris_timeline_start = EditorGUILayout.FloatField("Timeline Start", debris_timeline_start);
+            debris_timeline_end = EditorGUILayout.FloatField("Timeline End", debris_timeline_end);
+            
+
+            EditorGUILayout.Space(20);
+
             timeline = EditorGUILayout.ObjectField("Debris Timeline", timeline, typeof(DebrisTimeline), true) as DebrisTimeline;
             debug_prefab = EditorGUILayout.ObjectField("Debug Prefab", debug_prefab, typeof(GameObject), true) as GameObject;
             debug_parent_prefab = EditorGUILayout.ObjectField("Debug Parent Prefab", debug_parent_prefab, typeof(GameObject), true) as GameObject;
             generate_debug_game_objects = EditorGUILayout.Toggle("Generate Debug Objects", generate_debug_game_objects);
-            
+
             EditorGUILayout.Space(20);
             if (GUILayout.Button("Generate Spawn Points"))
             {
@@ -169,6 +193,16 @@ namespace Editor
             if (GUILayout.Button("Generate Directions"))
             {
                 generateDirections();
+            }
+
+            if (GUILayout.Button("Generate Timeline Trigger Points"))
+            {
+                generateTimelinePoints();
+            }
+
+            if (GUILayout.Button("Generate Forces"))
+            {
+                generateForces();
             }
 
             if (GUILayout.Button("Generate Debris Types"))
@@ -182,21 +216,45 @@ namespace Editor
             }
         }
 
+        private void generateForces()
+        {
+            foreach (var element in timeline.timeline)
+            {
+                element.second.force = Random.Range(min_force, max_force);
+            }
+        }
+
+        private void generateTimelinePoints()
+        {
+            foreach (var element in timeline.timeline)
+            {
+                element.first = Random.Range(debris_timeline_start, debris_timeline_end);
+            }
+        }
+
         private void generateDirections()
         {
             for (int i = 0; i < timeline.timeline.Count; i++)
             {
-                float x_rotation = UnityEngine.Random.Range(0, direction_range_around_normal_x * 2) - debris_normals[i].x;
-                float y_rotation = UnityEngine.Random.Range(0, direction_range_around_normal_y * 2) - debris_normals[i].y;
-                float z_rotation = debris_normals[i].z;
-                
-                Vector3 direction = new Vector3(x_rotation, y_rotation, z_rotation);
+                Vector3 normal = debris_normals[i];
+
+                // create a random axis perpendicular to the normal
+                Vector3 axis = Vector3.Cross(normal, Random.onUnitSphere);
+
+                // generate a random angle within the specified range
+                float angle = Random.Range(-direction_range_around_normal, direction_range_around_normal);
+
+                // generate a quaternion representing a rotation around the axis by the angle
+                Quaternion rotation = Quaternion.AngleAxis(angle, axis);
+
+                // apply the rotation to the normal to get a direction vector
+                Vector3 direction = rotation * normal;
 
                 timeline.timeline[i].second.direction = direction;
 
                 if (!object_direction_map.IsUnityNull() && object_direction_map.Count > 0)
                 {
-                    object_direction_map[i].first.GetComponent<DebugPrefabScript>().direction = direction;
+                    object_direction_map[i].GetComponent<DebugPrefabScript>().direction = direction;
                 }
             }
         }
@@ -257,7 +315,7 @@ namespace Editor
                             break;
                         
                         default:
-                            throw new ArgumentOutOfRangeException();
+                            throw new System.ArgumentOutOfRangeException();
                     }
 
                     // get triangles - return if there is none
@@ -289,7 +347,7 @@ namespace Editor
                             else
                             {
                                 spawn_point = Instantiate(debug_prefab);
-                                object_direction_map.Add(new Pair<GameObject, Vector3>(spawn_point, Vector3.zero));
+                                object_direction_map.Add(spawn_point);
                             }
                             
                             spawn_point.transform.SetParent(debug_objects_parent.transform);
