@@ -43,7 +43,7 @@ namespace Editor
         private static DebrisTimeline timeline;
         private static bool generate_debug_game_objects = false;
         private static List<Vector3> debris_normals;
-        private static List<GameObject> object_direction_map;
+        private static List<GameObject> debug_objects;
 
         private static float max_force;
         private static float min_force;
@@ -96,7 +96,7 @@ namespace Editor
             timeline = data.timeline;
             generate_debug_game_objects = data.generate_debug_game_objects;
             debris_normals = data.debris_normals;
-            object_direction_map = data.object_direction_map;
+            debug_objects = data.debug_objects;
 
             debug_prefab = data.debug_prefab;
             debug_parent_prefab = data.debug_parent_prefab;
@@ -131,7 +131,7 @@ namespace Editor
             data.timeline = timeline;
             data.generate_debug_game_objects = generate_debug_game_objects;
             data.debris_normals = debris_normals;
-            data.object_direction_map = object_direction_map;
+            data.debug_objects = debug_objects;
 
             data.debug_prefab = debug_prefab;
             data.debug_parent_prefab = debug_parent_prefab;
@@ -250,11 +250,13 @@ namespace Editor
                 // apply the rotation to the normal to get a direction vector
                 Vector3 direction = rotation * normal;
 
+                direction = direction.normalized;
+
                 timeline.timeline[i].second.direction = direction;
 
-                if (!object_direction_map.IsUnityNull() && object_direction_map.Count > 0)
+                if (!debug_objects.IsUnityNull() && debug_objects.Count > 0)
                 {
-                    object_direction_map[i].GetComponent<DebugPrefabScript>().direction = direction;
+                    debug_objects[i].GetComponent<DebugPrefabScript>().direction = direction;
                 }
             }
         }
@@ -272,7 +274,7 @@ namespace Editor
         {
             timeline.timeline.Clear();
             debris_normals.Clear();
-            object_direction_map.Clear();
+            debug_objects.Clear();
 
             if (!debug_objects_parent.IsUnityNull())
             {
@@ -347,7 +349,7 @@ namespace Editor
                             else
                             {
                                 spawn_point = Instantiate(debug_prefab);
-                                object_direction_map.Add(spawn_point);
+                                debug_objects.Add(spawn_point);
                             }
                             
                             spawn_point.transform.SetParent(debug_objects_parent.transform);

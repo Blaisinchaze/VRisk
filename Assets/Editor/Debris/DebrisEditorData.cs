@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "ScriptableObjects", menuName = "ScriptableObjects/DebrisEditorData")]
 public class DebrisEditorData : ScriptableObject
@@ -31,7 +32,7 @@ public class DebrisEditorData : ScriptableObject
     public DebrisTimeline timeline;
     public bool generate_debug_game_objects = false;
     public List<Vector3> debris_normals;
-    public List<GameObject> object_direction_map;
+    [FormerlySerializedAs("object_direction_map")] public List<GameObject> debug_objects;
 
     public GameObject debug_prefab;
     public GameObject debug_parent_prefab;

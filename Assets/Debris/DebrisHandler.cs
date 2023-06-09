@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DebrisHandler : MonoBehaviour
@@ -9,41 +10,32 @@ public class DebrisHandler : MonoBehaviour
         COUNT
     }
 
-    public enum Direction
+    public List<Triple<DebrisType, GameObject, int>> debris_prefabs;
+
+    private void Awake()
     {
-        FORWARD,
-        BACKWARD, 
-        LEFT, 
-        RIGHT
+        foreach (var triple in debris_prefabs)
+        {
+            //triple.
+        }
     }
 
-    public Pair<DebrisType, GameObject> debris_prefabs;
-
-    public void createDebris(DebrisType _type, int _building_id)
+    public void triggerDebris(DebrisTimelineElement _debris_data)
     {
-        if (!GameManager.Instance.BuildingManager.buildings.ContainsKey(_building_id))
+        GameObject prefab = null;
+        foreach (var element in debris_prefabs)
         {
-            var building = GameManager.Instance.BuildingManager.buildings[_building_id];
-            
+            if (element.first == _debris_data.type)
+            {
+                prefab = element.second;
+                break;
+            }
         }
-        
-        /*
-         * Notes:
-         * need to selected building by id.
-         * select the wall by local forward (or other)
-         * and eject debris at a point within that wall
-         * determined by an x and y percentage cross wall.
-         * 
-         * Need to randomly generate the data determining
-         * which building, which wall, at what location,
-         * at what time and store it within a scriptable object?
-         *
-         * tie into timeline manager?
-         *
-         * Yes can use a scriptable object,
-         * can also create a custom EditorWindow for populating it.
-         * Can randomise debris amounts and locations.
-         * amounts dependent on risk type.
-         */
+
+        if (prefab == null) return;
+
+        GameObject debris_object = Instantiate(prefab);
+        debris_object.transform.position = _debris_data.spawn_point;
+        debris_object.GetComponent<Rigidbody>().AddForce(_debris_data.direction * _debris_data.force, ForceMode.Impulse);
     }
 }
