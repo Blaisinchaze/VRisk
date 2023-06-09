@@ -5,6 +5,7 @@ using UnityEngine;
 public class FadeScreen : MonoBehaviour
 {
     public bool fade_on_start = true;
+    public bool clear_on_start = false;
     public float fade_duration = 2;
     public Color fade_color;
     private Renderer rend;
@@ -13,6 +14,14 @@ public class FadeScreen : MonoBehaviour
     void Start()
     {
         rend = GetComponent<Renderer>();
+        
+        if(clear_on_start) 
+        {
+            Color new_color = fade_color;
+            new_color.a = 0;
+            rend.material.SetColor("_Color", new_color);
+        }
+        
         if(fade_on_start) FadeIn();
     }
 

@@ -6,11 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class TransitionManager : MonoBehaviour
 {
-    public enum scenes : int
-    {
-        
-    }
-
     public FadeScreen fade_screen;
 
     public void GoToScene(int scene_index)
