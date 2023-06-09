@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 public class BuildingManager : MonoBehaviour
@@ -29,7 +26,7 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] private string mid_risk_tag = "Yellow";
     [SerializeField] private string high_risk_tag = "Red";
     
-    public Dictionary<int, Triple<RiskLevel, GameObject, BuildingData>> buildings = new Dictionary<int, Triple<RiskLevel, GameObject, BuildingData>>();
+    private Dictionary<int, Triple<RiskLevel, GameObject, BuildingData>> buildings = new Dictionary<int, Triple<RiskLevel, GameObject, BuildingData>>();
 
     private void Awake()
     {
@@ -53,7 +50,7 @@ public class BuildingManager : MonoBehaviour
             if (building_data != null)
             {
                 // Add building to list of buildings. 
-                // Add instead of directly assigning to avoid overriting if IDs are wrong - will throw error. 
+                // Add instead of directly assigning to avoid overwriting if IDs are wrong - will throw error. 
                 buildings.Add(building_data.id,
                     new Triple<RiskLevel, GameObject, BuildingData>(_risk, game_object, building_data));
             }
@@ -141,8 +138,10 @@ public class BuildingManager : MonoBehaviour
         _building_data.gameObject.transform.Translate(0, -2, 0);
         
         
-        // Temporary - change audio sound when appropriate audio file asset is included. 
-        GameManager.Instance.AudioManager.PlaySound(false, false, _building_data.original_position, AudioManager.SoundID.MENU_CLICK);
+        AudioManager.SoundID sound_id = _building_data.state == BuildingState.COLLAPSED
+            ? AudioManager.SoundID.BUILDING_COLLAPSE
+            : AudioManager.SoundID.BUILDING_DAMAGE;
+        GameManager.Instance.AudioManager.PlaySound(false, false, _building_data.original_position, sound_id);
 
         triggerLocalisedShake(_building_data.gameObject, _intensity, _shaking_reposition_interval, _impact_shake_duration, _affect_radius);
     }
@@ -225,5 +224,15 @@ public class BuildingManager : MonoBehaviour
         // bring back to original position after shaking
         _building.transform.position = new Vector3(_building_data.original_position.x, _building.transform.position.y,
             _building_data.original_position.z);
+    }
+
+    public Triple<RiskLevel, GameObject, BuildingData> getBuilding(int _id)
+    {
+        if (buildings.ContainsKey(_id))
+        {
+            return buildings[_id];
+        }
+
+        return null;
     }
 }

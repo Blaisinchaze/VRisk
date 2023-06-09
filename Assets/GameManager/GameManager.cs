@@ -11,10 +11,9 @@ public class GameManager : MonoBehaviour
     public BuildingManager BuildingManager { get; private set; }
     public HapticFeedbackHandler HapticFeedbackHandler { get; private set; }
     public InputHandler InputHandler { get; private set; }
-
     public AudioManager AudioManager { get; private set; }
-
     public ParticleManager ParticleManager { get; private set; }
+    public DebrisHandler DebrisHandler { get; private set; }
 
     private void Awake()
     {
@@ -30,6 +29,7 @@ public class GameManager : MonoBehaviour
         InputHandler = GetComponentInChildren<InputHandler>();
         AudioManager = GetComponentInChildren<AudioManager>();
         ParticleManager = GetComponentInChildren<ParticleManager>();
+        DebrisHandler = GetComponentInChildren<DebrisHandler>();
 
         Random.InitState(seed);
     }
