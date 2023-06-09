@@ -15078,7 +15078,9 @@ MonoBehaviour:
   debris_prefabs:
   - first: 0
     second: {fileID: 983966362090421041, guid: ecd0453341318dd4c9ecd8ffa8964fa7, type: 3}
-    third: 10
+    third: 90
+  debris_lifetime: 6
+  debris_min_scale: {x: 0, y: 0, z: 0}
 --- !u!1 &1456663666
 GameObject:
   m_ObjectHideFlags: 0

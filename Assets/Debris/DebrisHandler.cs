@@ -13,6 +13,9 @@ public class DebrisHandler : MonoBehaviour
     public List<Triple<DebrisType, GameObject, int>> debris_prefabs;
     private Dictionary<DebrisType, List<Pair<GameObject, DebrisScript>>> debris_pool;
 
+    public float debris_lifetime = 0;
+    public Vector3 debris_min_scale;
+
     private void Awake()
     {
         debris_pool = new Dictionary<DebrisType, List<Pair<GameObject, DebrisScript>>>();
