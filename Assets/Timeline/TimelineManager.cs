@@ -45,8 +45,7 @@ public class TimelineManager : MonoBehaviour
     private void updateDebrisTimeline()
     {
         if (debris_timeline == null || debris_timeline_index >= debris_timeline.timeline.Count  || debris_timeline.timeline.Count < debris_timeline_index ) return;
-        
-        Debug.Log(debris_timeline_index);
+
         if (debris_timeline.timeline[debris_timeline_index].first < timer)
         {
             GameManager.Instance.DebrisHandler.triggerDebris(debris_timeline.timeline[debris_timeline_index].second);
