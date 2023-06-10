@@ -7,6 +7,11 @@ public class DebrisHandler : MonoBehaviour
     public enum DebrisType
     {
         BRICK,
+        CONCRETE_SLAB,
+        CONCRETE_CHUNK,
+        BRICKWORK_CHUNK,
+        CINDER_BLOCK,
+        
         COUNT
     }
 
