@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Rigidbody))]
 public class MovementController : MonoBehaviour
@@ -51,17 +47,29 @@ public class MovementController : MonoBehaviour
 
     public void movePlayer(Vector2 input_vect)
     {
+        // Convert the input 2D vector into a 3D vector for world space movement.
         Vector3 world_move = new Vector3(input_vect.x, 0, input_vect.y);
+        
+        // Rotate the movement vector to be relative to the camera's orientation.
         Vector3 rotated_vector = cam.transform.TransformDirection(world_move);
         
+        // If the player is moving up or down (based on camera's view), 
+        // we adjust the horizontal movement to compensate and keep the movement planar.
         float temp = rotated_vector.magnitude - rotated_vector.y;
         rotated_vector.x += (rotated_vector.x / temp) * rotated_vector.y;
         rotated_vector.z += (rotated_vector.z / temp) * rotated_vector.y;
         rotated_vector.y = 0;
 
-        float speed = input_vect.magnitude <= min_run_input_mag ? walk_speed : run_speed;
-        Vector3 direction = rotated_vector.normalized * speed;
+        // Normalize the input vector if its magnitude is greater than 1.
+        // This ensures the direction of movement is kept without boosting speed.
+        input_vect = input_vect.magnitude > 1 ? input_vect.normalized : input_vect;
         
+        
+        Debug.Log(input_vect.magnitude <= min_run_input_mag ? walk_speed : run_speed);
+        // Set the movement speed based on the magnitude of the input.
+        float speed = input_vect.magnitude <= min_run_input_mag ? walk_speed : run_speed;
+
+        Vector3 direction = rotated_vector * speed;
         Vector3 new_pos = rig_rb.position + direction;
         rig_rb.MovePosition(new_pos);
     }
