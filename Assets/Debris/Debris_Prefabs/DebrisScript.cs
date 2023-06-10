@@ -14,10 +14,15 @@ public class DebrisScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        ContactPoint contact = other.GetContact(0);
+        
+        if (contact.otherCollider.CompareTag("Controller") ||
+            contact.otherCollider.CompareTag("Player")) return;
+        
         Quaternion rotation = Quaternion.LookRotation(other.contacts[0].normal);
         
-        GameManager.Instance.ParticleManager.triggerEffect(ParticleManager.ParticleID.DEBRIS_IMPACT, other.contacts[0].point, rotation.eulerAngles);
-        GameManager.Instance.AudioManager.PlaySound(false, false, other.contacts[0].point, AudioManager.SoundID.DEBRIS_COLLISION);
+        GameManager.Instance.ParticleManager.triggerEffect(ParticleManager.ParticleID.DEBRIS_IMPACT, contact.point, rotation.eulerAngles);
+        GameManager.Instance.AudioManager.PlaySound(false, false, contact.point, AudioManager.SoundID.DEBRIS_COLLISION);
     }
 
     private void FixedUpdate()

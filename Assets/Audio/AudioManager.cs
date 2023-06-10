@@ -57,6 +57,8 @@ public class AudioManager : MonoBehaviour
                 }
             }
         }
+        
+        Debug.Log("No available AudioSources in the pool - consider increasing the pool");
 
         return new Pair<AudioSource, Sound>(null, null);
     }
