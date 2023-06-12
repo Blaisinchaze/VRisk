@@ -15,7 +15,9 @@ public class AudioManager : MonoBehaviour
         SEISMIC_RUMBLE, 
         DEBRIS_COLLISION,
         BUILDING_DAMAGE, 
-        BUILDING_COLLAPSE
+        BUILDING_COLLAPSE,
+        WALKING,
+        RUNNING
     }
 
     public List<Sound> sounds;

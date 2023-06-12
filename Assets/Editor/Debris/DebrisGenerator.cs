@@ -1,4 +1,6 @@
+/*
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -37,12 +39,15 @@ namespace Editor
         private static int low_risk_debris_min;
         private static int mid_risk_debris_min;
         private static int high_risk_debris_min;
+
+        private static int points_per_mesh;
         
         private static float direction_range_around_normal;
 
         private static DebrisTimeline timeline;
+        private static SpawnPointsMap mesh_spawn_points_map;
         private static bool generate_debug_game_objects = false;
-        private static List<Vector3> debris_normals;
+        private static Dictionary<BuildingManager.BuildingState, List<Vector3>> debris_normals;
         private static List<GameObject> debug_objects;
 
         private static float max_force;
@@ -84,6 +89,8 @@ namespace Editor
             low_risk_debris_min = data.low_risk_debris_min;
             mid_risk_debris_min = data.mid_risk_debris_min;
             high_risk_debris_min = data.high_risk_debris_min;
+
+            points_per_mesh = data.points_per_mesh;
             
             direction_range_around_normal = data.direction_range_around_normal;
 
@@ -94,7 +101,9 @@ namespace Editor
             debris_timeline_end = data.debris_timeline_end;
 
             timeline = data.timeline;
+            mesh_spawn_points_map = data.mesh_spawn_points_map;
             generate_debug_game_objects = data.generate_debug_game_objects;
+            debris_normals = new Dictionary<BuildingManager.BuildingState, List<Vector3>>();
             debris_normals = data.debris_normals;
             debug_objects = data.debug_objects;
 
@@ -120,6 +129,8 @@ namespace Editor
             data.mid_risk_debris_min = mid_risk_debris_min;
             data.high_risk_debris_min = high_risk_debris_min;
 
+            data.points_per_mesh = points_per_mesh;
+            
             data.direction_range_around_normal = direction_range_around_normal;
 
             data.max_force = max_force;
@@ -129,6 +140,7 @@ namespace Editor
             data.debris_timeline_end = debris_timeline_end;
 
             data.timeline = timeline;
+            data.mesh_spawn_points_map = mesh_spawn_points_map;
             data.generate_debug_game_objects = generate_debug_game_objects;
             data.debris_normals = debris_normals;
             data.debug_objects = debug_objects;
@@ -161,7 +173,11 @@ namespace Editor
             low_risk_debris_min = EditorGUILayout.IntField("Low Risk Debris Min", low_risk_debris_min);
             mid_risk_debris_min = EditorGUILayout.IntField("Mid Risk Debris Min", mid_risk_debris_min);
             high_risk_debris_min = EditorGUILayout.IntField("High Risk Debris Min", high_risk_debris_min);
+            
+            EditorGUILayout.Space(10);
 
+            points_per_mesh = EditorGUILayout.IntField("Point Options Per Mesh", points_per_mesh);
+            
             EditorGUILayout.Space(20);
 
             max_force = EditorGUILayout.FloatField("Max Force", max_force);
@@ -180,6 +196,7 @@ namespace Editor
             EditorGUILayout.Space(20);
 
             timeline = EditorGUILayout.ObjectField("Debris Timeline", timeline, typeof(DebrisTimeline), true) as DebrisTimeline;
+            mesh_spawn_points_map = EditorGUILayout.ObjectField("Mesh|Spawnpoint Map", mesh_spawn_points_map, typeof(SpawnPointsMap), true) as SpawnPointsMap;
             debug_prefab = EditorGUILayout.ObjectField("Debug Prefab", debug_prefab, typeof(GameObject), true) as GameObject;
             debug_parent_prefab = EditorGUILayout.ObjectField("Debug Parent Prefab", debug_parent_prefab, typeof(GameObject), true) as GameObject;
             generate_debug_game_objects = EditorGUILayout.Toggle("Generate Debug Objects", generate_debug_game_objects);
@@ -226,37 +243,76 @@ namespace Editor
 
         private void generateTimelinePoints()
         {
-            foreach (var element in timeline.timeline)
-            {
-                element.first = Random.Range(debris_timeline_start, debris_timeline_end);
-            }
+            Dictionary<BuildingManager.RiskLevel, GameObject[]> risk_buildings_sets = new Dictionary<BuildingManager.RiskLevel, GameObject[]>();
+
+           risk_buildings_sets.Add(BuildingManager.RiskLevel.SAFE, GameObject.FindGameObjectsWithTag(safe_risk_tag)); 
+           risk_buildings_sets.Add(BuildingManager.RiskLevel.LOW, GameObject.FindGameObjectsWithTag(low_risk_tag)); 
+           risk_buildings_sets.Add(BuildingManager.RiskLevel.MID, GameObject.FindGameObjectsWithTag(mid_risk_tag)); 
+           risk_buildings_sets.Add(BuildingManager.RiskLevel.HIGH, GameObject.FindGameObjectsWithTag(high_risk_tag));
+
+           foreach (var set in risk_buildings_sets)
+           {
+               foreach (var building in set.Value)
+               {
+                   int debris_spawns_count = 0;
+                   
+                   switch (set.Key)
+                   {
+                       case BuildingManager.RiskLevel.SAFE:
+                           debris_spawns_count = Random.Range(safe_risk_debris_min, safe_risk_debris_max);
+                           break;
+                       
+                       case BuildingManager.RiskLevel.LOW:
+                           debris_spawns_count = Random.Range(low_risk_debris_min, low_risk_debris_max);
+                           break;
+                       
+                       case BuildingManager.RiskLevel.MID:
+                           debris_spawns_count = Random.Range(mid_risk_debris_min, mid_risk_debris_max);
+                           break;
+                       
+                       case BuildingManager.RiskLevel.HIGH:
+                           debris_spawns_count = Random.Range(high_risk_debris_min, high_risk_debris_max);
+                           break;
+                       
+                       default:
+                           throw new System.ArgumentOutOfRangeException();
+                   }
+
+                   for (int i = 0; i < debris_spawns_count; i++)
+                   {
+                       float timepoint = Random.Range(debris_timeline_start, debris_timeline_end);
+                       int building_id = building.GetComponent<BuildingData>().id;
+                       int debris_index = Random.Range(0, points_per_mesh);
+                   
+                       timeline.timeline.Add(new Pair<float, DebrisTimelineElement>(timepoint, new DebrisTimelineElement(building_id, debris_index, 0.0f, DebrisHandler.DebrisType.BRICK)));
+                   }
+               }
+           }
         }
 
         private void generateDirections()
         {
-            for (int i = 0; i < timeline.timeline.Count; i++)
+            foreach (var set in mesh_spawn_points_map.map)
             {
-                Vector3 normal = debris_normals[i];
-
-                // create a random axis perpendicular to the normal
-                Vector3 axis = Vector3.Cross(normal, Random.onUnitSphere);
-
-                // generate a random angle within the specified range
-                float angle = Random.Range(-direction_range_around_normal, direction_range_around_normal);
-
-                // generate a quaternion representing a rotation around the axis by the angle
-                Quaternion rotation = Quaternion.AngleAxis(angle, axis);
-
-                // apply the rotation to the normal to get a direction vector
-                Vector3 direction = rotation * normal;
-
-                direction = direction.normalized;
-
-                timeline.timeline[i].second.direction = direction;
-
-                if (!debug_objects.IsUnityNull() && debug_objects.Count > 0)
+                for (int i = 0; i < mesh_spawn_points_map.map.Count; i++)
                 {
-                    debug_objects[i].GetComponent<DebugPrefabScript>().direction = direction;
+                    Vector3 normal = debris_normals[set.first][i];
+
+                    // create a random axis perpendicular to the normal
+                    Vector3 axis = Vector3.Cross(normal, Random.onUnitSphere);
+
+                    // generate a random angle within the specified range
+                    float angle = Random.Range(-direction_range_around_normal, direction_range_around_normal);
+
+                    // generate a quaternion representing a rotation around the axis by the angle
+                    Quaternion rotation = Quaternion.AngleAxis(angle, axis);
+
+                    // apply the rotation to the normal to get a direction vector
+                    Vector3 direction = rotation * normal;
+
+                    direction = direction.normalized;
+
+                    set.third[i].direction = direction;
                 }
             }
         }
@@ -265,7 +321,7 @@ namespace Editor
         {
             for (int i = 0; i < timeline.timeline.Count; i++)
             {
-                int index = UnityEngine.Random.Range(0, (int) DebrisHandler.DebrisType.COUNT);
+                int index = Random.Range(0, (int) DebrisHandler.DebrisType.COUNT);
                 timeline.timeline[i].second.type = (DebrisHandler.DebrisType) index;
             }
         }
@@ -273,115 +329,62 @@ namespace Editor
         private void wipeTimeline()
         {
             timeline.timeline.Clear();
+            mesh_spawn_points_map.map.Clear();
             debris_normals.Clear();
-            debug_objects.Clear();
+
+            /*debug_objects.Clear();
 
             if (!debug_objects_parent.IsUnityNull())
             {
                 DestroyImmediate(debug_objects_parent);
                 debug_objects_parent = null;
-            }
+            }#1#
         }
 
         private void generateSpawnPoints()
         {
-            Dictionary<BuildingManager.RiskLevel, GameObject[]> risk_buildings_sets = new Dictionary<BuildingManager.RiskLevel, GameObject[]>();
-
-            risk_buildings_sets.Add(BuildingManager.RiskLevel.SAFE, GameObject.FindGameObjectsWithTag(safe_risk_tag)); 
-            risk_buildings_sets.Add(BuildingManager.RiskLevel.LOW, GameObject.FindGameObjectsWithTag(low_risk_tag)); 
-            risk_buildings_sets.Add(BuildingManager.RiskLevel.MID, GameObject.FindGameObjectsWithTag(mid_risk_tag)); 
-            risk_buildings_sets.Add(BuildingManager.RiskLevel.HIGH, GameObject.FindGameObjectsWithTag(high_risk_tag));
-
-            foreach (var set in risk_buildings_sets)
+            foreach (var state_mesh_pair in mesh_spawn_points_map.map)
             {
-                foreach (var building in set.Value)
+                List<spawnPointData> mesh_spawns = new List<spawnPointData>();
+                List<Vector3> normals = new List<Vector3>();
+
+                // get triangles - return if there is none
+                List<Pair<Triangle, Vector3>> triangles = getTriangles(state_mesh_pair.second);
+                if (triangles.Count == 0) return;
+
+                for (int i = 0; i < points_per_mesh; ++i)
                 {
-                    int debris_spawns_count = 0;
-                    
-                    switch (set.Key)
-                    {
-                        case BuildingManager.RiskLevel.SAFE:
-                            debris_spawns_count = UnityEngine.Random.Range(safe_risk_debris_min, safe_risk_debris_max);
-                            break;
-                        
-                        case BuildingManager.RiskLevel.LOW:
-                            debris_spawns_count = UnityEngine.Random.Range(low_risk_debris_min, low_risk_debris_max);
-                            break;
-                        
-                        case BuildingManager.RiskLevel.MID:
-                            debris_spawns_count = UnityEngine.Random.Range(mid_risk_debris_min, mid_risk_debris_max);
-                            break;
-                        
-                        case BuildingManager.RiskLevel.HIGH:
-                            debris_spawns_count = UnityEngine.Random.Range(high_risk_debris_min, high_risk_debris_max);
-                            break;
-                        
-                        default:
-                            throw new System.ArgumentOutOfRangeException();
-                    }
+                    int index = Random.Range(0, triangles.Count);
+                    Pair<Triangle, Vector3> triangle_and_normal = triangles[index];
 
-                    // get triangles - return if there is none
-                    List<Pair<Triangle, Vector3>> triangles = getTriangles(building);
-                    if (triangles.Count == 0) return;
+                    // generate a random point inside the triangle
+                    Vector3 point_in_triangle = randomPointInTriangle(triangle_and_normal.first.v1,
+                        triangle_and_normal.first.v2, triangle_and_normal.first.v3);
 
-                    for (int i = 0; i < debris_spawns_count; ++i)
-                    {
-                        int index = UnityEngine.Random.Range(0, triangles.Count);
-                        Pair<Triangle, Vector3> triangle_and_normal = triangles[index];
-                        
-                        // generate a random point inside the triangle
-                        Vector3 point_in_triangle = randomPointInTriangle(triangle_and_normal.first.v1, triangle_and_normal.first.v2, triangle_and_normal.first.v3);
-                        Vector3 spawn_point_position = building.transform.TransformPoint(point_in_triangle);
-
-                        // instantiate a game object at the spawn point
-                        if (generate_debug_game_objects)
-                        {
-                            if (debug_objects_parent.IsUnityNull())
-                            {
-                                debug_objects_parent = Instantiate(debug_parent_prefab);
-                            }
-                            
-                            GameObject spawn_point;
-                            if (debug_prefab.IsUnityNull())
-                            {
-                                spawn_point = new GameObject("Debris Spawn Point");
-                            }
-                            else
-                            {
-                                spawn_point = Instantiate(debug_prefab);
-                                debug_objects.Add(spawn_point);
-                            }
-                            
-                            spawn_point.transform.SetParent(debug_objects_parent.transform);
-                            spawn_point.transform.position = spawn_point_position;
-                        }
-
-                        debris_normals.Add(triangle_and_normal.second);
-                        timeline.timeline.Add(new Pair<float, DebrisTimelineElement>(10, new DebrisTimelineElement(spawn_point_position, new Vector3(0,0,0), 0, DebrisHandler.DebrisType.BRICK)));
-                    }
+                    normals.Add(triangle_and_normal.second);
+                    //mesh_spawns.Add(new spawnPointData(point_in_triangle, Vector3.zero));
                 }
+                
+                debris_normals.Add(state_mesh_pair.first, normals);
+                state_mesh_pair.third.AddRange(mesh_spawns);
             }
         }
 
-        private List<Pair<Triangle, Vector3>> getTriangles(GameObject _building)
+        private List<Pair<Triangle, Vector3>> getTriangles(Mesh _mesh)
         {
-            MeshFilter mesh_filter = _building.GetComponent<MeshFilter>();
-            if (mesh_filter.IsUnityNull()) return null;
-                    
-            Mesh mesh = mesh_filter.sharedMesh;
             List<Pair<Triangle, Vector3>> triangles = new List<Pair<Triangle, Vector3>>();
             
-            for (int x = 0; x < mesh.triangles.Length; x += 3)
+            for (int x = 0; x < _mesh.triangles.Length; x += 3)
             {
                 // get the vertices of the triangle
-                Vector3 v1 = mesh.vertices[mesh.triangles[x]];
-                Vector3 v2 = mesh.vertices[mesh.triangles[x + 1]];
-                Vector3 v3 = mesh.vertices[mesh.triangles[x + 2]];
+                Vector3 v1 = _mesh.vertices[_mesh.triangles[x]];
+                Vector3 v2 = _mesh.vertices[_mesh.triangles[x + 1]];
+                Vector3 v3 = _mesh.vertices[_mesh.triangles[x + 2]];
 
                 Triangle triangle = new Triangle(v1, v2, v3);
                 
                 // continue if triangle's normal matches the y axis
-                Vector3 normal = getNormal(triangle, _building);
+                Vector3 normal = getNormal(triangle);
                 if (isYAxisFacing(normal)) continue;
                 
                 triangles.Add(new Pair<Triangle, Vector3>(triangle, normal));
@@ -390,16 +393,13 @@ namespace Editor
             return triangles;
         }
 
-        private Vector3 getNormal(Triangle _triangle, GameObject _building)
+        private Vector3 getNormal(Triangle _triangle)
         {
             // calculate the triangle's normal
             Vector3 edge_1 = _triangle.v2 - _triangle.v1;
             Vector3 edge_2 = _triangle.v3 - _triangle.v1;
             Vector3 normal = Vector3.Cross(edge_1, edge_2).normalized;
-            
-            // transform the normal to world space
-            normal = _building.transform.TransformDirection(normal);
-            
+
             return normal;
         }
 
@@ -433,4 +433,5 @@ namespace Editor
         }
     }
 }
+*/
 

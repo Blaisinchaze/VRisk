@@ -14,11 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   states:
   - first: 0
-    second: {fileID: 5083779560280695074, guid: e48d18018a0ba46c283d9fd9c227e578,
-      type: 3}
-  - first: 1
-    second: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  - first: 2
-    second: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
-  - first: 3
-    second: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+    second: 0
+    third: {fileID: 4300000, guid: 8b4a2ad410d6b1741a92d0fa31d04a0e, type: 2}
+  - first: 0
+    second: 1
+    third: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  - first: 0
+    second: 2
+    third: {fileID: 4300000, guid: bef881eb8b602c940b40bf3749e38cd1, type: 2}
+  - first: 0
+    second: 3
+    third: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}

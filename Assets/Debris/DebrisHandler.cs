@@ -55,8 +55,8 @@ public class DebrisHandler : MonoBehaviour
             if (!debris.first.activeSelf)
             {
                 debris.first.SetActive(true);
-                debris.first.transform.position = _debris_data.spawn_point;
-                debris.first.GetComponent<Rigidbody>().AddForce(_debris_data.direction * _debris_data.force, ForceMode.Impulse);
+                /*debris.first.transform.position = _debris_data.spawn_point;
+                debris.first.GetComponent<Rigidbody>().AddForce(_debris_data.direction * _debris_data.force, ForceMode.Impulse);*/
                 return;
             }
         }

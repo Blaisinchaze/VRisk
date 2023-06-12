@@ -20,8 +20,13 @@ public class DebrisEditorData : ScriptableObject
     public int low_risk_debris_min;
     public int mid_risk_debris_min;
     public int high_risk_debris_min;
-    
-    public float direction_range_around_normal;
+
+    public int points_per_mesh;
+
+    public float direction_max_horizontal_rotation;
+    public float direction_min_horizontal_rotation;
+    public float direction_max_vertical_rotation;
+    public float direction_min_vertical_rotation;
     
     public float max_force;
     public float min_force;
@@ -30,10 +35,9 @@ public class DebrisEditorData : ScriptableObject
     public float debris_timeline_end;
 
     public DebrisTimeline timeline;
-    public bool generate_debug_game_objects = false;
-    public List<Vector3> debris_normals;
-    [FormerlySerializedAs("object_direction_map")] public List<GameObject> debug_objects;
-
+    public SpawnPointsMap mesh_spawn_points_map;
+    public List<MeshBuildingStateMap> building_maps;
+    
     public GameObject debug_prefab;
     public GameObject debug_parent_prefab;
 }

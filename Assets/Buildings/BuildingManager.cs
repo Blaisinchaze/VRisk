@@ -21,6 +21,11 @@ public class BuildingManager : MonoBehaviour
         NO_DAMAGE,
     }
 
+    public enum BuildingType
+    {
+        BASIC_SET
+    }
+
     [SerializeField] private string safe_risk_tag = "Black";
     [SerializeField] private string low_risk_tag = "Beige";
     [SerializeField] private string mid_risk_tag = "Yellow";

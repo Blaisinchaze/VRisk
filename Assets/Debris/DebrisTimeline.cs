@@ -12,25 +12,16 @@ public class DebrisTimeline : ScriptableObject
 [System.Serializable]
 public class DebrisTimelineElement
 {
-    public DebrisTimelineElement(Vector3 _spawn_point, Vector3 _direction, float _force, DebrisHandler.DebrisType _type)
+    public DebrisTimelineElement(int _building_id, int _debris_index, float _force, DebrisHandler.DebrisType _type)
     {
-        spawn_point = _spawn_point;
-        direction = _direction;
+        building_id = _building_id;
         type = _type;
         force = _force;
+        debris_index = _debris_index;
     }
     
-    
-    
-    public Vector3 spawn_point;
-    public Vector3 direction;
+    public int building_id;
     public float force;
     public DebrisHandler.DebrisType type;
+    public int debris_index;
 }
-
-
-/*
- * Add editor warning if size of normals differs from size of debris.
- * Add direction from normal to timeline data.
- * 
-*/
