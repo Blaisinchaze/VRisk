@@ -6,15 +6,17 @@ using UnityEngine;
 public class ShineMovement : MonoBehaviour
 {
     public bool shining = true;
-    public float shine_speed;
-    public float leap = 100;
-    public float shine_duration = 1.0f;
-    private float shine_timer = 0;
+    public bool repeat_shine = true;
     
+    [SerializeField] private float shine_speed;
+    [SerializeField] private float leap = 100;
+    [SerializeField] private float shine_duration = 1.0f;
+    
+    private RectTransform rect_transform;
     private Vector2 initial_pos;
     private Vector2 final_pos;
-
-    private RectTransform rect_transform;
+    
+    private float shine_timer = 0;
 
     void Awake()
     {
@@ -26,8 +28,7 @@ public class ShineMovement : MonoBehaviour
         initial_pos = rect_transform.anchoredPosition;
         final_pos = new Vector2(initial_pos.x + leap, initial_pos.y);
     }
-
-    // Update is called once per frame
+    
     void FixedUpdate()
     {
         if (!shining) return;
@@ -36,8 +37,12 @@ public class ShineMovement : MonoBehaviour
         if (shine_timer > shine_duration)
         {
             rect_transform.anchoredPosition = initial_pos;
-            shining = false;
             shine_timer = 0;
+
+            if (!repeat_shine && shining)
+            { 
+                shining = false;
+            }
         }
 
         if (rect_transform.anchoredPosition != final_pos)

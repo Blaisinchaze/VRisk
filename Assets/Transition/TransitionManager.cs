@@ -7,25 +7,16 @@ using UnityEngine.SceneManagement;
 public class TransitionManager : MonoBehaviour
 {
     public FadeScreen fade_screen;
+    public bool transitioning = false;
 
     public void GoToScene(int scene_index)
-    {
-        StartCoroutine(GoToSceneRoutine(scene_index));
-    }
-
-    IEnumerator GoToSceneRoutine(int scene_index)
-    {
-        fade_screen.FadeOut();
-        yield return new WaitForSeconds(fade_screen.fade_duration);
-    }
-    
-    public void GoToSceneAsync(int scene_index)
     {
         StartCoroutine(GoToSceneAsyncRoutine(scene_index));
     }
 
     IEnumerator GoToSceneAsyncRoutine(int scene_index)
     {
+        transitioning = true;
         fade_screen.FadeOut();
 
         AsyncOperation operation = SceneManager.LoadSceneAsync(scene_index);
@@ -39,5 +30,6 @@ public class TransitionManager : MonoBehaviour
         }
 
         operation.allowSceneActivation = true;
+        transitioning = false;
     }
 }

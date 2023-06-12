@@ -10,6 +10,6 @@ public class MenuRoutines : MonoBehaviour
     public void StartButton()
     {
         data.NextScene = 0;
-        transition_manager.GoToSceneAsync(1);
+        transition_manager.GoToScene(1);
     }
 }

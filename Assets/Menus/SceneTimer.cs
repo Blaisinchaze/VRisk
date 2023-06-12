@@ -1,24 +1,26 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class SceneTimer : MonoBehaviour
 {
-    public TransitionManager transition_manager;
+    public TransitionManager trans_manager;
     public GameData data;
-    private float timer = 0;
-
+    
+    //In seconds
+    [SerializeField] private float hold_time = 3.0f;
+    private float timer = 0.0f;
+    
     private void FixedUpdate()
     {
+        if (trans_manager.transitioning) return;
+            
         timer += Time.fixedDeltaTime;
 
-        if (timer > 3.0f)
+        if (timer > hold_time)
         {
-            transition_manager.GoToSceneAsync(data.NextScene);
-            Debug.Log(data.NextScene);
+            trans_manager.GoToScene(data.NextScene);
             timer = 0;
         }
     }
