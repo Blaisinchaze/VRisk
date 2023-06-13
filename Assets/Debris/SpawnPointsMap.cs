@@ -5,13 +5,13 @@ using UnityEngine;
 [System.Serializable]
 public class SpawnPointsMap : ScriptableObject
 {
-    public List<Triple<BuildingManager.BuildingType, BuildingManager.BuildingState, List<spawnPointData>>> map;
+    public Dictionary<BuildingManager.BuildingType, Dictionary<BuildingManager.BuildingState, List<SpawnPointData>>> map;
 }
 
 [System.Serializable]
-public class spawnPointData
+public class SpawnPointData
 {
-    public spawnPointData(Vector3 _spawn_point, Vector3 _direction, Vector3 _normal)
+    public SpawnPointData(Vector3 _spawn_point, Vector3 _direction, Vector3 _normal)
     {
         spawn_point = _spawn_point;
         direction = _direction;

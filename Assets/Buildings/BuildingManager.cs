@@ -12,7 +12,7 @@ public class BuildingManager : MonoBehaviour
         MID = 2,
         HIGH = 3
     }
-
+    
     public enum BuildingState
     {
         COLLAPSED,

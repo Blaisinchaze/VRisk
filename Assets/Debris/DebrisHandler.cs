@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DebrisHandler : MonoBehaviour
@@ -20,6 +21,8 @@ public class DebrisHandler : MonoBehaviour
 
     public float debris_lifetime = 0;
     public Vector3 debris_min_scale;
+
+    public SpawnPointsMap spawn_point_mesh_map;
 
     private void Awake()
     {
@@ -54,9 +57,18 @@ public class DebrisHandler : MonoBehaviour
         {
             if (!debris.first.activeSelf)
             {
+                var building = GameManager.Instance.BuildingManager.getBuilding(_debris_data.building_id);
+                var spawn_point_data = spawn_point_mesh_map.map[building.third.type][building.third.state][_debris_data.debris_index];
+
+                if (spawn_point_data.IsUnityNull()) return;
+                
+                Vector3 point = building.second.transform.TransformPoint(spawn_point_data.spawn_point);
+                Vector3 direction = building.second.transform.TransformDirection(spawn_point_data.direction);
+                
                 debris.first.SetActive(true);
-                /*debris.first.transform.position = _debris_data.spawn_point;
-                debris.first.GetComponent<Rigidbody>().AddForce(_debris_data.direction * _debris_data.force, ForceMode.Impulse);*/
+                debris.first.transform.position = point;
+                debris.first.GetComponent<Rigidbody>().AddForce(direction * _debris_data.force, ForceMode.Impulse);
+                
                 return;
             }
         }

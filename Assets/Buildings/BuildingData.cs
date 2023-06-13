@@ -6,11 +6,11 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 public class BuildingData : MonoBehaviour
-{ 
-    
+{
     public int id;
     public MeshBuildingStateMap building_map;
 
+    public BuildingManager.BuildingType type = BuildingManager.BuildingType.BASIC_SET;
     public BuildingManager.BuildingState state = BuildingManager.BuildingState.NO_DAMAGE;
     public Vector3 original_position;
 

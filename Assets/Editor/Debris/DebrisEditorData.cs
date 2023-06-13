@@ -40,4 +40,6 @@ public class DebrisEditorData : ScriptableObject
     
     public GameObject debug_prefab;
     public GameObject debug_parent_prefab;
+    
+    public BuildingManager.BuildingState debug_view_state;
 }

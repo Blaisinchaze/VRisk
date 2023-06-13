@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -40,10 +41,10 @@ public class DebrisEditor : EditorWindow
 
     private static int points_per_mesh;
 
-    private static float direction_max_horizontal_rotation;
-    private static float direction_min_horizontal_rotation;
-    private static float direction_max_vertical_rotation;
-    private static float direction_min_vertical_rotation;
+    private static float max_up_rotation;
+    private static float max_down_rotation;
+    private static float max_left_direction;
+    private static float max_right_direction;
     
     private static float max_force;
     private static float min_force;
@@ -58,6 +59,8 @@ public class DebrisEditor : EditorWindow
     private static GameObject debug_prefab;
     private static GameObject debug_parent_prefab;
     private static GameObject debug_objects_parent;
+
+    private static BuildingManager.BuildingState debug_view_state;
 
     [MenuItem("Window/Debris Data Editor")]
     public static void ShowWindow()
@@ -93,10 +96,10 @@ public class DebrisEditor : EditorWindow
 
             points_per_mesh = data.points_per_mesh;
 
-            direction_max_horizontal_rotation = data.direction_max_horizontal_rotation;
-            direction_min_horizontal_rotation = data.direction_min_horizontal_rotation;
-            direction_max_vertical_rotation = data.direction_max_vertical_rotation;
-            direction_min_vertical_rotation = data.direction_min_vertical_rotation;
+            max_up_rotation = data.direction_max_horizontal_rotation;
+            max_down_rotation = data.direction_min_horizontal_rotation;
+            max_left_direction = data.direction_max_vertical_rotation;
+            max_right_direction = data.direction_min_vertical_rotation;
 
             timeline = data.timeline;
             mesh_spawn_points_map = data.mesh_spawn_points_map;
@@ -110,6 +113,8 @@ public class DebrisEditor : EditorWindow
 
             debug_prefab = data.debug_prefab;
             debug_parent_prefab = data.debug_parent_prefab;
+
+            debug_view_state = data.debug_view_state;
         }
         
         debug_objects_parent = GameObject.FindGameObjectWithTag("DebrisDebugParent");
@@ -138,10 +143,10 @@ public class DebrisEditor : EditorWindow
 
             data.points_per_mesh = points_per_mesh;
 
-            data.direction_max_horizontal_rotation = direction_max_horizontal_rotation;
-            data.direction_min_horizontal_rotation = direction_min_horizontal_rotation;
-            data.direction_max_vertical_rotation = direction_max_vertical_rotation;
-            data.direction_min_vertical_rotation = direction_min_vertical_rotation;
+            data.direction_max_horizontal_rotation = max_up_rotation;
+            data.direction_min_horizontal_rotation = max_down_rotation;
+            data.direction_max_vertical_rotation = max_left_direction;
+            data.direction_min_vertical_rotation = max_right_direction;
 
             data.timeline = timeline;
             data.mesh_spawn_points_map = mesh_spawn_points_map;
@@ -155,6 +160,7 @@ public class DebrisEditor : EditorWindow
 
             data.debug_prefab = debug_prefab;
             data.debug_parent_prefab = debug_parent_prefab;
+            data.debug_view_state = debug_view_state;
         }
         
         EditorApplication.quitting -= onUnityClose;
@@ -203,14 +209,14 @@ public class DebrisEditor : EditorWindow
             
         EditorGUILayout.Space(10);
 
-        direction_max_horizontal_rotation = EditorGUILayout.FloatField("Direction Up|Down Max", 
-            direction_max_horizontal_rotation);
-        direction_min_horizontal_rotation = EditorGUILayout.FloatField("Direction Up|Down Min -", 
-            direction_min_horizontal_rotation);
-        direction_max_vertical_rotation = EditorGUILayout.FloatField("Direction Left|Right max", 
-            direction_max_vertical_rotation);
-        direction_min_vertical_rotation = EditorGUILayout.FloatField("Direction Left|Right Min -", 
-            direction_min_vertical_rotation);
+        max_up_rotation = EditorGUILayout.FloatField("Max Up Direction", 
+            max_up_rotation);
+        max_down_rotation = EditorGUILayout.FloatField("Max Down Direction", 
+            max_down_rotation);
+        max_left_direction = EditorGUILayout.FloatField("Max Left Direction", 
+            max_left_direction);
+        max_right_direction = EditorGUILayout.FloatField("Max Right Direction", 
+            max_right_direction);
         
         EditorGUILayout.Space(10);
 
@@ -218,6 +224,8 @@ public class DebrisEditor : EditorWindow
         debris_timeline_end = EditorGUILayout.FloatField("Timeline End", debris_timeline_end);
 
         EditorGUILayout.Space(10);
+        
+        debug_view_state = (BuildingManager.BuildingState)EditorGUILayout.EnumPopup("Debug View State", debug_view_state);
         
         timeline = EditorGUILayout.ObjectField("Debris Timeline", timeline, typeof(DebrisTimeline), 
                 true) as DebrisTimeline;
@@ -302,8 +310,17 @@ public class DebrisEditor : EditorWindow
 
     private void generateSpawnPoints()
     {
-        mesh_spawn_points_map.map.Clear();
-        
+        if (!mesh_spawn_points_map.map.IsUnityNull())
+        {
+            mesh_spawn_points_map.map.Clear();
+        }
+        else
+        {
+            mesh_spawn_points_map.map =
+                new Dictionary<BuildingManager.BuildingType,
+                    Dictionary<BuildingManager.BuildingState, List<SpawnPointData>>>();
+        }
+
         // List of building maps - maps meshes to each building state.
         // Have multiple because we might end up with more than one building set.
         foreach (var map in building_maps)
@@ -311,7 +328,7 @@ public class DebrisEditor : EditorWindow
             // For each mesh for the different states for that building. 
             foreach (var state_mesh_pair in map.states)
             {
-                List<spawnPointData> spawn_points = new List<spawnPointData>();
+                List<SpawnPointData> spawn_points = new List<SpawnPointData>();
 
                 List<Pair<Triangle, Vector3>> triangles_and_normals = getTriangles(state_mesh_pair.third);
                 if (triangles_and_normals.Count == 0) continue;
@@ -324,42 +341,57 @@ public class DebrisEditor : EditorWindow
                     // Generate a random point inside the triangle.
                     Vector3 point_in_triangle = randomPointInTriangle(selected_triangle_and_normal.first);
                     
-                    spawn_points.Add(new spawnPointData(point_in_triangle, Vector3.zero, 
+                    spawn_points.Add(new SpawnPointData(point_in_triangle, Vector3.zero, 
                         selected_triangle_and_normal.second));
                 }
+
+                if (!mesh_spawn_points_map.map.ContainsKey(state_mesh_pair.first))
+                {
+                    mesh_spawn_points_map.map.Add(state_mesh_pair.first, new Dictionary<BuildingManager.BuildingState, List<SpawnPointData>>());
+                }
+
+                if (!mesh_spawn_points_map.map[state_mesh_pair.first].ContainsKey(state_mesh_pair.second))
+                {
+                    mesh_spawn_points_map.map[state_mesh_pair.first].Add(state_mesh_pair.second, new List<SpawnPointData>());
+                }
                 
-                mesh_spawn_points_map.map.Add(new Triple<BuildingManager.BuildingType, BuildingManager.BuildingState, 
-                    List<spawnPointData>>(state_mesh_pair.first, state_mesh_pair.second, spawn_points));
+                
+                mesh_spawn_points_map.map[state_mesh_pair.first][state_mesh_pair.second].AddRange(spawn_points);
             }
         }
     }
 
     private void generateDirections()
     {
-        foreach (var element in mesh_spawn_points_map.map)
+        foreach (var type_map_dict in mesh_spawn_points_map.map)
         {
-            for (int i = 0; i < element.third.Count; i++)
+            foreach (var state_points_dict in type_map_dict.Value)
             {
-                Vector3 normal = element.third[i].normal;
+                foreach (var spawn_points_data in state_points_dict.Value)
+                {
+                    Vector3 normal = spawn_points_data.normal;
 
-                // Cross product to get the local x axis
-                Vector3 local_right = Vector3.Normalize(Vector3.Cross(Vector3.up, normal));
-                // Cross product to get the local y axis
-                Vector3 localUp = Vector3.Cross(normal, local_right);
+                    // Cross product to get the local x axis
+                    Vector3 local_right = Vector3.Normalize(Vector3.Cross(Vector3.up, normal));
+                    // Cross product to get the local y axis
+                    Vector3 localUp = Vector3.Cross(normal, local_right);
 
-                float horizontal_angle = Random.Range(-direction_min_horizontal_rotation, direction_max_horizontal_rotation);
-                float vertical_angle = Random.Range(-direction_min_vertical_rotation, direction_max_vertical_rotation);
+                    float horizontal_angle = 
+                        Random.Range(-max_up_rotation, max_down_rotation);
+                    float vertical_angle =
+                        Random.Range(-max_left_direction, max_right_direction);
 
-                // Creating the rotations around the local right and up directions
-                Quaternion rotationRight = Quaternion.AngleAxis(horizontal_angle, local_right);
-                Quaternion rotationUp = Quaternion.AngleAxis(vertical_angle, localUp);
+                    // Creating the rotations around the local right and up directions
+                    Quaternion rotationRight = Quaternion.AngleAxis(horizontal_angle, local_right);
+                    Quaternion rotationUp = Quaternion.AngleAxis(vertical_angle, localUp);
 
-                // Combining the two rotations
-                Quaternion rotation = rotationRight * rotationUp;
+                    // Combining the two rotations
+                    Quaternion rotation = rotationRight * rotationUp;
 
-                Vector3 direction = rotation * normal;
-                direction = direction.normalized;
-                element.third[i].direction = direction;
+                    Vector3 direction = rotation * normal;
+                    direction = direction.normalized;
+                    spawn_points_data.direction = direction;
+                }
             }
         }
     }
@@ -433,20 +465,60 @@ public class DebrisEditor : EditorWindow
 
     private void generateDebugVisuals()
     {
-        
+        if (!debug_objects_parent.IsUnityNull()) DestroyImmediate(debug_objects_parent);
+        debug_objects_parent = Instantiate(debug_parent_prefab);
+
+        var buildings = getBuildings();
+
+        foreach (var timeline_element in timeline.timeline)
+        {
+            var building = buildings[timeline_element.second.building_id];
+            
+            foreach (var map in mesh_spawn_points_map.map)
+            {
+                foreach (var spawn_point_data in map.Value[debug_view_state])
+                {
+                    var debug_object = Instantiate(debug_prefab);
+                    debug_object.transform.position = building.second.transform.TransformPoint(spawn_point_data.spawn_point);
+                    debug_object.GetComponent<DebugPrefabScript>().direction = building.second.transform.TransformDirection(spawn_point_data.direction);
+                    debug_object.transform.SetParent(debug_objects_parent.transform);
+                }
+            }
+        }
     }
 
     private void clearDebugVisuals()
     {
-        
+        DestroyImmediate(debug_objects_parent);
+        debug_objects_parent = null;
     }
 
     private void clearAll()
     {
-        mesh_spawn_points_map.map.Clear();
-        timeline.timeline.Clear();
+        if (!mesh_spawn_points_map.IsUnityNull()) mesh_spawn_points_map.map.Clear();
+        if (!timeline.IsUnityNull()) timeline.timeline.Clear();
     }
-    
+
+
+    private Dictionary<int,Pair<GameObject, BuildingData>> getBuildings()
+    {
+        Dictionary<int,Pair<GameObject, BuildingData>> buildings_map = new Dictionary<int,Pair<GameObject, BuildingData>>();
+
+        List<GameObject> buildings = new List<GameObject>();
+        
+        buildings.AddRange(GameObject.FindGameObjectsWithTag(safe_risk_tag));
+        buildings.AddRange(GameObject.FindGameObjectsWithTag(low_risk_tag));
+        buildings.AddRange(GameObject.FindGameObjectsWithTag(mid_risk_tag));
+        buildings.AddRange(GameObject.FindGameObjectsWithTag(high_risk_tag));
+
+        foreach (var building in buildings)
+        {
+            BuildingData building_data = building.GetComponent<BuildingData>();
+            buildings_map.Add(building_data.id, new Pair<GameObject, BuildingData>(building, building_data));
+        }
+
+        return buildings_map;
+    }
     
     private List<Pair<Triangle, Vector3>> getTriangles(Mesh _mesh)
     {
@@ -495,8 +567,8 @@ public class DebrisEditor : EditorWindow
     private Vector3 randomPointInTriangle(Triangle _triangle) 
     {
         // generate two random numbers
-        float u = UnityEngine.Random.value;
-        float v = UnityEngine.Random.value;
+        float u = Random.value;
+        float v = Random.value;
 
         // ensure the point is inside the triangle
         if (u + v > 1) 
