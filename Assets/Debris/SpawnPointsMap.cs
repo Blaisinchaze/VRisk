@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ScriptableObjects", menuName = "ScriptableObjects/DebrisMeshSpawnPointMap")]
 [System.Serializable]
 public class SpawnPointsMap : ScriptableObject
 {
-    public Dictionary<BuildingManager.BuildingType, Dictionary<BuildingManager.BuildingState, List<SpawnPointData>>> map;
+    public SerializedDictionary<BuildingManager.BuildingType, SerializedDictionary<BuildingManager.BuildingState, List<SpawnPointData>>> map;
 }
 
 [System.Serializable]

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using AYellowpaper.SerializedCollections;
 using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -317,8 +318,8 @@ public class DebrisEditor : EditorWindow
         else
         {
             mesh_spawn_points_map.map =
-                new Dictionary<BuildingManager.BuildingType,
-                    Dictionary<BuildingManager.BuildingState, List<SpawnPointData>>>();
+                new SerializedDictionary<BuildingManager.BuildingType, 
+                    SerializedDictionary<BuildingManager.BuildingState, List<SpawnPointData>>>();
         }
 
         // List of building maps - maps meshes to each building state.
@@ -347,7 +348,7 @@ public class DebrisEditor : EditorWindow
 
                 if (!mesh_spawn_points_map.map.ContainsKey(state_mesh_pair.first))
                 {
-                    mesh_spawn_points_map.map.Add(state_mesh_pair.first, new Dictionary<BuildingManager.BuildingState, List<SpawnPointData>>());
+                    mesh_spawn_points_map.map.Add(state_mesh_pair.first, new SerializedDictionary<BuildingManager.BuildingState, List<SpawnPointData>>());
                 }
 
                 if (!mesh_spawn_points_map.map[state_mesh_pair.first].ContainsKey(state_mesh_pair.second))
