@@ -15,7 +15,9 @@ public class AudioManager : MonoBehaviour
         SEISMIC_RUMBLE, 
         DEBRIS_COLLISION,
         BUILDING_DAMAGE, 
-        BUILDING_COLLAPSE
+        BUILDING_COLLAPSE,
+        WALKING,
+        RUNNING
     }
 
     public List<Sound> sounds;
@@ -57,6 +59,8 @@ public class AudioManager : MonoBehaviour
                 }
             }
         }
+        
+        Debug.Log("No available AudioSources in the pool - consider increasing the pool");
 
         return new Pair<AudioSource, Sound>(null, null);
     }

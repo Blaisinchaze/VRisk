@@ -92,7 +92,7 @@ public class ParticleManager : MonoBehaviour
             }
         }
         
-        Debug.Log("No available " + _id + " particle available in the pool - consider increasing the pool");
+        Debug.Log("No available " + _id + " particle in the pool - consider increasing the pool");
     }
 
     IEnumerator delayedDeactivation(ParticleEmitter _emitter)

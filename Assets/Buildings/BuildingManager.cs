@@ -12,13 +12,18 @@ public class BuildingManager : MonoBehaviour
         MID = 2,
         HIGH = 3
     }
-
+    
     public enum BuildingState
     {
         COLLAPSED,
         VERY_DAMAGED,
         DAMAGED,
         NO_DAMAGE,
+    }
+
+    public enum BuildingType
+    {
+        BASIC_SET
     }
 
     [SerializeField] private string safe_risk_tag = "Black";
