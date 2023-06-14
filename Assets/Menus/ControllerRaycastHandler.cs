@@ -14,6 +14,8 @@ public class ControllerRaycastHandler : MonoBehaviour
 
     private XRInteractorLineVisual left_cast;
     private XRInteractorLineVisual right_cast;
+    private XRRayInteractor left_ray;
+    private XRRayInteractor right_ray;
 
     private InputAction trigger_left_pressed;
     private InputAction trigger_left_touched;
@@ -35,6 +37,8 @@ public class ControllerRaycastHandler : MonoBehaviour
     {
         left_cast = left_controller.GetComponent<XRInteractorLineVisual>();
         right_cast = right_controller.GetComponent<XRInteractorLineVisual>();
+        left_ray = left_controller.GetComponent<XRRayInteractor>();
+        right_ray = right_controller.GetComponent<XRRayInteractor>();
         
         trigger_left_pressed = GameManager.Instance.InputHandler.input_asset.InputActionMap.InteractLeft_Hand;
         trigger_left_touched = GameManager.Instance.InputHandler.input_asset.InputActionMap.TouchLeft_Hand;
@@ -70,23 +74,35 @@ public class ControllerRaycastHandler : MonoBehaviour
                 switch (current)
                 {
                     case CastSide.Left:
-                        left_cast.enabled = true;
-                        right_cast.enabled = false;
+                        LeftState(true);
+                        RightState(false);
                         break;
 
                     case CastSide.Right:
-                        left_cast.enabled = false;
-                        right_cast.enabled = true;
+                        LeftState(false);
+                        RightState(true);
                         break;
                     
                     case CastSide.None:
-                        left_cast.enabled = false;
-                        right_cast.enabled = false;
+                        LeftState(false);
+                        RightState(false);
                         break;
                 }
                 
                 previous = current;
             }
         }
+    }
+
+    private void LeftState(bool active)
+    {
+        left_cast.enabled = active;
+        left_ray.enabled = active;
+    }
+    
+    private void RightState(bool active)
+    {
+        right_cast.enabled = active;
+        right_ray.enabled = active;
     }
 }

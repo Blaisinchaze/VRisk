@@ -472,7 +472,7 @@ PrefabInstance:
     - target: {fileID: 1166428782608586837, guid: 790343bff76893a4f8fedecc9c201fb1,
         type: 3}
       propertyPath: fade_duration
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1166428782608586837, guid: 790343bff76893a4f8fedecc9c201fb1,
         type: 3}
