@@ -1,3 +1,4 @@
+using System.Xml;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +12,8 @@ public class MovementController : MonoBehaviour
     public float min_run_input_mag = 0.7f;
     public float walk_speed = 0.5f;
     public float run_speed = 1.0f;
+    public float current_speed = 0.0f;
+    public float last_speed = 0.0f;
     
     private Vector3 prev_controller_r; 
     private Vector3 prev_controller_l;
@@ -27,6 +30,10 @@ public class MovementController : MonoBehaviour
     public float ratio_of_motion = 0.0f;               
     
     public bool moving = false;
+    
+    public bool footsteps_audio_playing = false;
+    public GameObject feet_object;
+    public AudioSource feet_audio_source;
 
     void Start()
     {
@@ -38,15 +45,59 @@ public class MovementController : MonoBehaviour
     private void FixedUpdate()
     {
         GestureControl();
-        
+
         if (move_action.ReadValue<Vector2>() != Vector2.zero)
         {
             movePlayer(move_action.ReadValue<Vector2>());
+        }
+        else
+        {
+            moving = false;
+        }
+        
+        
+        handleFootsteps();
+    }
+
+    private void handleFootsteps()
+    {
+        if (moving && !footsteps_audio_playing)
+        {
+            AudioManager.SoundID sound_clip = AudioManager.SoundID.WALKING;
+
+            if (current_speed == run_speed)
+            {
+                sound_clip = AudioManager.SoundID.RUNNING;
+            }
+
+            GameManager.Instance.AudioManager.PlaySound(feet_audio_source, true, false, Vector3.zero, feet_object.transform,
+                true, sound_clip);
+            footsteps_audio_playing = true;
+        }
+        else if (!moving && footsteps_audio_playing)
+        {
+            feet_audio_source.Stop();
+            footsteps_audio_playing = false;
+        }
+
+        if (moving && current_speed != last_speed)
+        {
+            AudioManager.SoundID sound_clip = AudioManager.SoundID.WALKING;
+
+            if (current_speed == run_speed)
+            {
+                sound_clip = AudioManager.SoundID.RUNNING;
+            }
+
+            GameManager.Instance.AudioManager.PlaySound(feet_audio_source, true, false, Vector3.zero, feet_object.transform,
+                true, sound_clip);
         }
     }
 
     public void movePlayer(Vector2 input_vect)
     {
+        moving = true;
+        
         // Convert the input 2D vector into a 3D vector for world space movement.
         Vector3 world_move = new Vector3(input_vect.x, 0, input_vect.y);
         
@@ -63,13 +114,12 @@ public class MovementController : MonoBehaviour
         // Normalize the input vector if its magnitude is greater than 1.
         // This ensures the direction of movement is kept without boosting speed.
         input_vect = input_vect.magnitude > 1 ? input_vect.normalized : input_vect;
-        
-        
-        Debug.Log(input_vect.magnitude <= min_run_input_mag ? walk_speed : run_speed);
-        // Set the movement speed based on the magnitude of the input.
-        float speed = input_vect.magnitude <= min_run_input_mag ? walk_speed : run_speed;
 
-        Vector3 direction = rotated_vector * speed;
+        last_speed = current_speed;
+        // Set the movement speed based on the magnitude of the input.
+        current_speed = input_vect.magnitude <= min_run_input_mag ? walk_speed : run_speed;
+
+        Vector3 direction = rotated_vector * current_speed;
         Vector3 new_pos = rig_rb.position + direction;
         rig_rb.MovePosition(new_pos);
     }

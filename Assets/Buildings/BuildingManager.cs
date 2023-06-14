@@ -62,16 +62,6 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        triggerGlobalShake(0.2f, 0.05f, 30);
-        
-        // For testing - remove later when the start of the rumble audio is triggered by the timeline manager. 
-        GameManager.Instance.AudioManager.PlaySound(true, false, Vector3.zero,
-            GameObject.FindGameObjectWithTag("MainCamera").transform, true, AudioManager.SoundID.SEISMIC_RUMBLE, 
-            GameManager.earthquakeIntensityCurve, 30);
-    }
-
     public void damageBuilding(int _building_id, float _intensity, float _shaking_reposition_interval, float _duration, float _impact_shake_duration, float _affect_radius)
     {
         // Grab reference to desired building. 

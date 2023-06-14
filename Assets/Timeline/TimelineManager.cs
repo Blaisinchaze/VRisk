@@ -19,6 +19,17 @@ public class TimelineManager : MonoBehaviour
         debris_timeline.timeline.Sort((x, y) => x.first.CompareTo(y.first));
     }
 
+    private void Start()
+    {
+        ///TEMP
+        GameManager.Instance.BuildingManager.triggerGlobalShake(0.2f, 0.05f, 30);
+        
+        // For testing - remove later when the start of the rumble audio is triggered by the timeline manager. 
+        GameManager.Instance.AudioManager.PlaySound(true, false, Vector3.zero,
+            GameObject.FindGameObjectWithTag("MainCamera").transform, true, AudioManager.SoundID.SEISMIC_RUMBLE, 
+            GameManager.earthquakeIntensityCurve, 30);
+    }
+
     private void FixedUpdate()
     {
         timer += Time.fixedDeltaTime;
