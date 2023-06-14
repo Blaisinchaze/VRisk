@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class MenuVisualsHandler : MonoBehaviour
+public class ControllerRaycastHandler : MonoBehaviour
 {
     public bool inside_menu = false;
 
