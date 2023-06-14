@@ -1,5 +1,6 @@
 using System.Xml;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -27,8 +28,9 @@ public class MovementController : MonoBehaviour
     private float timer = 0.0f;
 
     private float speed_multiplier = 100.0f;
-    public float ratio_of_motion = 0.0f;               
-    
+    public float ratio_of_motion = 0.0f;
+
+    public bool gesture_control_moving;
     public bool moving = false;
     
     public bool footsteps_audio_playing = false;
@@ -44,17 +46,16 @@ public class MovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        GestureControl();
+        gesture_control_moving = GestureControl();
 
         if (move_action.ReadValue<Vector2>() != Vector2.zero)
         {
             movePlayer(move_action.ReadValue<Vector2>());
         }
-        else
+        else if (!gesture_control_moving)
         {
             moving = false;
         }
-        
         
         handleFootsteps();
     }
@@ -89,8 +90,7 @@ public class MovementController : MonoBehaviour
                 sound_clip = AudioManager.SoundID.RUNNING;
             }
 
-            GameManager.Instance.AudioManager.PlaySound(feet_audio_source, true, false, Vector3.zero, feet_object.transform,
-                true, sound_clip);
+            GameManager.Instance.AudioManager.PlaySound(feet_audio_source, true, false, Vector3.zero, feet_object.transform, true, sound_clip);
         }
     }
 
@@ -102,13 +102,7 @@ public class MovementController : MonoBehaviour
         Vector3 world_move = new Vector3(input_vect.x, 0, input_vect.y);
         
         // Rotate the movement vector to be relative to the camera's orientation.
-        Vector3 rotated_vector = cam.transform.TransformDirection(world_move);
-        
-        // If the player is moving up or down (based on camera's view), 
-        // we adjust the horizontal movement to compensate and keep the movement planar.
-        float temp = rotated_vector.magnitude - rotated_vector.y;
-        rotated_vector.x += (rotated_vector.x / temp) * rotated_vector.y;
-        rotated_vector.z += (rotated_vector.z / temp) * rotated_vector.y;
+        Vector3 rotated_vector = cam.transform.rotation * world_move ;
         rotated_vector.y = 0;
 
         // Normalize the input vector if its magnitude is greater than 1.
@@ -124,7 +118,7 @@ public class MovementController : MonoBehaviour
         rig_rb.MovePosition(new_pos);
     }
 
-    private void GestureControl()
+    private bool GestureControl()
     {
         timer += Time.fixedDeltaTime;
 
@@ -145,22 +139,15 @@ public class MovementController : MonoBehaviour
             timer = 0;
         }
 
-        if (timer < 0.5f)
-        {
-            moving = true;
-        }
-        else
-        {
-            moving = false;
-        }
-
-
-        if (moving)
-        {
-            movePlayer(new Vector2(0, 1));
-        }
-
         prev_controller_r = controller_r;
         prev_controller_l = controller_l;
+        
+        if (timer < 0.5f)
+        {
+            movePlayer(new Vector2(0, 1));
+            return true;
+        }
+
+        return false;
     }
 }

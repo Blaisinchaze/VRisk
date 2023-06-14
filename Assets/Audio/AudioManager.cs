@@ -23,6 +23,7 @@ public class AudioManager : MonoBehaviour
     public List<Sound> sounds;
     public List<Pair<GameObject, AudioSource>> sources;
     public int number_of_sources = 8;
+    public float master_volume;
     private void Awake()
     {
         for (int i = 0; i < number_of_sources; i++)
@@ -34,6 +35,8 @@ public class AudioManager : MonoBehaviour
             
             sources.Add(new Pair<GameObject, AudioSource>(game_object, audio_source));
         }
+        
+        setMasterVolume(master_volume);
     }
 
     // Base PlaySound using the pool.
