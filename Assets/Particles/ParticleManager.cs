@@ -46,16 +46,6 @@ public class ParticleManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        GameManager.Instance.InputHandler.input_asset.InputActionMap.Debug.started += Test;
-    }
-
-    private void Test(InputAction.CallbackContext _context)
-    {
-        triggerEffect(ParticleID.DEBRIS_IMPACT, new Vector3(-26.4012032f,10.7600002f,-49.6206245f), new Vector3(0,0,0));
-    }
-
     public void triggerEffect(ParticleID _id, Vector3 _location, Vector3 _rotation, Transform _parent = null, bool _relative_to_parent = false)
     {
         if (!particle_emitters.ContainsKey(_id))

@@ -164,6 +164,7 @@ public class DebrisEditor : EditorWindow
             data.debug_view_state = debug_view_state;
         }
         
+        EditorUtility.SetDirty(data);
         EditorApplication.quitting -= onUnityClose;
     }
 
@@ -360,6 +361,8 @@ public class DebrisEditor : EditorWindow
                 mesh_spawn_points_map.map[state_mesh_pair.first][state_mesh_pair.second].AddRange(spawn_points);
             }
         }
+        
+        EditorUtility.SetDirty(mesh_spawn_points_map);
     }
 
     private void generateDirections()
@@ -395,6 +398,8 @@ public class DebrisEditor : EditorWindow
                 }
             }
         }
+        
+        EditorUtility.SetDirty(mesh_spawn_points_map);
     }
 
     private void generateTimeline()
@@ -445,6 +450,8 @@ public class DebrisEditor : EditorWindow
                 }
             }
         }
+        
+        EditorUtility.SetDirty(timeline);
     }
 
     private void generateForces()
@@ -453,6 +460,8 @@ public class DebrisEditor : EditorWindow
         {
             element.second.force = Random.Range(min_force, max_force);
         }
+        
+        EditorUtility.SetDirty(timeline);
     }
 
     private void generateDebrisTypes()
@@ -462,6 +471,8 @@ public class DebrisEditor : EditorWindow
             int index = Random.Range(0, (int) DebrisHandler.DebrisType.COUNT);
             timeline.timeline[i].second.type = (DebrisHandler.DebrisType)index;
         }
+        
+        EditorUtility.SetDirty(timeline);
     }
 
     private void generateDebugVisuals()
@@ -498,6 +509,9 @@ public class DebrisEditor : EditorWindow
     {
         if (!mesh_spawn_points_map.IsUnityNull()) mesh_spawn_points_map.map.Clear();
         if (!timeline.IsUnityNull()) timeline.timeline.Clear();
+        
+        EditorUtility.SetDirty(timeline);
+        EditorUtility.SetDirty(mesh_spawn_points_map);
     }
 
 
