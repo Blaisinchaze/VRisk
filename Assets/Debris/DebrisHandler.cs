@@ -23,6 +23,7 @@ public class DebrisHandler : MonoBehaviour
     public Vector3 debris_min_scale;
 
     public SpawnPointsMap spawn_point_mesh_map;
+    public float distance_from_player_cutoff = 20;
 
     private void Awake()
     {
@@ -63,6 +64,10 @@ public class DebrisHandler : MonoBehaviour
                 if (spawn_point_data.IsUnityNull()) return;
                 
                 Vector3 point = building.second.transform.TransformPoint(spawn_point_data.spawn_point);
+
+                if (Vector3.Distance(GameManager.Instance.Player.transform.position, point) >
+                    distance_from_player_cutoff) return;
+                
                 Vector3 direction = building.second.transform.TransformDirection(spawn_point_data.direction);
                 
                 debris.first.SetActive(true);

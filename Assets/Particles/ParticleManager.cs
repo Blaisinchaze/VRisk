@@ -24,6 +24,7 @@ public class ParticleManager : MonoBehaviour
     
     public Dictionary<ParticleID, List<ParticleEmitter>> particle_emitters;
     public ParticleEffectMap effect_map;
+    public float distance_from_player_cutoff = 20;
 
     private void Awake()
     {
@@ -48,6 +49,9 @@ public class ParticleManager : MonoBehaviour
 
     public void triggerEffect(ParticleID _id, Vector3 _location, Vector3 _rotation, Transform _parent = null, bool _relative_to_parent = false)
     {
+        Vector3 world_location = _relative_to_parent ? _parent.position + _location : _location;
+        if (Vector3.Distance(GameManager.Instance.Player.transform.position, world_location) > distance_from_player_cutoff) return;
+            
         if (!particle_emitters.ContainsKey(_id))
         {
             Debug.Log("ParticleEmitters dictionary does not contain key " + _id);
