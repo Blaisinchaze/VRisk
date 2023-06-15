@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -14,6 +15,8 @@ public class GameManager : MonoBehaviour
     public AudioManager AudioManager { get; private set; }
     public ParticleManager ParticleManager { get; private set; }
     public DebrisHandler DebrisHandler { get; private set; }
+
+    public GameObject Player { get; private set; }
 
     private void Awake()
     {
@@ -30,6 +33,8 @@ public class GameManager : MonoBehaviour
         AudioManager = GetComponentInChildren<AudioManager>();
         ParticleManager = GetComponentInChildren<ParticleManager>();
         DebrisHandler = GetComponentInChildren<DebrisHandler>();
+
+        Player = GameObject.FindWithTag("Player");
 
         Random.InitState(seed);
     }

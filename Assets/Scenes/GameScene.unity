@@ -19072,7 +19072,7 @@ PrefabInstance:
     - target: {fileID: 2073369824179737296, guid: 0efaad1d0687e7e4193a3ee218bdc9fe,
         type: 3}
       propertyPath: number_of_sources
-      value: 50
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 2073369824179737296, guid: 0efaad1d0687e7e4193a3ee218bdc9fe,
         type: 3}
@@ -19091,6 +19091,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 33d6f21d5e43efe4bb7d7c9f563c46ef,
         type: 2}
+    - target: {fileID: 2073369824179737296, guid: 0efaad1d0687e7e4193a3ee218bdc9fe,
+        type: 3}
+      propertyPath: distance_from_player_cutoff
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2073369824490068447, guid: 0efaad1d0687e7e4193a3ee218bdc9fe,
         type: 3}
       propertyPath: left_controller
@@ -19107,6 +19112,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 4eed0d0058a92d04eb34f7eac4228634,
         type: 2}
+    - target: {fileID: 2073369824700098433, guid: 0efaad1d0687e7e4193a3ee218bdc9fe,
+        type: 3}
+      propertyPath: distance_from_player_cutoff
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2073369825241551972, guid: 0efaad1d0687e7e4193a3ee218bdc9fe,
+        type: 3}
+      propertyPath: distance_from_player_cutoff
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 2073369825302991534, guid: 0efaad1d0687e7e4193a3ee218bdc9fe,
         type: 3}
       propertyPath: m_RootOrder

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public delegate float intensityControlFunction(float x);
@@ -24,6 +25,8 @@ public class AudioManager : MonoBehaviour
     public List<Pair<GameObject, AudioSource>> sources;
     public int number_of_sources = 8;
     public float master_volume;
+    public float distance_from_player_cutoff = 20;
+
     private void Awake()
     {
         for (int i = 0; i < number_of_sources; i++)
@@ -42,6 +45,9 @@ public class AudioManager : MonoBehaviour
     // Base PlaySound using the pool.
     public Pair<AudioSource, Sound> PlaySound(bool _loop, bool _two_dimensional, Vector3 _position, SoundID _sound_id)
     {
+        if (Vector3.Distance(GameManager.Instance.Player.transform.position, _position) >
+            distance_from_player_cutoff) return null;
+        
         foreach (var source in sources)
         {
             if (!source.second.isPlaying)
@@ -72,6 +78,9 @@ public class AudioManager : MonoBehaviour
     // Base PlaySound with AudioSource provided;
     public Pair<AudioSource, Sound> PlaySound(AudioSource _source, bool _loop, bool _two_dimensional, Vector3 _position, SoundID _sound_id)
     {
+        if (Vector3.Distance(GameManager.Instance.Player.transform.position, _position) >
+            distance_from_player_cutoff) return null;
+        
         _source.transform.position = _position;
         _source.spatialBlend = _two_dimensional ? 0.0f : 1.0f;
         _source.loop = _loop;
@@ -95,6 +104,8 @@ public class AudioManager : MonoBehaviour
     public Pair<AudioSource, Sound> PlaySound(bool _loop, bool _two_dimensional, Vector3 _position, Transform _parent, bool _pos_relative_to_parent, SoundID _sound_id)
     {
         var source_sound_pair = PlaySound(_loop, _two_dimensional, _position, _sound_id);
+        if (source_sound_pair.IsUnityNull()) return null;
+        
         source_sound_pair.first.transform.SetParent(_parent);
         if (_pos_relative_to_parent)
         {
@@ -108,6 +119,8 @@ public class AudioManager : MonoBehaviour
     public Pair<AudioSource, Sound> PlaySound(AudioSource _source, bool _loop, bool _two_dimensional, Vector3 _position, Transform _parent, bool _pos_relative_to_parent, SoundID _sound_id)
     {
         var source_sound_pair = PlaySound(_source, _loop, _two_dimensional, _position, _sound_id);
+        if (source_sound_pair.IsUnityNull()) return null;
+        
         source_sound_pair.first.transform.SetParent(_parent);
         if (_pos_relative_to_parent)
         {
@@ -121,6 +134,8 @@ public class AudioManager : MonoBehaviour
     public Pair<AudioSource, Sound> PlaySound(bool _loop, bool _two_dimensional, Vector3 _position, Transform _parent, bool _pos_relative_to_parent, SoundID _sound_id, intensityControlFunction _volume_control, float _duration)
     { 
         var source_sound_pair = PlaySound(_loop, _two_dimensional, _position, _parent, _pos_relative_to_parent, _sound_id);
+        if (source_sound_pair.IsUnityNull()) return null;
+        
         StartCoroutine(volumeControl(source_sound_pair.first, source_sound_pair.second.volume, _volume_control, _duration));
         return source_sound_pair;
     }
@@ -129,6 +144,8 @@ public class AudioManager : MonoBehaviour
     public Pair<AudioSource, Sound> PlaySound(AudioSource _source, bool _loop, bool _two_dimensional, Vector3 _position, Transform _parent, bool _pos_relative_to_parent, SoundID _sound_id, intensityControlFunction _volume_control, float _duration)
     { 
         var source_sound_pair = PlaySound(_source, _loop, _two_dimensional, _position, _parent, _pos_relative_to_parent, _sound_id);
+        if (source_sound_pair.IsUnityNull()) return null;
+        
         StartCoroutine(volumeControl(source_sound_pair.first, source_sound_pair.second.volume, _volume_control, _duration));
         return source_sound_pair;
     }
