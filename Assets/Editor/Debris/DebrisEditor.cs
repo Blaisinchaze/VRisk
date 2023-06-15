@@ -52,6 +52,7 @@ public class DebrisEditor : EditorWindow
     
     private static float debris_timeline_start;
     private static float debris_timeline_end;
+    private static bool timeline_follows_earthquake_intensity_curve;
     
     private static DebrisTimeline timeline;
     private static SpawnPointsMap mesh_spawn_points_map;
@@ -106,6 +107,8 @@ public class DebrisEditor : EditorWindow
             mesh_spawn_points_map = data.mesh_spawn_points_map;
             building_maps = data.building_maps;
 
+            timeline_follows_earthquake_intensity_curve = data.timeline_follows_earthquake_intensity_curve;
+
             max_force = data.max_force;
             min_force = data.min_force;
 
@@ -158,6 +161,8 @@ public class DebrisEditor : EditorWindow
 
             data.debris_timeline_start = debris_timeline_start;
             data.debris_timeline_end = debris_timeline_end;
+
+            data.timeline_follows_earthquake_intensity_curve = timeline_follows_earthquake_intensity_curve;
 
             data.debug_prefab = debug_prefab;
             data.debug_parent_prefab = debug_parent_prefab;
@@ -225,6 +230,9 @@ public class DebrisEditor : EditorWindow
         debris_timeline_start = EditorGUILayout.FloatField("Timeline Start", debris_timeline_start);
         debris_timeline_end = EditorGUILayout.FloatField("Timeline End", debris_timeline_end);
 
+        timeline_follows_earthquake_intensity_curve = EditorGUILayout.Toggle("Follows Earthquake Curve",
+            timeline_follows_earthquake_intensity_curve);
+
         EditorGUILayout.Space(10);
         
         debug_view_state = (BuildingManager.BuildingState)EditorGUILayout.EnumPopup("Debug View State", debug_view_state);
@@ -279,7 +287,14 @@ public class DebrisEditor : EditorWindow
 
         if (GUILayout.Button("Generate Timeline"))
         {
-            generateTimeline();
+            if (timeline_follows_earthquake_intensity_curve)
+            {
+                generateTimelineOverQuakeIntensity();
+            }
+            else
+            {
+                generateTimeline();
+            }
         }
 
         if (GUILayout.Button("Generate Forces"))
@@ -453,8 +468,83 @@ public class DebrisEditor : EditorWindow
         
         EditorUtility.SetDirty(timeline);
     }
+    
+        private void generateTimelineOverQuakeIntensity()
+    {
+        Dictionary<BuildingManager.RiskLevel, GameObject[]> risk_buildings_sets =
+            new Dictionary<BuildingManager.RiskLevel, GameObject[]>();
 
-    private void generateForces()
+        risk_buildings_sets.Add(BuildingManager.RiskLevel.SAFE, GameObject.FindGameObjectsWithTag(safe_risk_tag));
+        risk_buildings_sets.Add(BuildingManager.RiskLevel.LOW, GameObject.FindGameObjectsWithTag(low_risk_tag));
+        risk_buildings_sets.Add(BuildingManager.RiskLevel.MID, GameObject.FindGameObjectsWithTag(mid_risk_tag));
+        risk_buildings_sets.Add(BuildingManager.RiskLevel.HIGH, GameObject.FindGameObjectsWithTag(high_risk_tag));
+        
+        int number_of_bins = 2000;
+        float bin_size = (debris_timeline_end - debris_timeline_start) / number_of_bins;
+
+        List<float> bins = new List<float>();
+        List<float> weights = new List<float>();
+        
+        for (int i = 0; i < number_of_bins; i++)
+        {
+            float x = debris_timeline_start + bin_size * i;
+            float weight = GameManager.debrisIntensityCurve(x);
+
+            bins.Add(x);
+            weights.Add(weight);
+        }
+        
+        // Normalize weights to represent probabilities
+        float total_weight = weights.Sum();
+        for (int i = 0; i < weights.Count; i++)
+        {
+            weights[i] /= total_weight;
+        }
+
+        foreach (var set in risk_buildings_sets)
+        {
+            foreach (var building in set.Value)
+            {
+                int debris_spawns_count = 0;
+
+                switch (set.Key)
+                {
+                    case BuildingManager.RiskLevel.SAFE:
+                        debris_spawns_count = Random.Range(safe_risk_debris_min, safe_risk_debris_max);
+                        break;
+
+                    case BuildingManager.RiskLevel.LOW:
+                        debris_spawns_count = Random.Range(low_risk_debris_min, low_risk_debris_max);
+                        break;
+
+                    case BuildingManager.RiskLevel.MID:
+                        debris_spawns_count = Random.Range(mid_risk_debris_min, mid_risk_debris_max);
+                        break;
+
+                    case BuildingManager.RiskLevel.HIGH:
+                        debris_spawns_count = Random.Range(high_risk_debris_min, high_risk_debris_max);
+                        break;
+
+                    default:
+                        throw new System.ArgumentOutOfRangeException();
+                }
+
+                for (int i = 0; i < debris_spawns_count; i++)
+                {
+                    float timepoint = randonChoiceFollowingDistribution(bins.ToArray(), weights.ToArray());
+                    int building_id = building.GetComponent<BuildingData>().id;
+                    int debris_index = Random.Range(0, points_per_mesh);
+
+                    timeline.timeline.Add(new Pair<float, DebrisTimelineElement>(timepoint,
+                        new DebrisTimelineElement(building_id, debris_index, 0.0f, DebrisHandler.DebrisType.BRICK)));
+                }
+            }
+        }
+
+        EditorUtility.SetDirty(timeline);
+    }
+
+        private void generateForces()
     {
         foreach (var element in timeline.timeline)
         {
@@ -595,5 +685,22 @@ public class DebrisEditor : EditorWindow
         // calculate the point's position
         Vector3 point = _triangle.v1 + u * (_triangle.v2 - _triangle.v1) + v * (_triangle.v3 - _triangle.v1);
         return point;
+    }
+
+    public static float randonChoiceFollowingDistribution(float[] _bins, float[] _weights)
+    {
+        float rand_choice = Random.Range(0, _weights.Sum());
+        float cumulative = 0.0f;
+
+        for (int i = 0; i < _bins.Length; i++)
+        {
+            cumulative += _weights[i];
+            if (rand_choice < cumulative)
+            {
+                return _bins[i];
+            }
+        }
+
+        return _bins[_bins.Length - 1];
     }
 }

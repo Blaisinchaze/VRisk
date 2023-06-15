@@ -38,4 +38,9 @@ public class GameManager : MonoBehaviour
     {
         return -15.5f * (float)Math.Pow(_x - 0.48f, 4) + (0.3f * _x) + 0.824f;
     }
+
+    static public float debrisIntensityCurve(float _x)
+    {
+        return -4f * (float)Math.Pow(_x - 0.48f, 4) + (0.3f * _x) + 0.8f;
+    }
 }
