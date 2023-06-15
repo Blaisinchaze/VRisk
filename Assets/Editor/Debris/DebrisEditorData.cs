@@ -37,6 +37,8 @@ public class DebrisEditorData : ScriptableObject
     public DebrisTimeline timeline;
     public SpawnPointsMap mesh_spawn_points_map;
     public List<MeshBuildingStateMap> building_maps;
+
+    public bool timeline_follows_earthquake_intensity_curve;
     
     public GameObject debug_prefab;
     public GameObject debug_parent_prefab;

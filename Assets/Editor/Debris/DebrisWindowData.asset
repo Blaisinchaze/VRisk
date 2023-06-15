@@ -16,11 +16,11 @@ MonoBehaviour:
   low_risk_tag: Beige
   mid_risk_tag: Yellow
   high_risk_tag: Red
-  safe_risk_debris_max: 20
+  safe_risk_debris_max: 40
   low_risk_debris_max: 0
   mid_risk_debris_max: 0
   high_risk_debris_max: 0
-  safe_risk_debris_min: 20
+  safe_risk_debris_min: 40
   low_risk_debris_min: 0
   mid_risk_debris_min: 0
   high_risk_debris_min: 0
@@ -38,6 +38,7 @@ MonoBehaviour:
     type: 2}
   building_maps:
   - {fileID: 11400000, guid: 6231616930b440c448f260ae8671dc61, type: 2}
+  timeline_follows_earthquake_intensity_curve: 1
   debug_prefab: {fileID: 991434971382147968, guid: a268a54a2d2c2e144b940ccbc2f395a6,
     type: 3}
   debug_parent_prefab: {fileID: 5162772366254443620, guid: 3ee761a4b949f1643b1fc7c0e8593e29,
