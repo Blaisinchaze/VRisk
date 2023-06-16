@@ -1656,7 +1656,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.627451}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3267,7 +3267,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 1403249556}
   view_angle: 75
-  lerp_speed: 4
+  walk_area: 0.5
+  lerp_speed_rot: 5
+  lerp_speed_pos: 3
 --- !u!1 &1162621496
 GameObject:
   m_ObjectHideFlags: 0
