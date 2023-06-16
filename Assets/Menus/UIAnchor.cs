@@ -27,12 +27,14 @@ public class UIAnchor : MonoBehaviour
 
     private void Update()
     {
+        //Finds out where the anchor should be located based on camera posiion
         Vector3 camera_pos = camera.transform.position;
         anchor_pos = new Vector3(camera_pos.x, default_pos.y + camera_pos.y, camera_pos.z);
         
+        //If the player has gotten fairly away from the menu, it gets re-moved in range of the player
         if (reset_pos)
         {
-            if (Vector3.Distance(transform.position, anchor_pos) >= 0.05f)
+            if (Vector3.Distance(transform.position, anchor_pos) >= threshold)
             {
                 transform.position = Vector3.Lerp(transform.position, anchor_pos, lerp_speed_pos * Time.deltaTime);
             }
@@ -43,12 +45,14 @@ public class UIAnchor : MonoBehaviour
         }
         else
         { 
+            //Checks if the player is in range
             if (!ApproximatelyEqual(transform.position, anchor_pos, walk_area)) reset_pos = true;
         }
         
         Quaternion camera_rot = Quaternion.Euler(0, camera.transform.eulerAngles.y, 0);
         Quaternion anchor_rot = Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
+        //Checks if the menu should be moved to face the player again
         if (reset_angle)
         {
             if (Quaternion.Angle(anchor_rot, camera_rot) > threshold)
@@ -62,13 +66,14 @@ public class UIAnchor : MonoBehaviour
         }
         else
         {
+            //Checks if the angle of the camera is facing away from the menu visible angle
             if (Quaternion.Angle(anchor_rot, camera_rot) > view_angle) reset_angle = true;
-            
         }
 
         transform.rotation = anchor_rot;
     }
     
+    //Checks if two vector3s are somewhat similar
     bool ApproximatelyEqual(Vector3 a, Vector3 b, float threshold)
     {
         return Mathf.Abs(a.x - b.x) <= threshold &&
