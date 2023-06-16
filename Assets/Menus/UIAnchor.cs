@@ -46,7 +46,7 @@ public class UIAnchor : MonoBehaviour
         else
         { 
             //Checks if the player is in range
-            if (!ApproximatelyEqual(transform.position, anchor_pos, walk_area)) reset_pos = true;
+            if (!VectorHelper.ApproximatelyEqual(transform.position, anchor_pos, walk_area)) reset_pos = true;
         }
         
         Quaternion camera_rot = Quaternion.Euler(0, camera.transform.eulerAngles.y, 0);
@@ -71,13 +71,5 @@ public class UIAnchor : MonoBehaviour
         }
 
         transform.rotation = anchor_rot;
-    }
-    
-    //Checks if two vector3s are somewhat similar
-    bool ApproximatelyEqual(Vector3 a, Vector3 b, float threshold)
-    {
-        return Mathf.Abs(a.x - b.x) <= threshold &&
-               Mathf.Abs(a.y - b.y) <= threshold &&
-               Mathf.Abs(a.z - b.z) <= threshold;
     }
 }

@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 402a925eab7810b4f8874e740e8fe528, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.09674967, g: 0.35171837, b: 0.7160277, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -284,8 +284,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1575636215}
-        m_TargetAssemblyTypeName: MainMenuInputManager, Assembly-CSharp
-        m_MethodName: StartPressed
+        m_TargetAssemblyTypeName: MenuInputManager, Assembly-CSharp
+        m_MethodName: CloseSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -512,6 +512,7 @@ Transform:
   m_Children:
   - {fileID: 286777858}
   - {fileID: 861050028}
+  - {fileID: 1575636214}
   - {fileID: 1100139820}
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -736,7 +737,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 114740203}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.9372527, y: 0.74981666, z: 0.22167219}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -956,7 +957,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0.0000095367}
-  m_SizeDelta: {x: 232.6, y: 52.3}
+  m_SizeDelta: {x: 460, y: 52.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &224713196
 GameObject:
@@ -1799,14 +1800,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CustomSlideManager, Assembly-CSharp
-        m_MethodName: OnValueDecrease
-        m_Mode: 1
+      - m_Target: {fileID: 2120724239}
+        m_TargetAssemblyTypeName: HeightManager, Assembly-CSharp
+        m_MethodName: DecrementValue
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1939,7 +1940,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1575636215}
         m_TargetAssemblyTypeName: MenuInputManager, Assembly-CSharp
-        m_MethodName: OpenSettings
+        m_MethodName: OpenCloseSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2534,6 +2535,7 @@ GameObject:
   - component: {fileID: 666970558}
   - component: {fileID: 666970560}
   - component: {fileID: 666970559}
+  - component: {fileID: 666970561}
   m_Layer: 5
   m_Name: MovementSetting
   m_TagString: Untagged
@@ -2601,6 +2603,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 666970557}
   m_CullTransparentMesh: 1
+--- !u!114 &666970561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666970557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4917258997b4c7a43b16c3d736628d5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  joystickBT: {fileID: 698517208}
+  gestureBT: {fileID: 844779364}
+  useGestures: 1
 --- !u!1 &698517203
 GameObject:
   m_ObjectHideFlags: 0
@@ -2761,9 +2778,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CustomSlideManager, Assembly-CSharp
-        m_MethodName: OnValueIncrease
+      - m_Target: {fileID: 666970561}
+        m_TargetAssemblyTypeName: PresetManager, Assembly-CSharp
+        m_MethodName: JoystickSelected
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3182,14 +3199,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CustomSlideManager, Assembly-CSharp
-        m_MethodName: OnValueIncrease
-        m_Mode: 1
+      - m_Target: {fileID: 2120724239}
+        m_TargetAssemblyTypeName: HeightManager, Assembly-CSharp
+        m_MethodName: IncrementValue
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3604,9 +3621,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CustomSlideManager, Assembly-CSharp
-        m_MethodName: OnValueIncrease
+      - m_Target: {fileID: 666970561}
+        m_TargetAssemblyTypeName: PresetManager, Assembly-CSharp
+        m_MethodName: GestureSelected
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3873,7 +3890,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -70.497}
-  m_SizeDelta: {x: 232.6, y: 50}
+  m_SizeDelta: {x: 460, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &914409887
 MonoBehaviour:
@@ -4935,7 +4952,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1575636214}
   - {fileID: 325886485}
   - {fileID: 1069903696}
   m_Father: {fileID: 45867946}
@@ -7862,11 +7878,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1575636213}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1100139820}
+  m_Father: {fileID: 45867946}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1575636215
@@ -7881,8 +7897,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44990dbbab5521540b6f05272f63486b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenuController: {fileID: 325886486}
-  optionsMenuController: {fileID: 1069903697}
+  mainMenu: {fileID: 325886484}
+  settingsMenu: {fileID: 1069903695}
+  defaultPos: {x: 0, y: 0, z: 0}
+  slidePos: {x: -2.5, y: 0, z: 0}
+  targetPos: {x: 0, y: 0, z: 0}
+  lerpSpeed: 3.5
+  openDelay: 0.5
+  closeDelay: 0.5
 --- !u!1 &1590402118
 GameObject:
   m_ObjectHideFlags: 0
@@ -8943,14 +8965,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CustomSlideManager, Assembly-CSharp
-        m_MethodName: OnValueDecrease
-        m_Mode: 1
+      - m_Target: {fileID: 2120724239}
+        m_TargetAssemblyTypeName: HeightManager, Assembly-CSharp
+        m_MethodName: DecrementValue
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 10
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -9159,14 +9181,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CustomSlideManager, Assembly-CSharp
-        m_MethodName: OnValueIncrease
-        m_Mode: 1
+      - m_Target: {fileID: 2120724239}
+        m_TargetAssemblyTypeName: HeightManager, Assembly-CSharp
+        m_MethodName: IncrementValue
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 10
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -9497,6 +9519,7 @@ GameObject:
   - component: {fileID: 2120724238}
   - component: {fileID: 2120724237}
   - component: {fileID: 2120724236}
+  - component: {fileID: 2120724239}
   m_Layer: 5
   m_Name: HeightSetting
   m_TagString: Untagged
@@ -9569,6 +9592,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2120724239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120724234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0b3e1a824b73444ad0a79d586205c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textCM: {fileID: 184261955}
+  textFT: {fileID: 914409887}
+  height: 170
 --- !u!1 &2132296853
 GameObject:
   m_ObjectHideFlags: 0
@@ -11198,8 +11236,8 @@ MonoBehaviour:
   m_FillRect: {fileID: 7632900628199222891}
   m_HandleRect: {fileID: 7632900627729973263}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 10
+  m_MinValue: 1
+  m_MaxValue: 9
   m_WholeNumbers: 1
   m_Value: 5
   m_OnValueChanged:
