@@ -16,11 +16,14 @@ public class BuildingData : MonoBehaviour
 
     public MeshCollider building_collider;
     public MeshFilter mesh_filter;
+    public MeshRenderer mesh_renderer;
 
     private void Awake()
     {
         building_collider = GetComponent<MeshCollider>();
+        mesh_renderer = GetComponent<MeshRenderer>();
         mesh_filter = GetComponent<MeshFilter>();
+
         original_position = transform.position;
     }
 }

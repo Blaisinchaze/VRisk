@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,8 @@ public class ParticleManager : MonoBehaviour
 {
     public enum ParticleID
     {
-        DEBRIS_IMPACT
+        DEBRIS_IMPACT,
+        BUILDING_DAMAGE
     }
 
     public struct ParticleEmitter
@@ -25,6 +27,8 @@ public class ParticleManager : MonoBehaviour
     public Dictionary<ParticleID, List<ParticleEmitter>> particle_emitters;
     public ParticleEffectMap effect_map;
     public float distance_from_player_cutoff = 20;
+
+    public MeshRenderer test;
 
     private void Awake()
     {
@@ -46,16 +50,51 @@ public class ParticleManager : MonoBehaviour
             }
         }
     }
-
-    public void triggerEffect(ParticleID _id, Vector3 _location, Vector3 _rotation, Transform _parent = null, bool _relative_to_parent = false)
+    
+    public GameObject triggerBuildingCollapseEffect(ParticleID _id, MeshRenderer _mesh_renderer)
     {
-        Vector3 world_location = _relative_to_parent ? _parent.position + _location : _location;
-        if (Vector3.Distance(GameManager.Instance.Player.transform.position, world_location) > distance_from_player_cutoff) return;
+        
+        if (Vector3.Distance(GameManager.Instance.Player.transform.position, _mesh_renderer.transform.position) > distance_from_player_cutoff) return null;
             
         if (!particle_emitters.ContainsKey(_id))
         {
             Debug.Log("ParticleEmitters dictionary does not contain key " + _id);
-            return;
+            return null;
+        }
+
+        foreach (var emitter in particle_emitters[_id])
+        {
+            if (!emitter.parent.activeSelf)
+            {
+                emitter.parent.SetActive(true);
+
+                foreach (var system in emitter.particle_systems)
+                {
+                    var shape = system.shape;
+                    shape.shapeType = ParticleSystemShapeType.MeshRenderer;
+
+                    shape.meshRenderer = _mesh_renderer;
+                }
+
+                StartCoroutine(delayedDeactivation(emitter));
+
+                return emitter.parent;
+            }
+        }
+        
+        Debug.Log("No available " + _id + " particle in the pool - consider increasing the pool");
+        return null;
+    }
+
+    public GameObject triggerEffect(ParticleID _id, Vector3 _location, Vector3 _rotation, Transform _parent = null, bool _relative_to_parent = false)
+    {
+        Vector3 world_location = _relative_to_parent ? _parent.position + _location : _location;
+        if (Vector3.Distance(GameManager.Instance.Player.transform.position, world_location) > distance_from_player_cutoff) return null;
+            
+        if (!particle_emitters.ContainsKey(_id))
+        {
+            Debug.Log("ParticleEmitters dictionary does not contain key " + _id);
+            return null;
         }
 
         foreach (var emitter in particle_emitters[_id])
@@ -82,11 +121,12 @@ public class ParticleManager : MonoBehaviour
 
                 StartCoroutine(delayedDeactivation(emitter));
 
-                return;
+                return emitter.parent;
             }
         }
         
         Debug.Log("No available " + _id + " particle in the pool - consider increasing the pool");
+        return null;
     }
 
     IEnumerator delayedDeactivation(ParticleEmitter _emitter)
