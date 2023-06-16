@@ -50,17 +50,7 @@ public class ParticleManager : MonoBehaviour
             }
         }
     }
-
-    private void Start()
-    {
-        GameManager.Instance.InputHandler.input_asset.InputActionMap.Debug.started += debug;
-    }
-
-    private void debug(InputAction.CallbackContext _context)
-    {
-        triggerBuildingCollapseEffect(ParticleID.BUILDING_DAMAGE, test);
-    }
-
+    
     public GameObject triggerBuildingCollapseEffect(ParticleID _id, MeshRenderer _mesh_renderer)
     {
         

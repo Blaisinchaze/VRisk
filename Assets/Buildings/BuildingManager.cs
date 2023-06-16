@@ -136,7 +136,9 @@ public class BuildingManager : MonoBehaviour
         AudioManager.SoundID sound_id = _building_data.state == BuildingState.COLLAPSED
             ? AudioManager.SoundID.BUILDING_COLLAPSE
             : AudioManager.SoundID.BUILDING_DAMAGE;
+        
         GameManager.Instance.AudioManager.PlaySound(false, false, _building_data.original_position, sound_id);
+        GameManager.Instance.ParticleManager.triggerBuildingCollapseEffect(ParticleManager.ParticleID.BUILDING_DAMAGE, _building_data.mesh_renderer);
 
         triggerLocalisedShake(_building_data.gameObject, _intensity, _shaking_reposition_interval, _impact_shake_duration, _affect_radius);
     }
