@@ -9,8 +9,6 @@ public class ColliderController : MonoBehaviour
 {
     private Collider player_collider;
     private Transform collider_transform;
-    private const float scale_interval = 0.8f;
-    private float scale_timer = 0;
     public Transform head;
 
     private void Start()
@@ -21,8 +19,6 @@ public class ColliderController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        scale_timer += Time.deltaTime;
-        
         collider_transform.position = new Vector3(head.position.x, 
                                     collider_transform.position.y,
                                     head.position.z);

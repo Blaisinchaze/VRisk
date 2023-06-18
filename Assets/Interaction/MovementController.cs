@@ -150,4 +150,17 @@ public class MovementController : MonoBehaviour
 
         return false;
     }
+    
+    private void OnCollisionEnter(Collision other)
+    {
+        ContactPoint contact = other.GetContact(0);
+
+        if (contact.otherCollider.CompareTag("Debris"))
+        {
+            if (contact.otherCollider.gameObject.GetComponent<DebrisScript>().falling)
+            {
+                Debug.Log("die");
+            }
+        }
+    }
 }

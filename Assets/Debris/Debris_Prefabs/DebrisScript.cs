@@ -6,6 +6,7 @@ public class DebrisScript : MonoBehaviour
 {
     private float elapsed_time = 0;
     private Vector3 original_scale;
+    public bool falling = true;
 
     private void Awake()
     {
@@ -15,14 +16,18 @@ public class DebrisScript : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         ContactPoint contact = other.GetContact(0);
-        
-        if (contact.otherCollider.CompareTag("Controller") ||
-            contact.otherCollider.CompareTag("Player")) return;
-        
-        Quaternion rotation = Quaternion.LookRotation(other.contacts[0].normal);
-        
-        GameManager.Instance.ParticleManager.triggerEffect(ParticleManager.ParticleID.DEBRIS_IMPACT, contact.point, rotation.eulerAngles);
-        GameManager.Instance.AudioManager.PlaySound(false, false, contact.point, AudioManager.SoundID.DEBRIS_COLLISION);
+
+        if (falling)
+        {
+            Quaternion rotation = Quaternion.LookRotation(other.contacts[0].normal);
+
+            GameManager.Instance.ParticleManager.triggerEffect(ParticleManager.ParticleID.DEBRIS_IMPACT, contact.point,
+                rotation.eulerAngles);
+            GameManager.Instance.AudioManager.PlaySound(false, false, contact.point,
+                AudioManager.SoundID.DEBRIS_COLLISION);
+
+            if (contact.otherCollider.CompareTag("Floor")) falling = false;
+        }
     }
 
     private void FixedUpdate()
@@ -42,5 +47,6 @@ public class DebrisScript : MonoBehaviour
     private void OnEnable()
     {
         elapsed_time = 0;
+        falling = true;
     }
 }

@@ -325,7 +325,7 @@ GameObject:
   - component: {fileID: 7124276689308020557}
   m_Layer: 0
   m_Name: ConcreteDebris
-  m_TagString: Untagged
+  m_TagString: Debris
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -387,3 +387,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d75277d9005a429438eda5601cb9751d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  falling: 1
