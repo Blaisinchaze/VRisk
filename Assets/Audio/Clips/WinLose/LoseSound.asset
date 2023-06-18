@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e28866ce2ee3bc94ca9953aca5f50b7d, type: 3}
-  m_Name: SpawnPointsData
+  m_Script: {fileID: 11500000, guid: 7371fb1892bc88940b8aba65bc04899c, type: 3}
+  m_Name: LoseSound
   m_EditorClassIdentifier: 
-  map:
-    _serializedList: []
+  clip: {fileID: 8300000, guid: b1981664dc579024889a8e980801f553, type: 3}
+  id: 9
+  volume: 1
+  pitch: 1

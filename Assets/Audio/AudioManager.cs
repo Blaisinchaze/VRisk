@@ -18,7 +18,9 @@ public class AudioManager : MonoBehaviour
         BUILDING_DAMAGE, 
         BUILDING_COLLAPSE,
         WALKING,
-        RUNNING
+        RUNNING,
+        WIN, 
+        LOSE
     }
 
     public List<Sound> sounds;

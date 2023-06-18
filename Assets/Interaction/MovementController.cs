@@ -36,6 +36,7 @@ public class MovementController : MonoBehaviour
     public bool footsteps_audio_playing = false;
     public GameObject feet_object;
     public AudioSource feet_audio_source;
+    public GameObject head;
 
     void Start()
     {
@@ -159,6 +160,7 @@ public class MovementController : MonoBehaviour
         {
             if (contact.otherCollider.gameObject.GetComponent<DebrisScript>().falling)
             {
+                GameManager.Instance.AudioManager.PlaySound(false, false, head.transform.position, AudioManager.SoundID.LOSE);
                 Debug.Log("die");
             }
         }
