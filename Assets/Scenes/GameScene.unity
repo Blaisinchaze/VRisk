@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b4c12bd4648fc4bbf059032a4dbc71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  head: {fileID: 227105091}
 --- !u!64 &17099627
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11670,6 +11671,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b4c12bd4648fc4bbf059032a4dbc71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  head: {fileID: 227105091}
 --- !u!64 &1875917208
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -15587,7 +15589,7 @@ PrefabInstance:
     - target: {fileID: 6200711137863556591, guid: 1fffdbe8acf11e940beec20ed7afb24e,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6200711137863556591, guid: 1fffdbe8acf11e940beec20ed7afb24e,
         type: 3}
