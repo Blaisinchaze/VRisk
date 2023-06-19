@@ -10,6 +10,7 @@ public class TimelineManager : MonoBehaviour
     public List<Pair<int, float>> timeline;
 
     [SerializeField] private float timer = 0;
+    public float time_since_start { get; private set; }
     private int debris_timeline_index = 0;
     
     void Awake()

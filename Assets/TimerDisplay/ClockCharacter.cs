@@ -1,7 +1,5 @@
-using System;
 using AYellowpaper.SerializedCollections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class ClockCharacter : MonoBehaviour
 {
@@ -32,7 +30,6 @@ public class ClockCharacter : MonoBehaviour
     
     public SerializedDictionary<SegmentType, GameObject> segments;
     public ClockCharacterSegmentsMap character_segments_map;
-    public Character thing;
 
     public void setCharacter(Character _character)
     {
@@ -51,15 +48,5 @@ public class ClockCharacter : MonoBehaviour
                 segments[current_segment].SetActive(false);
             }
         }
-    }
-
-    private void Start()
-    {
-        GameManager.Instance.InputHandler.input_asset.InputActionMap.Debug.started += test;
-    }
-
-    private void test(InputAction.CallbackContext _context)
-    {
-        setCharacter(thing);
     }
 }
