@@ -1,6 +1,4 @@
-using System.Xml;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]

@@ -20,7 +20,8 @@ public class AudioManager : MonoBehaviour
         WALKING,
         RUNNING,
         WIN, 
-        LOSE
+        LOSE,
+        WARNING_SIREN
     }
 
     public List<Sound> sounds;
@@ -151,6 +152,16 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(volumeControl(source_sound_pair.first, source_sound_pair.second.volume, _volume_control, _duration));
         return source_sound_pair;
     }
+    
+    // Provided AudioSource with provided duration.
+    public Pair<AudioSource, Sound> PlaySound(AudioSource _source, bool _loop, bool _two_dimensional, Vector3 _position,
+        SoundID _sound_id, float _duration)
+    {
+        var source_sound_pair = PlaySound(_source, _loop, _two_dimensional, _position, _sound_id);
+        StartCoroutine(delayedDeactivation(source_sound_pair.first, _duration));
+        
+        return source_sound_pair;
+    }
 
     private IEnumerator volumeControl(AudioSource _source, float _max_volume, intensityControlFunction _volume_control_function, float _duration)
     {
@@ -171,6 +182,19 @@ public class AudioManager : MonoBehaviour
             
             elapsed += Time.deltaTime;
             vol_change_timer += Time.deltaTime;
+            yield return null;
+        }
+        
+        _source.Stop();
+    }
+
+    private IEnumerator delayedDeactivation(AudioSource _source, float _duration)
+    {
+        float elapsed = 0.0f;
+        
+        while (elapsed < _duration)
+        {
+            elapsed += Time.deltaTime;
             yield return null;
         }
         
