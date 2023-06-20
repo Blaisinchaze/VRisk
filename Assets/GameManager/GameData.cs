@@ -17,6 +17,6 @@ public class GameData : ScriptableObject
 
     private void Awake()
     {
-        NextScene = 2;
+        NextScene = 1;
     }
 }

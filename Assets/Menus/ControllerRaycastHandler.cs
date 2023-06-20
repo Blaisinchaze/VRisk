@@ -7,8 +7,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class ControllerRaycastHandler : MonoBehaviour
 {
-    public bool inside_menu = false;
-
     public XRBaseController left_controller;
     public XRBaseController right_controller;
 
@@ -22,7 +20,9 @@ public class ControllerRaycastHandler : MonoBehaviour
     
     private InputAction trigger_right_pressed;
     private InputAction trigger_right_touched;
-    
+
+    [SerializeField] private bool start_deactivated = false;
+
     private enum CastSide
     {
         Left,
@@ -44,53 +44,52 @@ public class ControllerRaycastHandler : MonoBehaviour
         trigger_left_touched = GameManager.Instance.InputHandler.input_asset.InputActionMap.TouchLeft_Hand;
         trigger_right_pressed = GameManager.Instance.InputHandler.input_asset.InputActionMap.InteractRight_Hand;
         trigger_right_touched = GameManager.Instance.InputHandler.input_asset.InputActionMap.TouchRight_Hand;
+
+        if (start_deactivated) ChangeState(false);
     }
-    
-    void FixedUpdate()
+
+    void Update()
     {
-        if (inside_menu)
+        //Uses touch and press to cast a line if the player is using the left controller to point
+        if (current != CastSide.Left)
         {
-            //Uses touch and press to cast a line if the player is using the left controller to point
-            if (current != CastSide.Left)
+            if (trigger_left_touched.triggered || trigger_left_pressed.triggered)
             {
-                if (trigger_left_touched.triggered || trigger_left_pressed.triggered)
-                {
-                    current = CastSide.Left;
-                }
+                current = CastSide.Left;
             }
-            
-            //Same but with the right controller instead
-            if (current != CastSide.Right)
+        }
+
+        //Same but with the right controller instead
+        if (current != CastSide.Right)
+        {
+            if (trigger_right_touched.triggered || trigger_right_pressed.triggered)
             {
-                if (trigger_right_touched.triggered || trigger_right_pressed.triggered)
-                {
-                    current = CastSide.Right;
-                }
+                current = CastSide.Right;
+            }
+        }
+
+        //Sets the correct line to be casted in a menu
+        if (current != previous)
+        {
+            switch (current)
+            {
+                case CastSide.Left:
+                    LeftState(true);
+                    RightState(false);
+                    break;
+
+                case CastSide.Right:
+                    LeftState(false);
+                    RightState(true);
+                    break;
+
+                case CastSide.None:
+                    LeftState(false);
+                    RightState(false);
+                    break;
             }
 
-            //Sets the correct line to be casted in a menu
-            if (current != previous)
-            {
-                switch (current)
-                {
-                    case CastSide.Left:
-                        LeftState(true);
-                        RightState(false);
-                        break;
-
-                    case CastSide.Right:
-                        LeftState(false);
-                        RightState(true);
-                        break;
-                    
-                    case CastSide.None:
-                        LeftState(false);
-                        RightState(false);
-                        break;
-                }
-                
-                previous = current;
-            }
+            previous = current;
         }
     }
 
@@ -104,5 +103,19 @@ public class ControllerRaycastHandler : MonoBehaviour
     {
         right_cast.enabled = active;
         right_ray.enabled = active;
+    }
+
+    public void ChangeState(bool state)
+    {
+        if (state)
+        {
+            enabled = true;
+        }
+        else
+        {
+            enabled = false;
+            RightState(false);
+            LeftState(false);
+        }
     }
 }

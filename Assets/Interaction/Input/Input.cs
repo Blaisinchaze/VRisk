@@ -116,6 +116,15 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""5cf8b9ff-85fb-4dd9-834a-ffc80094b2f3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -360,6 +369,17 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""action"": ""Touch(Right_Hand)"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c0aec2d0-4c93-4058-a8fc-ebdfa6494db7"",
+                    ""path"": ""<XRController>{LeftHand}/menu"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -378,6 +398,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         m_InputActionMap_InteractRight_Hand = m_InputActionMap.FindAction("Interact(Right_Hand)", throwIfNotFound: true);
         m_InputActionMap_TouchLeft_Hand = m_InputActionMap.FindAction("Touch(Left_Hand)", throwIfNotFound: true);
         m_InputActionMap_TouchRight_Hand = m_InputActionMap.FindAction("Touch(Right_Hand)", throwIfNotFound: true);
+        m_InputActionMap_Pause = m_InputActionMap.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -447,6 +468,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
     private readonly InputAction m_InputActionMap_InteractRight_Hand;
     private readonly InputAction m_InputActionMap_TouchLeft_Hand;
     private readonly InputAction m_InputActionMap_TouchRight_Hand;
+    private readonly InputAction m_InputActionMap_Pause;
     public struct InputActionMapActions
     {
         private @Input m_Wrapper;
@@ -461,6 +483,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         public InputAction @InteractRight_Hand => m_Wrapper.m_InputActionMap_InteractRight_Hand;
         public InputAction @TouchLeft_Hand => m_Wrapper.m_InputActionMap_TouchLeft_Hand;
         public InputAction @TouchRight_Hand => m_Wrapper.m_InputActionMap_TouchRight_Hand;
+        public InputAction @Pause => m_Wrapper.m_InputActionMap_Pause;
         public InputActionMap Get() { return m_Wrapper.m_InputActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -500,6 +523,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @TouchRight_Hand.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchRight_Hand;
                 @TouchRight_Hand.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchRight_Hand;
                 @TouchRight_Hand.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchRight_Hand;
+                @Pause.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_InputActionMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -534,6 +560,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @TouchRight_Hand.started += instance.OnTouchRight_Hand;
                 @TouchRight_Hand.performed += instance.OnTouchRight_Hand;
                 @TouchRight_Hand.canceled += instance.OnTouchRight_Hand;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -550,5 +579,6 @@ public partial class @Input : IInputActionCollection2, IDisposable
         void OnInteractRight_Hand(InputAction.CallbackContext context);
         void OnTouchLeft_Hand(InputAction.CallbackContext context);
         void OnTouchRight_Hand(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

@@ -36,7 +36,7 @@ public class MenuInputManager : MonoBehaviour
 
     public void StartSimulation()
     {
-        data.NextScene = (int)GameData.SceneIndex.MIAN_MENU;
+        data.NextScene = (int)GameData.SceneIndex.SIMULATION;
         transitionManager.LoadNextScene();
     }
     

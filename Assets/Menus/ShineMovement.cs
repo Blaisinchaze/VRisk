@@ -7,6 +7,9 @@ public class ShineMovement : MonoBehaviour
 {
     public bool shining = true;
     public bool repeat_shine = true;
+
+    public bool apply_delay = false;
+    public float delay = 0.5f;
     
     [SerializeField] private float shine_speed;
     [SerializeField] private float leap = 100;
@@ -17,6 +20,7 @@ public class ShineMovement : MonoBehaviour
     private Vector2 final_pos;
     
     private float shine_timer = 0;
+    private float delay_timer = 0;
 
     void Awake()
     {
@@ -32,6 +36,12 @@ public class ShineMovement : MonoBehaviour
     void FixedUpdate()
     {
         if (!shining) return;
+
+        if (apply_delay && delay_timer < delay)
+        {
+            delay_timer += Time.fixedDeltaTime;
+            return;
+        }
 
         shine_timer += Time.fixedDeltaTime;
         if (shine_timer > shine_duration)
