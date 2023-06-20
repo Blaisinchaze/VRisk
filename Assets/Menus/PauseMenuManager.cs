@@ -11,6 +11,7 @@ public class PauseMenuManager : MonoBehaviour
     public ViewController viewController;
     public ControllerRaycastHandler raycastHandler;
     public UIAnchor canvasAnchor;
+    public PauseFadeManager pauseFadeManager;
 
     public bool menuIsOpen = false;
     
@@ -38,10 +39,12 @@ public class PauseMenuManager : MonoBehaviour
         
         if (menuIsOpen)
         {
+            pauseFadeManager.FadeIn();
             canvasAnchor.PopIn();
         }
         else
         {
+            pauseFadeManager.FadeOut();
             canvasAnchor.PopOut();
         }
         
