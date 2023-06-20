@@ -16,17 +16,18 @@ public class DebrisScript : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         ContactPoint contact = other.GetContact(0);
-
-        if (falling)
+        
+        if (falling && contact.otherCollider.CompareTag("Floor"))
         {
             Quaternion rotation = Quaternion.LookRotation(other.contacts[0].normal);
 
-            GameManager.Instance.ParticleManager.triggerEffect(ParticleManager.ParticleID.DEBRIS_IMPACT, contact.point,
-                rotation.eulerAngles);
+            GameManager.Instance.ParticleManager.triggerEffect(ParticleManager.ParticleID.DEBRIS_IMPACT,
+                contact.point, rotation.eulerAngles);
+
             GameManager.Instance.AudioManager.PlaySound(false, false, contact.point,
                 AudioManager.SoundID.DEBRIS_COLLISION);
 
-            if (contact.otherCollider.CompareTag("Floor")) falling = false;
+            falling = false;
         }
     }
 

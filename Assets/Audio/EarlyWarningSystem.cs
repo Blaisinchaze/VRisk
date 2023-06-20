@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class EarlyWarningSystem : MonoBehaviour
 {
@@ -8,6 +10,16 @@ public class EarlyWarningSystem : MonoBehaviour
     private void Awake()
     {
         sources.AddRange(transform.GetComponentsInChildren<AudioSource>());
+    }
+
+    private void Start()
+    {
+        GameManager.Instance.InputHandler.input_asset.InputActionMap.Debug.started += test;
+    }
+
+    public void test(InputAction.CallbackContext _context)
+    {
+        triggerWarningSiren(10);
     }
 
     public void triggerWarningSiren(float _duration)

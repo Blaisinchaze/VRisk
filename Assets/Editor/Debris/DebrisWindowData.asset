@@ -16,14 +16,14 @@ MonoBehaviour:
   low_risk_tag: Beige
   mid_risk_tag: Yellow
   high_risk_tag: Red
-  safe_risk_debris_max: 40
-  low_risk_debris_max: 0
-  mid_risk_debris_max: 0
-  high_risk_debris_max: 0
-  safe_risk_debris_min: 40
-  low_risk_debris_min: 0
-  mid_risk_debris_min: 0
-  high_risk_debris_min: 0
+  safe_risk_debris_max: 10
+  low_risk_debris_max: 20
+  mid_risk_debris_max: 30
+  high_risk_debris_max: 40
+  safe_risk_debris_min: 5
+  low_risk_debris_min: 15
+  mid_risk_debris_min: 25
+  high_risk_debris_min: 30
   points_per_mesh: 20
   direction_max_horizontal_rotation: 0
   direction_min_horizontal_rotation: 90

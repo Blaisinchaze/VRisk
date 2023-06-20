@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -21,9 +20,6 @@ public class TimerDisplay : MonoBehaviour
 
     public void startTimerDisplay()
     {
-        seconds = 0;
-        minutes = 0;
-
         active = true;
         StartCoroutine(updateTimer());
     }
