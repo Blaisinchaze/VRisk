@@ -12,6 +12,7 @@ public class PauseMenuManager : MonoBehaviour
     public ControllerRaycastHandler raycastHandler;
     public UIAnchor canvasAnchor;
     public PauseFadeManager pauseFadeManager;
+    public MenuInputManager menuInputManager;
 
     public bool menuIsOpen = false;
     
@@ -28,16 +29,35 @@ public class PauseMenuManager : MonoBehaviour
     {
         if (pausePressed.triggered && !busy)
         {
-            StartCoroutine(OpenCloseMenu());
+            StartCoroutine(OpenCloseMenuCoroutine());
+        }
+    }
+    
+    public void CloseMenu()
+    {
+        if (!busy)
+        {
+            menuIsOpen = true;
+            StartCoroutine(OpenCloseMenuCoroutine());
+        }
+    }
+    
+    public void OpenMenu()
+    {
+        if (!busy)
+        {
+            menuIsOpen = false;
+            StartCoroutine(OpenCloseMenuCoroutine());
         }
     }
 
-    private IEnumerator OpenCloseMenu()
+    // --------------------------------------------------------------------
+
+    private IEnumerator OpenCloseMenuCoroutine()
     {
         busy = true;
-        menuIsOpen = !menuIsOpen;
-        
-        if (menuIsOpen)
+
+        if (!menuIsOpen)
         {
             pauseFadeManager.FadeIn();
             canvasAnchor.PopIn();
@@ -46,15 +66,17 @@ public class PauseMenuManager : MonoBehaviour
         {
             pauseFadeManager.FadeOut();
             canvasAnchor.PopOut();
+            menuInputManager.CloseSettings();
         }
         
-        if(!menuIsOpen) yield return new WaitForSeconds(canvasAnchor.animation_time * 1.15f);
+        if(menuIsOpen) yield return new WaitForSeconds(canvasAnchor.animation_time * 1.15f);
         
         //Stops movement and enables ray casting
-        movementController.enabled = !menuIsOpen;
-        viewController.enabled = !menuIsOpen;
-        raycastHandler.ChangeState(menuIsOpen);
+        movementController.enabled = menuIsOpen;
+        viewController.enabled = menuIsOpen;
+        raycastHandler.ChangeState(!menuIsOpen);
         
         busy = false;
+        menuIsOpen = !menuIsOpen;
     }
 }

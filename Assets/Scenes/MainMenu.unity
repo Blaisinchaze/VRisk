@@ -1387,9 +1387,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3441dfec7393db49a1b69277a859d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inside_menu: 1
   left_controller: {fileID: 1557924511}
   right_controller: {fileID: 1501176599}
+  start_deactivated: 0
 --- !u!1 &325886484
 GameObject:
   m_ObjectHideFlags: 0
@@ -4582,6 +4582,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 1403249556}
+  animation_time: 0.8
+  start_unactive: 0
   apply_offset: 0
   Inital_offset: 7000
   view_angle: 75
@@ -5219,6 +5221,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 1403249556}
+  animation_time: 0.8
+  start_unactive: 0
   apply_offset: 1
   Inital_offset: 9000
   view_angle: 75
@@ -7503,7 +7507,7 @@ MonoBehaviour:
   m_SphereCastRadius: 0.1
   m_RaycastMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 32
   m_RaycastTriggerInteraction: 1
   m_HitClosestOnly: 0
   m_HoverToSelect: 0
@@ -7882,7 +7886,7 @@ MonoBehaviour:
   m_SphereCastRadius: 0.1
   m_RaycastMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 32
   m_RaycastTriggerInteraction: 1
   m_HitClosestOnly: 0
   m_HoverToSelect: 0
@@ -8316,8 +8320,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: a6b60318d2973d945b6c54e5df97169e, type: 2}
   transitionManager: {fileID: 1791993180}
-  mainMenu: {fileID: 325886484}
-  settingsMenu: {fileID: 1069903695}
+  pauseManager: {fileID: 0}
+  menuOne: {fileID: 325886484}
+  menuTwo: {fileID: 1069903695}
   defaultPos: {x: 0, y: 0, z: 0}
   slidePos: {x: -2.5, y: 0, z: 0}
   animationDuration: 0.7

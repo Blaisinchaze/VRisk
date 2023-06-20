@@ -107,15 +107,8 @@ public class ControllerRaycastHandler : MonoBehaviour
 
     public void ChangeState(bool state)
     {
-        if (state)
-        {
-            enabled = true;
-        }
-        else
-        {
-            enabled = false;
-            RightState(false);
-            LeftState(false);
-        }
+        enabled = state;
+        RightState(state);
+        LeftState(state);
     }
 }

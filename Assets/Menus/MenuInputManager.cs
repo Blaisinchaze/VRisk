@@ -2,17 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class MenuInputManager : MonoBehaviour
 {
     public GameData data;
     public TransitionManager transitionManager;
+    public PauseMenuManager pauseManager;
     
-    public GameObject mainMenu;
-    public GameObject settingsMenu;
+    public GameObject menuOne;
+    public GameObject menuTwo;
     
-    private MenuController mainMenuController;
-    private MenuController settingsMenuController;
+    private MenuController menuOneController;
+    private MenuController menuTwoController;
 
     [SerializeField] private Vector3 defaultPos;
     [SerializeField] private Vector3 slidePos;
@@ -25,28 +27,37 @@ public class MenuInputManager : MonoBehaviour
     
     private void Awake()
     {
-        mainMenuController = mainMenu.GetComponent<MenuController>();
-        settingsMenuController = settingsMenu.GetComponent<MenuController>();
+        menuOneController = menuOne.GetComponent<MenuController>();
+        menuTwoController = menuTwo.GetComponent<MenuController>();
     }
 
     private void Start()
     {
-        defaultPos = mainMenu.transform.localPosition;
+        defaultPos = menuOne.transform.localPosition;
     }
 
-    public void StartSimulation()
-    {
-        data.NextScene = (int)GameData.SceneIndex.SIMULATION;
-        transitionManager.LoadNextScene();
-    }
-    
+    // ------------------------------------------------------------------
+
     public void OpenCloseSettings()
     {
         //Ignore input if animation is not finished
         if (busy) return;
 
         StartCoroutine(OpenCloseCoroutine());
-        isOpen = !isOpen;
+    }
+
+    public void CloseSettings()
+    {
+        if (busy) return;
+
+        isOpen = true;
+        StartCoroutine(OpenCloseCoroutine());
+    }
+    
+    public void StartSimulation()
+    {
+        data.NextScene = (int)GameData.SceneIndex.SIMULATION;
+        transitionManager.LoadNextScene();
     }
 
     public void CloseSimulation()
@@ -55,8 +66,24 @@ public class MenuInputManager : MonoBehaviour
         Application.Quit();
     }
 
-    // --------------------------------------------------------------------
+    public void ResumeSimulation()
+    {
+        CloseSettings();
 
+        if (pauseManager != null)
+        {
+            pauseManager.CloseMenu();
+        }
+    }
+
+    public void GoBackToMainMenu()
+    {
+        data.NextScene = (int)GameData.SceneIndex.MIAN_MENU;
+        transitionManager.LoadNextScene();
+    }
+    
+    // -------------------------------------------------------------------
+    
     private IEnumerator OpenCloseCoroutine()
     {
         busy = true;
@@ -64,18 +91,19 @@ public class MenuInputManager : MonoBehaviour
         //Closes/opens menu depending on the last action, uses easing for smooth motion
         if (isOpen)
         {
-            settingsMenuController.CloseMenu();
+            menuTwoController.CloseMenu();
             yield return new WaitForSeconds(delay);
-            mainMenu.transform.LeanMoveLocal(defaultPos, animationDuration).setEaseInOutBack();
+            menuOne.transform.LeanMoveLocal(defaultPos, animationDuration).setEaseInOutBack();
         }
         else
         {
-            mainMenu.transform.LeanMoveLocal(slidePos, animationDuration).setEaseInOutBack();
+            menuOne.transform.LeanMoveLocal(slidePos, animationDuration).setEaseInOutBack();
             yield return new WaitForSeconds(delay);
-            settingsMenuController.OpenMenu();
+            menuTwoController.OpenMenu();
         }
 
         yield return new WaitForSeconds(delay);
+        isOpen = !isOpen;
         busy = false;
     }
 }
