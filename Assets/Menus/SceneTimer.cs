@@ -20,8 +20,7 @@ public class SceneTimer : MonoBehaviour
 
         if (timer > hold_time)
         {
-            trans_manager.GoToScene(data.NextScene);
-            timer = 0;
+            trans_manager.AsyncLoadNextScene();
         }
     }
 }

@@ -285,7 +285,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1575636215}
         m_TargetAssemblyTypeName: MenuInputManager, Assembly-CSharp
-        m_MethodName: CloseSettings
+        m_MethodName: OpenCloseSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2917,8 +2917,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1575636215}
-        m_TargetAssemblyTypeName: MainMenuInputManager, Assembly-CSharp
-        m_MethodName: StartPressed
+        m_TargetAssemblyTypeName: MenuInputManager, Assembly-CSharp
+        m_MethodName: StartSimulation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4970,6 +4970,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 1403249556}
+  apply_offset: 1
+  Inital_offset: 7000
   view_angle: 75
   walk_area: 0.5
   lerp_speed_rot: 5
@@ -5480,7 +5482,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1181118663}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1575636215}
+        m_TargetAssemblyTypeName: MenuInputManager, Assembly-CSharp
+        m_MethodName: CloseSimulation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1181118663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7897,14 +7911,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44990dbbab5521540b6f05272f63486b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: a6b60318d2973d945b6c54e5df97169e, type: 2}
+  transitionManager: {fileID: 1791993180}
   mainMenu: {fileID: 325886484}
   settingsMenu: {fileID: 1069903695}
   defaultPos: {x: 0, y: 0, z: 0}
   slidePos: {x: -2.5, y: 0, z: 0}
-  targetPos: {x: 0, y: 0, z: 0}
-  lerpSpeed: 3.5
-  openDelay: 0.5
-  closeDelay: 0.5
+  animationDuration: 0.7
+  delay: 0.5
 --- !u!1 &1590402118
 GameObject:
   m_ObjectHideFlags: 0
@@ -8698,6 +8712,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 1, y: 1}
   m_UseGraphicAlpha: 0
+--- !u!114 &1791993180 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2748176001354899480, guid: 690b3a74e6cc79d41a8a8057514660f7,
+    type: 3}
+  m_PrefabInstance: {fileID: 2053107099}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83adeb6a62cbda74d94066eb5073f071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1811245927
 GameObject:
   m_ObjectHideFlags: 0
@@ -9479,9 +9505,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2748176001354899480, guid: 690b3a74e6cc79d41a8a8057514660f7,
         type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: a6b60318d2973d945b6c54e5df97169e,
+        type: 2}
+    - target: {fileID: 2748176001354899480, guid: 690b3a74e6cc79d41a8a8057514660f7,
+        type: 3}
       propertyPath: fade_screen
       value: 
       objectReference: {fileID: 2099143708}
+    - target: {fileID: 2748176001354899480, guid: 690b3a74e6cc79d41a8a8057514660f7,
+        type: 3}
+      propertyPath: transitioning
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7142194067318052051, guid: 690b3a74e6cc79d41a8a8057514660f7,
         type: 3}
       propertyPath: m_Name

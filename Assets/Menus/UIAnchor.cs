@@ -7,7 +7,10 @@ using UnityEngine.Serialization;
 public class UIAnchor : MonoBehaviour
 {
     public GameObject camera;
-    
+
+    [SerializeField] private bool apply_offset = false;
+    [SerializeField] private float Inital_offset = 7000f;
+
     [SerializeField] private float view_angle = 45.0f;
     [SerializeField] private float walk_area = 0.5f;
     [SerializeField] private float lerp_speed_rot = 5.0f;
@@ -23,6 +26,15 @@ public class UIAnchor : MonoBehaviour
     private void Awake()
     {
         default_pos = transform.position;
+    }
+
+    private void Start()
+    {
+        if (apply_offset)
+        {
+            //Doing so makes the menu fall from the sky, its just something easy that adds a nice touch
+            transform.position = new Vector3(default_pos.x, default_pos.y + Inital_offset, default_pos.z);
+        }
     }
 
     private void Update()

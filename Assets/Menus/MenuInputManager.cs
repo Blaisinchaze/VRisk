@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class MenuInputManager : MonoBehaviour
 {
+    public GameData data;
+    public TransitionManager transitionManager;
+    
     public GameObject mainMenu;
     public GameObject settingsMenu;
     
@@ -13,11 +16,9 @@ public class MenuInputManager : MonoBehaviour
 
     [SerializeField] private Vector3 defaultPos;
     [SerializeField] private Vector3 slidePos;
-    [SerializeField] private Vector3 targetPos;
-    [SerializeField] private float lerpSpeed = 3.5f;
-    
-    [SerializeField] private float openDelay = 0.5f;
-    [SerializeField] private float closeDelay = 0.5f;
+
+    [SerializeField] private float animationDuration = 0.5f;
+    [SerializeField] private float delay = 0.5f;
 
     private bool isOpen = false;
     private bool busy = false;
@@ -33,41 +34,48 @@ public class MenuInputManager : MonoBehaviour
         defaultPos = mainMenu.transform.localPosition;
     }
 
+    public void StartSimulation()
+    {
+        data.NextScene = (int)GameData.SceneIndex.MIAN_MENU;
+        transitionManager.LoadNextScene();
+    }
+    
     public void OpenCloseSettings()
     {
+        //Ignore input if animation is not finished
         if (busy) return;
 
         StartCoroutine(OpenCloseCoroutine());
         isOpen = !isOpen;
     }
 
-    private void Update()
+    public void CloseSimulation()
     {
-        if (!VectorHelper.ApproximatelyEqual(mainMenu.transform.localPosition, targetPos, 0.01f))
-        {
-            mainMenu.transform.localPosition =
-                Vector3.Lerp(mainMenu.transform.localPosition, targetPos, lerpSpeed * Time.deltaTime);
-            busy = true;
-        }
-        else
-        {
-            busy = false;
-        }
+        //Simply closes the game
+        Application.Quit();
     }
+
+    // --------------------------------------------------------------------
 
     private IEnumerator OpenCloseCoroutine()
     {
+        busy = true;
+        
+        //Closes/opens menu depending on the last action, uses easing for smooth motion
         if (isOpen)
         {
             settingsMenuController.CloseMenu();
-            yield return new WaitForSeconds(closeDelay);
-            targetPos = defaultPos;
+            yield return new WaitForSeconds(delay);
+            mainMenu.transform.LeanMoveLocal(defaultPos, animationDuration).setEaseInOutBack();
         }
         else
         {
-            targetPos = slidePos;
-            yield return new WaitForSeconds(openDelay);
+            mainMenu.transform.LeanMoveLocal(slidePos, animationDuration).setEaseInOutBack();
+            yield return new WaitForSeconds(delay);
             settingsMenuController.OpenMenu();
         }
+
+        yield return new WaitForSeconds(delay);
+        busy = false;
     }
 }

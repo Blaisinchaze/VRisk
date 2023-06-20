@@ -6,8 +6,11 @@ public class FadeScreen : MonoBehaviour
 {
     public bool fade_on_start = true;
     public bool clear_on_start = false;
+    
     public float fade_duration = 2;
+    public float unfade_delay = 0.15f;
     public Color fade_color;
+    
     private Renderer rend;
     private MeshRenderer mesh_rend;
     
@@ -44,6 +47,8 @@ public class FadeScreen : MonoBehaviour
         StartCoroutine(FadeRoutine(_alpha_in, _alpha_out));
     }
 
+    // --------------------------------------------------------------------------    
+    
     public IEnumerator FadeRoutine(float _alpha_in, float _alpha_out)
     {
         mesh_rend.enabled = true;
@@ -67,7 +72,7 @@ public class FadeScreen : MonoBehaviour
 
     public IEnumerator DelayedRenderState(bool _state)
     {
-        yield return new WaitForSeconds(fade_duration);
+        yield return new WaitForSeconds(fade_duration + unfade_delay);
         mesh_rend.enabled = _state;
     }
 }

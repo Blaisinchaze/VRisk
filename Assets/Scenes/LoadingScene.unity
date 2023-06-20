@@ -869,7 +869,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 1970350734}
   view_angle: 35
-  lerp_speed: 3.5
+  walk_area: 0.5
+  lerp_speed_rot: 5
+  lerp_speed_pos: 3
 --- !u!1 &1652290511
 GameObject:
   m_ObjectHideFlags: 0
@@ -1252,6 +1254,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2748176001354899480, guid: 690b3a74e6cc79d41a8a8057514660f7,
+        type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: a6b60318d2973d945b6c54e5df97169e,
+        type: 2}
     - target: {fileID: 2748176001354899480, guid: 690b3a74e6cc79d41a8a8057514660f7,
         type: 3}
       propertyPath: fade_screen
