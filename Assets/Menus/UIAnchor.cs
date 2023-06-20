@@ -15,11 +15,11 @@ public class UIAnchor : MonoBehaviour
     [SerializeField] private float walk_area = 0.5f;
     [SerializeField] private float lerp_speed_rot = 5.0f;
     [SerializeField] private float lerp_speed_pos = 3.0f;
-
+    [SerializeField] private float threshold = 0.05f;
+    
     private bool reset_angle = true;
     private bool reset_pos = true;
-    private float threshold = 0.05f;
-    
+
     private Vector3 default_pos;
     private Vector3 anchor_pos;
     
