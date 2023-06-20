@@ -2688,7 +2688,7 @@ Transform:
   m_Children:
   - {fileID: 358134723}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &449114695
 MonoBehaviour:
@@ -2702,7 +2702,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3324fec19a58cb24baeed88374fb6e7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound: {fileID: 11400000, guid: b848ef345e3c22445b87bb16e2742942, type: 2}
   sources: []
 --- !u!43 &465256538
 Mesh:
@@ -5121,7 +5120,7 @@ Transform:
   - {fileID: 17099625}
   - {fileID: 1875917206}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &877326826
 Mesh:
@@ -11000,7 +10999,7 @@ Transform:
   - {fileID: 599916905}
   - {fileID: 1824460713}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1786443200
 Mesh:
@@ -13362,7 +13361,7 @@ PrefabInstance:
     - target: {fileID: 2073369825302991534, guid: 0efaad1d0687e7e4193a3ee218bdc9fe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2073369825302991534, guid: 0efaad1d0687e7e4193a3ee218bdc9fe,
         type: 3}
@@ -15376,6 +15375,11 @@ PrefabInstance:
       propertyPath: feedback_handler
       value: 
       objectReference: {fileID: 1078785968}
+    - target: {fileID: 6200711137863556584, guid: 1fffdbe8acf11e940beec20ed7afb24e,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6200711137863556590, guid: 1fffdbe8acf11e940beec20ed7afb24e,
         type: 3}
       propertyPath: m_RootOrder
@@ -15431,10 +15435,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6200711137863556591, guid: 1fffdbe8acf11e940beec20ed7afb24e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6200711137863556595, guid: 1fffdbe8acf11e940beec20ed7afb24e,
         type: 3}
       propertyPath: m_Name
       value: PlayerRig
+      objectReference: {fileID: 0}
+    - target: {fileID: 6200711138064417365, guid: 1fffdbe8acf11e940beec20ed7afb24e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6363815041349882408, guid: 1fffdbe8acf11e940beec20ed7afb24e,
         type: 3}
