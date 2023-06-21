@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public int seed = 0;
     public static GameManager Instance { get; private set; }
+    
+    public TimelineManager TimelineManager { get; private set; }
     public BuildingManager BuildingManager { get; private set; }
     public HapticFeedbackHandler HapticFeedbackHandler { get; private set; }
     public InputHandler InputHandler { get; private set; }
@@ -30,6 +32,7 @@ public class GameManager : MonoBehaviour
         AudioManager = GetComponentInChildren<AudioManager>();
         ParticleManager = GetComponentInChildren<ParticleManager>();
         DebrisHandler = GetComponentInChildren<DebrisHandler>();
+        TimelineManager = GetComponentInChildren<TimelineManager>();
 
         Player = GameObject.FindWithTag("Player");
 

@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class TimerDisplay : MonoBehaviour
@@ -10,23 +9,15 @@ public class TimerDisplay : MonoBehaviour
 
     private int seconds;
     private int minutes;
-
-    private bool active = false;
-
-    private void Start()
+    
+    public void updateTimer(float _time_in_secs)
     {
-        startTimerDisplay();
-    }
+        int seconds_since_start = Mathf.FloorToInt(_time_in_secs);
 
-    public void startTimerDisplay()
-    {
-        active = true;
-        StartCoroutine(updateTimer());
-    }
+        seconds = seconds_since_start % 60;
+        minutes = seconds_since_start / 60;
 
-    public void stopTimer()
-    {
-        active = false;
+        updateDisplay();
     }
 
     public void resetTimer()
@@ -37,7 +28,7 @@ public class TimerDisplay : MonoBehaviour
         updateDisplay();
     }
 
-    public void updateDisplay()
+    private void updateDisplay()
     {
         ClockCharacter.Character secondsOnes = (ClockCharacter.Character)(seconds % 10);
         ClockCharacter.Character secondsTens = (ClockCharacter.Character)(seconds / 10);
@@ -50,23 +41,5 @@ public class TimerDisplay : MonoBehaviour
 
         minutes_ones_char.setCharacter(minutesOnes);
         minutes_tens_char.setCharacter(minutesTens);
-    }
-
-    IEnumerator updateTimer()
-    {
-        while (active)
-        {
-            yield return new WaitForSeconds(1);
-
-            seconds++;
-
-            if (seconds >= 60)
-            {
-                minutes++;
-                seconds = 0;
-            }
-
-            updateDisplay();
-        }
     }
 }

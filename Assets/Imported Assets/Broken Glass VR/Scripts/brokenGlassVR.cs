@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class brokenGlassVR : MonoBehaviour {
 	public Material _glassMat;

@@ -30,22 +30,27 @@ public class ClockCharacter : MonoBehaviour
     
     public SerializedDictionary<SegmentType, GameObject> segments;
     public ClockCharacterSegmentsMap character_segments_map;
+    public Character character = Character.ZERO;
 
     public void setCharacter(Character _character)
     {
-        var char_segments = character_segments_map.characters[_character];
-        
-        for (int i = 0; i < 7; ++i)
+        if (_character != character)
         {
-            SegmentType current_segment = (SegmentType)i;
+            character = _character;
+            var char_segments = character_segments_map.characters[_character];
 
-            if (char_segments.Contains(current_segment))
+            for (int i = 0; i < 7; ++i)
             {
-                segments[current_segment].SetActive(true);
-            }
-            else
-            {
-                segments[current_segment].SetActive(false);
+                SegmentType current_segment = (SegmentType) i;
+
+                if (char_segments.Contains(current_segment))
+                {
+                    segments[current_segment].SetActive(true);
+                }
+                else
+                {
+                    segments[current_segment].SetActive(false);
+                }
             }
         }
     }
