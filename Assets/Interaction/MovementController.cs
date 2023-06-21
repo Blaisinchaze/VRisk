@@ -23,7 +23,10 @@ public class MovementController : MonoBehaviour
     private bool left_mov = false;
     private bool right_mov = false;
 
-    private float timer = 0.0f;
+    /// <summary>
+    /// PAIN - PLEZ DESTROY - TIMERS SHOULD NOT START AT ANYTHING OTHER THAN 0!
+    /// </summary>
+    private float timer = 2.0f;
 
     private float speed_multiplier = 100.0f;
     public float ratio_of_motion = 0.0f;
