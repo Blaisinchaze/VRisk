@@ -8,7 +8,7 @@ public class ButtonAnimator : MonoBehaviour
 {
     public Outline outline;
 
-    private void Awake()
+    private void Start()
     {
         outline = this.GetComponent<Outline>();
     }
