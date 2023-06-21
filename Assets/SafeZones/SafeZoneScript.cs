@@ -6,24 +6,28 @@ public class SafeZoneScript : MonoBehaviour
     public NavigationArrow nav_arrow;
     public TimerDisplay timer;
     public GameObject celebration_effects;
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            GameManager.Instance.AudioManager.PlaySound(false, false, head.transform.position,
-                AudioManager.SoundID.WIN);
-            
+            // Celebrate
+            GameManager.Instance.AudioManager.PlaySound(false, false, head.transform.position, AudioManager.SoundID.WIN);
             celebration_effects.SetActive(true);
-            Debug.Log("transition");
-
+            
+            
             nav_arrow.navigating = false;
-            timer.stopTimer();
+            GameManager.Instance.TimelineManager.quake_active = false;
+            
+            Debug.Log("transition");
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        nav_arrow.navigating = true;
-        timer.startTimerDisplay();
+        if (other.gameObject.CompareTag("Player"))
+        {
+            nav_arrow.navigating = true;
+        }
     }
 }
