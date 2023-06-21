@@ -38,7 +38,6 @@ public class MovementController : MonoBehaviour
     public GameObject feet_object;
     public AudioSource feet_audio_source;
     public GameObject head;
-    public brokenGlassVR lens_glass;
 
     void Start()
     {
@@ -163,7 +162,6 @@ public class MovementController : MonoBehaviour
             if (contact.otherCollider.gameObject.GetComponent<DebrisScript>().falling)
             {
                 GameManager.Instance.AudioManager.PlaySound(false, false, head.transform.position, AudioManager.SoundID.LOSE);
-                lens_glass.GlassShatter();
                 Debug.Log("die");
             }
         }
