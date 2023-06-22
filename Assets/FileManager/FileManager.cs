@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class FileManager : MonoBehaviour
 {
-    public static string getFile(string _editor_path, string _android_path)
+    public static string getFileContents(string _editor_path, string _android_path)
     {
         string path = getFilePath(_editor_path, _android_path);
 
@@ -25,7 +25,7 @@ public class FileManager : MonoBehaviour
     
     public static string[][] parseCSV(string fileContents)
     {
-        string[] lines = fileContents.Split(',');
+        string[] lines = fileContents.Split('\n');
         
         string[][] data = new string[lines.Length][];
         for (int i = 0; i < lines.Length; i++)
@@ -34,5 +34,24 @@ public class FileManager : MonoBehaviour
         }
 
         return data;
+    }
+
+    public static void saveToFile(string _editor_path, string _android_path, string _content)
+    {
+        string path = getFilePath(_editor_path, _android_path);
+        File.WriteAllText(path, _content);
+    }
+
+    public static void saveToCSV(string _editor_path, string _android_path, string[][] _content)
+    {
+        string path = getFilePath(_editor_path, _android_path);
+
+        using (StreamWriter sw = new StreamWriter(path))
+        {
+            for (int i = 0; i < _content.Length; i++)
+            {
+                sw.WriteLine(string.Join(",", _content[i]));
+            }
+        }
     }
 }
