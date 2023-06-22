@@ -1,44 +1,74 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
-using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
 public class MenuController : MonoBehaviour
 {
-    public float animationTime = 0.5f;
-    
-    //private GameObject canvas;
+    public enum OpenMode
+    {
+        SCALE,
+        SLIDE
+    }
 
+    public OpenMode openMode = OpenMode.SCALE;
+    public float animationTime = 0.5f;
+
+    [SerializeField] private Vector3 defaultPos;
+    [SerializeField] private Vector3 awayPos;
+    
     [SerializeField] private bool startOpen = false;
     [SerializeField] private bool open = true;
 
     void Start()
     {
-        //canvas = transform.GetChild(0).gameObject;
+        defaultPos = transform.localPosition;
         
         if (!startOpen)
         {
-            transform.localScale = new Vector3(0, 0, 1);
+            switch (openMode)
+            {
+                case OpenMode.SCALE:
+                    transform.localScale = new Vector3(0, 0, 1);
+                    break;
+                
+                case OpenMode.SLIDE:
+                    transform.localScale = awayPos;
+                    break;
+            }
+            
             open = false;
-            //canvas.SetActive(false);
         }
     }
 
     public void OpenMenu()
     {
-        //canvas.SetActive(true);
         open = true;
-        transform.LeanScale(new Vector3(1,1,1), animationTime);
+
+        switch (openMode)
+        {
+            case OpenMode.SCALE:
+                transform.LeanScale(new Vector3(1,1,1), animationTime);
+                break;
+            
+            case OpenMode.SLIDE:
+                transform.LeanMoveLocal(defaultPos, animationTime).setEaseInOutBack();
+                break;
+        }
     }
 
     public void CloseMenu()
     {
-        //canvas.SetActive(false);
         open = false;
-        transform.LeanScale(new Vector3(0,0,1), animationTime).setEaseInBack();
+        
+        switch (openMode)
+        {
+            case OpenMode.SCALE:
+                transform.LeanScale(new Vector3(0,0,1), animationTime).setEaseInBack();
+                break;
+            
+            case OpenMode.SLIDE:
+                transform.LeanMoveLocal(awayPos, animationTime).setEaseInOutBack();
+                break;
+        }
     }
 
     public void ToggleOpenClose()
