@@ -50,8 +50,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 98c2ec079710fb74bbcd8fdbf06873ef, type: 2}
   - {fileID: 11400000, guid: e0d1b6e8b4dfbca4482618ad920ebbc7, type: 2}
   - {fileID: 11400000, guid: f6cfb0a8ba81fe4438c443d5ef564507, type: 2}
+  - {fileID: 11400000, guid: 3541de9e946c0004fa1c5722c67a15c9, type: 2}
+  - {fileID: 11400000, guid: 33d6f21d5e43efe4bb7d7c9f563c46ef, type: 2}
+  - {fileID: 11400000, guid: dc7414e9bca21d14d92b31f85b91d713, type: 2}
+  - {fileID: 11400000, guid: be0c6d6e8e750e7488844b3e030a1bba, type: 2}
+  - {fileID: 11400000, guid: b848ef345e3c22445b87bb16e2742942, type: 2}
   sources: []
-  number_of_sources: 20
+  number_of_sources: 200
+  master_volume: 1
+  distance_from_player_cutoff: 100
 --- !u!1 &2073369824348419340
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,6 +263,9 @@ MonoBehaviour:
     third: 30
   debris_lifetime: 6
   debris_min_scale: {x: 0, y: 0, z: 0}
+  spawn_point_mesh_map: {fileID: 11400000, guid: 4eed0d0058a92d04eb34f7eac4228634,
+    type: 2}
+  distance_from_player_cutoff: 50
 --- !u!1 &2073369825115547670
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,6 +359,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect_map: {fileID: 11400000, guid: a9318fc6eb846d54e8fbd18a349ee686, type: 2}
+  distance_from_player_cutoff: 40
+  test: {fileID: 0}
 --- !u!1 &2073369825302991570
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,6 +479,7 @@ MonoBehaviour:
   original_position: {x: 0, y: 0, z: 0}
   building_collider: {fileID: 0}
   mesh_filter: {fileID: 0}
+  mesh_renderer: {fileID: 0}
 --- !u!1 &2073369825349645169
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,6 +516,7 @@ Transform:
   - {fileID: 2073369824179737297}
   - {fileID: 2073369825241551973}
   - {fileID: 2073369824700098434}
+  - {fileID: 2981780486170746361}
   m_Father: {fileID: 2073369825302991534}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -519,3 +533,57 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seed: 61543
+  game_data_filepath_editor:
+  - GameManager
+  - GameData.csv
+  game_data_filepath_android: []
+  Data: {fileID: 11400000, guid: a6b60318d2973d945b6c54e5df97169e, type: 2}
+--- !u!1 &5601245947319532149
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2981780486170746361}
+  - component: {fileID: 4985704077619924400}
+  m_Layer: 0
+  m_Name: DataTracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2981780486170746361
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5601245947319532149}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2073369825349645168}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4985704077619924400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5601245947319532149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a3c6680774de7641b9aadefc82462f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 0
+  timer_display: {fileID: 0}
+  record_position_interval: 0
+  record_position_timer: 0
+  map_origin: {fileID: 0}

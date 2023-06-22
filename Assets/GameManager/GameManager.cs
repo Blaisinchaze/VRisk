@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
     public string[] game_data_filepath_editor;
     public string[] game_data_filepath_android;
     public static GameManager Instance { get; private set; }
-    
     public TimelineManager TimelineManager { get; private set; }
     public BuildingManager BuildingManager { get; private set; }
     public HapticFeedbackHandler HapticFeedbackHandler { get; private set; }
@@ -17,14 +16,13 @@ public class GameManager : MonoBehaviour
     public AudioManager AudioManager { get; private set; }
     public ParticleManager ParticleManager { get; private set; }
     public DebrisHandler DebrisHandler { get; private set; }
-
     public DataTracker DataTracker { get; private set; }
 
     public GameObject Player { get; private set; }
 
     public GameData Data = null;
     private Dictionary<string, GameDataVariable> string_to_game_data_var_map = new Dictionary<string, GameDataVariable>()
-        {{"Track Position Interval", GameDataVariable.RECORD_POSITION_INTERVAL}};
+        {{"Track Position Interval", GameDataVariable.RECORD_POSITION_INTERVAL}, {"Grid Cell Size X", GameDataVariable.GRID_CELL_SIZE_X}, {"Grid Cell Size Y", GameDataVariable.GRID_CELL_SIZE_Y}};
 
     private void Awake()
     {
@@ -71,7 +69,15 @@ public class GameManager : MonoBehaviour
                         case GameDataVariable.RECORD_POSITION_INTERVAL:
                             float.TryParse(value, out Data.record_position_interval);
                             break;
-
+                        
+                        case GameDataVariable.GRID_CELL_SIZE_X:
+                            float.TryParse(value, out Data.grid_cell_size_x);
+                            break;
+                        
+                        case GameDataVariable.GRID_CELL_SIZE_Y:
+                            float.TryParse(value, out Data.grid_cell_size_y);
+                            break;
+                        
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
