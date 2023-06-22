@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class TimeTracker : MonoBehaviour
+public class DataTracker : MonoBehaviour
 {
     [SerializeField] private float timer;
     public TimerDisplay timer_display;
@@ -40,12 +39,15 @@ public class TimeTracker : MonoBehaviour
 
     private void test(InputAction.CallbackContext _context)
     {
-        recordTime();
+        recordTime(true);
     }
 
-    public void recordTime()
+    public void recordTime(bool _survived)
     {
         active = false;
+
+        string survived = _survived ? "Survived" : "Died";
+        _recorded_locations.Add(new List<string> {timer.ToString(), Vector2.zero.ToString(), survived});
         
         FileManager.saveToCSV(new []{"GameManager", "record.csv"}, new []{"test.csv"} ,_recorded_locations);
     }

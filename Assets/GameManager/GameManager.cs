@@ -18,10 +18,11 @@ public class GameManager : MonoBehaviour
     public ParticleManager ParticleManager { get; private set; }
     public DebrisHandler DebrisHandler { get; private set; }
 
+    public DataTracker DataTracker { get; private set; }
+
     public GameObject Player { get; private set; }
 
     public GameData Data = null;
-
     private Dictionary<string, GameDataVariable> string_to_game_data_var_map = new Dictionary<string, GameDataVariable>()
         {{"Track Position Interval", GameDataVariable.RECORD_POSITION_INTERVAL}};
 
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour
         ParticleManager = GetComponentInChildren<ParticleManager>();
         DebrisHandler = GetComponentInChildren<DebrisHandler>();
         TimelineManager = GetComponentInChildren<TimelineManager>();
+        DataTracker = GetComponentInChildren<DataTracker>();
 
         Player = GameObject.FindWithTag("Player");
 
