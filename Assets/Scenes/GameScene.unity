@@ -178,7 +178,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   head: {fileID: 227105091}
   nav_arrow: {fileID: 1545409257}
-  timer: {fileID: 922198909}
   celebration_effects: {fileID: 261472234}
 --- !u!64 &17099627
 MeshCollider:
@@ -12690,7 +12689,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   head: {fileID: 227105091}
   nav_arrow: {fileID: 1545409257}
-  timer: {fileID: 922198909}
   celebration_effects: {fileID: 261472234}
 --- !u!64 &1875917208
 MeshCollider:
@@ -13745,6 +13743,32 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameManagerBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 2073369825349645135, guid: 0efaad1d0687e7e4193a3ee218bdc9fe,
+        type: 3}
+      propertyPath: Data
+      value: 
+      objectReference: {fileID: 11400000, guid: a6b60318d2973d945b6c54e5df97169e,
+        type: 2}
+    - target: {fileID: 2073369825349645135, guid: 0efaad1d0687e7e4193a3ee218bdc9fe,
+        type: 3}
+      propertyPath: game_data_filepath_editor
+      value: /GameManager/GameData.csv
+      objectReference: {fileID: 0}
+    - target: {fileID: 2073369825349645135, guid: 0efaad1d0687e7e4193a3ee218bdc9fe,
+        type: 3}
+      propertyPath: game_data_filepath_editor.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2073369825349645135, guid: 0efaad1d0687e7e4193a3ee218bdc9fe,
+        type: 3}
+      propertyPath: game_data_filepath_editor.Array.data[0]
+      value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2073369825349645135, guid: 0efaad1d0687e7e4193a3ee218bdc9fe,
+        type: 3}
+      propertyPath: game_data_filepath_editor.Array.data[1]
+      value: GameData.csv
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

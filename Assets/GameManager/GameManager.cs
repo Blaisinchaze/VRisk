@@ -1,10 +1,14 @@
 using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
     public int seed = 0;
+    public string[] game_data_filepath_editor;
+    public string[] game_data_filepath_android;
     public static GameManager Instance { get; private set; }
     
     public TimelineManager TimelineManager { get; private set; }
@@ -16,6 +20,11 @@ public class GameManager : MonoBehaviour
     public DebrisHandler DebrisHandler { get; private set; }
 
     public GameObject Player { get; private set; }
+
+    public GameData Data = null;
+
+    private Dictionary<string, GameDataVariable> string_to_game_data_var_map = new Dictionary<string, GameDataVariable>()
+        {{"Track Position Interval", GameDataVariable.RECORD_POSITION_INTERVAL}};
 
     private void Awake()
     {
@@ -37,14 +46,53 @@ public class GameManager : MonoBehaviour
         Player = GameObject.FindWithTag("Player");
 
         Random.InitState(seed);
+
+        populateGameDataFromFile(game_data_filepath_editor, game_data_filepath_android);
     }
 
-    static public float earthquakeIntensityCurve(float _x)
+    private void populateGameDataFromFile(string[] _editor_path, string[] _android_path)
+    {
+        var filepath = FileManager.getFileContents(_editor_path, _android_path);
+
+        if (filepath != null)
+        {
+            var data = FileManager.parseCSV(FileManager.getFileContents(_editor_path, _android_path));
+
+            /*foreach (var VARIABLE in data)
+            {
+                foreach (var thing in VARIABLE)
+                {
+                    Debug.Log(thing);
+                }
+            }*/
+            
+            foreach (var id_value_pair in data)
+            {
+                if (id_value_pair.Length == 2)
+                {
+                    string id = id_value_pair[0];
+                    string value = id_value_pair[1];
+
+                    switch (string_to_game_data_var_map[id])
+                    {
+                        case GameDataVariable.RECORD_POSITION_INTERVAL:
+                            float.TryParse(value, out Data.record_position_interval);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                }
+            }
+        }
+    }
+
+    public static float earthquakeIntensityCurve(float _x)
     {
         return -15.5f * (float)Math.Pow(_x - 0.48f, 4) + (0.3f * _x) + 0.824f;
     }
 
-    static public float debrisIntensityCurve(float _x)
+    public static float debrisIntensityCurve(float _x)
     {
         return -4f * (float)Math.Pow(_x - 0.48f, 4) + (0.3f * _x) + 0.8f;
     }

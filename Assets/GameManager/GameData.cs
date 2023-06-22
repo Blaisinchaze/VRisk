@@ -1,15 +1,13 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
 public class GameData : ScriptableObject
 {
-    public int NextScene;
+    public float record_position_interval;
+    public int NextScene = 2;
+}
 
-    private void Awake()
-    {
-        NextScene = 2;
-    }
+public enum GameDataVariable
+{
+    RECORD_POSITION_INTERVAL
 }

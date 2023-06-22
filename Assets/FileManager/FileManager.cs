@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class FileManager : MonoBehaviour
 {
-    public static string getFileContents(string _editor_path, string _android_path)
+    public static string getFileContents(string[] _editor_path, string[] _android_path)
     {
         string path = getFilePath(_editor_path, _android_path);
 
@@ -14,12 +14,14 @@ public class FileManager : MonoBehaviour
         return null;
     }
     
-    public static string getFilePath(string _editor_path, string _android_path)
+    public static string getFilePath(string[] _editor_path, string[] _android_path)
     {
         #if UNITY_EDITOR
-            return Path.Combine(Application.dataPath, _editor_path);
+            var path = Path.Combine(_editor_path);
+            return Path.Combine(Application.dataPath, path);
         #else
-            return Path.Combine(Application.persistentDataPath, _android_path);
+            var path = Path.Combine(_android_path);
+            return Path.Combine(Application.persistentDataPath, path);
         #endif
     }
     
@@ -36,13 +38,13 @@ public class FileManager : MonoBehaviour
         return data;
     }
 
-    public static void saveToFile(string _editor_path, string _android_path, string _content)
+    public static void saveToFile(string[] _editor_path, string[] _android_path, string _content)
     {
         string path = getFilePath(_editor_path, _android_path);
         File.WriteAllText(path, _content);
     }
 
-    public static void saveToCSV(string _editor_path, string _android_path, string[][] _content)
+    public static void saveToCSV(string[] _editor_path, string[] _android_path, string[][] _content)
     {
         string path = getFilePath(_editor_path, _android_path);
 
