@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf3c3f0dc1cce7c409a404aee67f18a5, type: 3}
   m_Name: GameDataSO
   m_EditorClassIdentifier: 
+  record_position_interval: 1
+  NextScene: 2

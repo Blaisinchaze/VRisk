@@ -10,11 +10,7 @@ public class TimelineManager : MonoBehaviour
     public List<Pair<int, float>> timeline;
 
     [SerializeField] private float timer = 0;
-    
-    public float time_since_start { get; private set; }
-    public TimerDisplay timer_display; 
-    public bool quake_active = false;
-    
+
     private int debris_timeline_index = 0;
     
     void Awake()
@@ -35,15 +31,6 @@ public class TimelineManager : MonoBehaviour
             GameManager.earthquakeIntensityCurve, 30);
     }
 
-    private void Update()
-    {
-        if (quake_active)
-        {
-            time_since_start += Time.deltaTime;
-            timer_display.updateTimer(time_since_start);
-        }
-    }
-
     private void FixedUpdate()
     {
         timer += Time.fixedDeltaTime;
@@ -61,8 +48,7 @@ public class TimelineManager : MonoBehaviour
             //Prompts building manager!
             // Need to replace with values read in, as opposed to hard coding them.
             GameManager.Instance.BuildingManager.damageBuilding(timeline.First().first, 0.2f, 0.05f, 1, 5, 40);
-            
-            // IF START QUAKE - SET quake_started TO TRUE;
+            // needs to trigger start of quake and start of siren.
 
             timeline.RemoveAt(0);
         }
