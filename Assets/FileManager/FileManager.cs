@@ -1,5 +1,8 @@
+using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class FileManager : MonoBehaviour
 {
@@ -17,11 +20,9 @@ public class FileManager : MonoBehaviour
     public static string getFilePath(string[] _editor_path, string[] _android_path)
     {
         #if UNITY_EDITOR
-            var path = Path.Combine(_editor_path);
-            return Path.Combine(Application.dataPath, path);
+            return Path.Combine(Application.dataPath, Path.Combine(_editor_path));
         #else
-            var path = Path.Combine(_android_path);
-            return Path.Combine(Application.persistentDataPath, path);
+            return Path.Combine(Application.persistentDataPath, Path.Combine(_android_path));
         #endif
     }
     
@@ -41,6 +42,7 @@ public class FileManager : MonoBehaviour
     public static void saveToFile(string[] _editor_path, string[] _android_path, string _content)
     {
         string path = getFilePath(_editor_path, _android_path);
+
         File.WriteAllText(path, _content);
     }
 
@@ -55,5 +57,25 @@ public class FileManager : MonoBehaviour
                 sw.WriteLine(string.Join(",", _content[i]));
             }
         }
+    }
+
+    public static void saveToCSV(string[] _editor_path, string[] _android_path, List<List<string>> _content)
+    {
+        string[][] content = new string[_content.Count][];
+        
+        for (int row_index = 0; row_index < _content.Count; row_index++)
+        {
+            var row_data = _content[row_index];
+            string[] columns = new string[row_data.Count];
+            
+            for (int column_index = 0; column_index < row_data.Count; column_index++)
+            {
+                columns[column_index] = row_data[column_index];
+            }
+            
+            content[row_index] = columns;
+        }
+
+        saveToCSV(_editor_path, _android_path, content);
     }
 }

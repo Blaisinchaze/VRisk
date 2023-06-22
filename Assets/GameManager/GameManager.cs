@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -58,14 +57,6 @@ public class GameManager : MonoBehaviour
         {
             var data = FileManager.parseCSV(FileManager.getFileContents(_editor_path, _android_path));
 
-            /*foreach (var VARIABLE in data)
-            {
-                foreach (var thing in VARIABLE)
-                {
-                    Debug.Log(thing);
-                }
-            }*/
-            
             foreach (var id_value_pair in data)
             {
                 if (id_value_pair.Length == 2)
