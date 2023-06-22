@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: GameDataSO
   m_EditorClassIdentifier: 
   record_position_interval: 1
+  grid_cell_size_x: 10
+  grid_cell_size_y: 10
+  user_name: User Name
   NextScene: 2

@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 1117
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Hierarchy
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -68,8 +68,8 @@ MonoBehaviour:
     y: 0
     width: 459
     height: 1067
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -94,8 +94,8 @@ MonoBehaviour:
     y: 0
     width: 238
     height: 583
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -268,8 +268,8 @@ MonoBehaviour:
     y: 0
     width: 1223
     height: 583
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -318,22 +318,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Audio/Clips/WinLose
+    - Assets/GameManager
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Audio/Clips/WinLose
+  - Assets/GameManager
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Jade\Documents\Games Tech\Git\VRisk
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: 1c720000
-    m_LastClickedID: 29212
-    m_ExpandedIDs: 0000000056710000587100005a7100005c710000ea710000fa71000088a00000a4a00000c4a0000000ca9a3b
+    scrollPos: {x: 0, y: 5}
+    m_SelectedIDs: de710000
+    m_LastClickedID: 29150
+    m_ExpandedIDs: 0000000040710000427100004471000046710000d071000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -361,7 +361,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000056710000587100005a7100005c710000
+    m_ExpandedIDs: 0000000040710000427100004471000046710000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -493,7 +493,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 06d0faff8ad5faffd8d5fafffcdffaff9ee8faffeee8faff08f3faffb4fefaff02fffaff3009fbff26e9feff7ae9feffa8f3feffc0c6ffff0cc7ffff1ed1ffffb2e3ffff00e4ffff2eeeffff7cf5ffff8af5ffff28fbffff8c7500006c760000947600000c770000d0790000a47a0000447b0000347e00008a8b0000b28b0000ee8e000062900000ecb6000014b7000050ba0000c4bb00006860010090600100cc63010040650100
+      m_ExpandedIDs: 0098f0ff389bf0ff46f5ffff4af5ffffa4f5ffffb8f5fffff4f5ffff28fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -776,9 +776,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 12.393556, y: 2.9489715, z: 0.04829461}
+    m_Target: {x: -48.28397, y: -83.64556, z: 3.41804}
     speed: 2
-    m_Value: {x: 12.393556, y: 2.9489715, z: 0.04829461}
+    m_Value: {x: -48.28397, y: -83.64556, z: 3.41804}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -824,13 +824,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.044296056, y: 0.062897146, z: -0.0027889002, w: 0.9970492}
+    m_Target: {x: -0.5715427, y: -0.0056690047, z: 0.003947107, w: -0.8205486}
     speed: 2
-    m_Value: {x: 0.044295322, y: 0.0628961, z: -0.002788854, w: 0.9970327}
+    m_Value: {x: -0.57154024, y: -0.0056689805, z: 0.0039470904, w: -0.8205451}
   m_Size:
-    m_Target: 6.7603173
+    m_Target: 166.91562
     speed: 2
-    m_Value: 6.7603173
+    m_Value: 166.91562
   m_Ortho:
     m_Target: 0
     speed: 2

@@ -6,6 +6,8 @@ public class GameData : ScriptableObject
     public float record_position_interval = 0;
     public float grid_cell_size_x = 0;
     public float grid_cell_size_y = 0;
+
+    public string user_name;
     
     public int NextScene = 2;
 }
