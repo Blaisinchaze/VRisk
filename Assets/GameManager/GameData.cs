@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class GameData : ScriptableObject
 {
-    public int NextScene { get; set; }
+    public int NextScene;
 
     private void Awake()
     {

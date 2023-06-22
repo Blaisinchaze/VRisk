@@ -4,7 +4,6 @@ public class SafeZoneScript : MonoBehaviour
 {
     public GameObject head;
     public NavigationArrow nav_arrow;
-    public TimerDisplay timer;
     public GameObject celebration_effects;
     
     private void OnTriggerEnter(Collider other)
@@ -17,7 +16,8 @@ public class SafeZoneScript : MonoBehaviour
             
             
             nav_arrow.navigating = false;
-            GameManager.Instance.TimelineManager.quake_active = false;
+            // TRIGGER DATA STORING.
+            // TRIGGER TRANSITION.
             
             Debug.Log("transition");
         }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7371fb1892bc88940b8aba65bc04899c, type: 3}
   m_Name: LoseSound
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 93b65f67a6145294aaa69d57de8cd16d, type: 3}
+  clip: {fileID: 8300000, guid: b1981664dc579024889a8e980801f553, type: 3}
   id: 9
   volume: 1
   pitch: 1
