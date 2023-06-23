@@ -36,10 +36,10 @@ public class MenuVisualsHandler : MonoBehaviour
         left_cast = left_controller.GetComponent<XRInteractorLineVisual>();
         right_cast = right_controller.GetComponent<XRInteractorLineVisual>();
         
-        trigger_left_pressed = GameManager.Instance.InputHandler.input_asset.InputActionMap.InteractLeft_Hand;
-        trigger_left_touched = GameManager.Instance.InputHandler.input_asset.InputActionMap.TouchLeft_Hand;
-        trigger_right_pressed = GameManager.Instance.InputHandler.input_asset.InputActionMap.InteractRight_Hand;
-        trigger_right_touched = GameManager.Instance.InputHandler.input_asset.InputActionMap.TouchRight_Hand;
+        trigger_left_pressed = GameManager.Instance.InputHandler.input_asset.VRiskExperienceInputMap.InteractLeft_Hand;
+        trigger_left_touched = GameManager.Instance.InputHandler.input_asset.VRiskExperienceInputMap.TouchLeft_Hand;
+        trigger_right_pressed = GameManager.Instance.InputHandler.input_asset.VRiskExperienceInputMap.InteractRight_Hand;
+        trigger_right_touched = GameManager.Instance.InputHandler.input_asset.VRiskExperienceInputMap.TouchRight_Hand;
     }
     
     void FixedUpdate()
