@@ -14,7 +14,7 @@ public class EarlyWarningSystem : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.InputHandler.input_asset.InputActionMap.Debug.started += test;
+        GameManager.Instance.InputHandler.input_asset.VRiskExperienceInputMap.Debug.started += test;
     }
 
     public void test(InputAction.CallbackContext _context)

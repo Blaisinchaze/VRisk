@@ -41,7 +41,7 @@ public class MovementController : MonoBehaviour
 
     void Start()
     {
-        move_action = GameManager.Instance.InputHandler.input_asset.InputActionMap.MoveKeyStick;
+        move_action = GameManager.Instance.InputHandler.input_asset.VRiskExperienceInputMap.MoveKeyStick;
         cam = Camera.main;
         rig_rb = GetComponent<Rigidbody>();
     }
@@ -124,8 +124,8 @@ public class MovementController : MonoBehaviour
     {
         timer += Time.fixedDeltaTime;
 
-        Vector3 controller_r = GameManager.Instance.InputHandler.input_asset.InputActionMap.MoveRight_Hand.ReadValue<Vector3>();
-        Vector3 controller_l = GameManager.Instance.InputHandler.input_asset.InputActionMap.MoveLeft_Hand.ReadValue<Vector3>();
+        Vector3 controller_r = GameManager.Instance.InputHandler.input_asset.VRiskExperienceInputMap.MoveRight_Hand.ReadValue<Vector3>();
+        Vector3 controller_l = GameManager.Instance.InputHandler.input_asset.VRiskExperienceInputMap.MoveLeft_Hand.ReadValue<Vector3>();
 
         Vector3 controller_delta_r = (controller_r - prev_controller_r) * sensibility;
         Vector3 controller_delta_l = (controller_l - prev_controller_l) * sensibility;

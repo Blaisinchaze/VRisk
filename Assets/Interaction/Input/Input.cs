@@ -24,7 +24,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
     ""name"": ""Input"",
     ""maps"": [
         {
-            ""name"": ""InputActionMap"",
+            ""name"": ""VRiskExperienceInputMap"",
             ""id"": ""5e1e67e7-5ece-4866-91f1-ed181fb0a924"",
             ""actions"": [
                 {
@@ -362,22 +362,245 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""DataVisualiserInputMap"",
+            ""id"": ""da215fe0-8952-4317-9cf5-5e41762ffb9f"",
+            ""actions"": [
+                {
+                    ""name"": ""MouseDelta"",
+                    ""type"": ""Value"",
+                    ""id"": ""591ea2ed-c2fb-4fd3-8bfb-25e52df5882a"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""PanView"",
+                    ""type"": ""Button"",
+                    ""id"": ""e3f65a64-e730-4151-90ae-2d8275e22281"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ZoomView"",
+                    ""type"": ""Value"",
+                    ""id"": ""73da6d99-8561-4f5d-be02-ee7e7d45ddcb"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""RotateView"",
+                    ""type"": ""Button"",
+                    ""id"": ""b3081131-9581-46e7-a981-c2fd3ee2a058"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveView"",
+                    ""type"": ""Value"",
+                    ""id"": ""50473440-9c14-4366-a0d7-87b4682bc1cc"",
+                    ""expectedControlType"": ""Vector3"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""FasterMovement"",
+                    ""type"": ""Button"",
+                    ""id"": ""f160da04-e9c6-4cb2-8b64-070d264ebe72"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleOrthoPerspective"",
+                    ""type"": ""Button"",
+                    ""id"": ""04aeaf0d-72d3-4af0-89df-8b3963b05a6e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""24f9e479-4653-4feb-93cd-c2e912c29653"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PanView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e1cfea72-9842-4e44-b46f-c26b2ec8d6d0"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ZoomView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""972d160f-b638-4395-840f-ae9a817b25a7"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""669db0d3-0ed6-4630-9ead-a8ea6ddc4a2c"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""3D Vector"",
+                    ""id"": ""513e0d4f-e143-4dfb-84e3-fb98360cd569"",
+                    ""path"": ""3DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveView"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""beda9c00-ef96-4a01-991f-d03098c43ed6"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""e0511efd-b57a-4aa3-ac85-019a6f631c48"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""e1278629-4377-477c-8116-78afd456357a"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""5877a52d-e94c-484f-87b7-5155a17aec48"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""forward"",
+                    ""id"": ""c14e042f-4084-4257-a02e-a5154799320d"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""backward"",
+                    ""id"": ""e36701d0-db88-44aa-985c-d35f40e62248"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bb2c1f38-e789-4747-8d23-317bc055becb"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FasterMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2f0ef551-8fa1-43da-aa5e-19a2abe27f88"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleOrthoPerspective"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
 }");
-        // InputActionMap
-        m_InputActionMap = asset.FindActionMap("InputActionMap", throwIfNotFound: true);
-        m_InputActionMap_MoveKeyStick = m_InputActionMap.FindAction("Move(Key/Stick)", throwIfNotFound: true);
-        m_InputActionMap_MoveLeft_Hand = m_InputActionMap.FindAction("Move(Left_Hand)", throwIfNotFound: true);
-        m_InputActionMap_MoveRight_Hand = m_InputActionMap.FindAction("Move(Right_Hand)", throwIfNotFound: true);
-        m_InputActionMap_RotateView = m_InputActionMap.FindAction("RotateView", throwIfNotFound: true);
-        m_InputActionMap_HeadMoved = m_InputActionMap.FindAction("HeadMoved", throwIfNotFound: true);
-        m_InputActionMap_Debug = m_InputActionMap.FindAction("Debug", throwIfNotFound: true);
-        m_InputActionMap_InteractLeft_Hand = m_InputActionMap.FindAction("Interact(Left_Hand)", throwIfNotFound: true);
-        m_InputActionMap_InteractRight_Hand = m_InputActionMap.FindAction("Interact(Right_Hand)", throwIfNotFound: true);
-        m_InputActionMap_TouchLeft_Hand = m_InputActionMap.FindAction("Touch(Left_Hand)", throwIfNotFound: true);
-        m_InputActionMap_TouchRight_Hand = m_InputActionMap.FindAction("Touch(Right_Hand)", throwIfNotFound: true);
+        // VRiskExperienceInputMap
+        m_VRiskExperienceInputMap = asset.FindActionMap("VRiskExperienceInputMap", throwIfNotFound: true);
+        m_VRiskExperienceInputMap_MoveKeyStick = m_VRiskExperienceInputMap.FindAction("Move(Key/Stick)", throwIfNotFound: true);
+        m_VRiskExperienceInputMap_MoveLeft_Hand = m_VRiskExperienceInputMap.FindAction("Move(Left_Hand)", throwIfNotFound: true);
+        m_VRiskExperienceInputMap_MoveRight_Hand = m_VRiskExperienceInputMap.FindAction("Move(Right_Hand)", throwIfNotFound: true);
+        m_VRiskExperienceInputMap_RotateView = m_VRiskExperienceInputMap.FindAction("RotateView", throwIfNotFound: true);
+        m_VRiskExperienceInputMap_HeadMoved = m_VRiskExperienceInputMap.FindAction("HeadMoved", throwIfNotFound: true);
+        m_VRiskExperienceInputMap_Debug = m_VRiskExperienceInputMap.FindAction("Debug", throwIfNotFound: true);
+        m_VRiskExperienceInputMap_InteractLeft_Hand = m_VRiskExperienceInputMap.FindAction("Interact(Left_Hand)", throwIfNotFound: true);
+        m_VRiskExperienceInputMap_InteractRight_Hand = m_VRiskExperienceInputMap.FindAction("Interact(Right_Hand)", throwIfNotFound: true);
+        m_VRiskExperienceInputMap_TouchLeft_Hand = m_VRiskExperienceInputMap.FindAction("Touch(Left_Hand)", throwIfNotFound: true);
+        m_VRiskExperienceInputMap_TouchRight_Hand = m_VRiskExperienceInputMap.FindAction("Touch(Right_Hand)", throwIfNotFound: true);
+        // DataVisualiserInputMap
+        m_DataVisualiserInputMap = asset.FindActionMap("DataVisualiserInputMap", throwIfNotFound: true);
+        m_DataVisualiserInputMap_MouseDelta = m_DataVisualiserInputMap.FindAction("MouseDelta", throwIfNotFound: true);
+        m_DataVisualiserInputMap_PanView = m_DataVisualiserInputMap.FindAction("PanView", throwIfNotFound: true);
+        m_DataVisualiserInputMap_ZoomView = m_DataVisualiserInputMap.FindAction("ZoomView", throwIfNotFound: true);
+        m_DataVisualiserInputMap_RotateView = m_DataVisualiserInputMap.FindAction("RotateView", throwIfNotFound: true);
+        m_DataVisualiserInputMap_MoveView = m_DataVisualiserInputMap.FindAction("MoveView", throwIfNotFound: true);
+        m_DataVisualiserInputMap_FasterMovement = m_DataVisualiserInputMap.FindAction("FasterMovement", throwIfNotFound: true);
+        m_DataVisualiserInputMap_ToggleOrthoPerspective = m_DataVisualiserInputMap.FindAction("ToggleOrthoPerspective", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -434,74 +657,74 @@ public partial class @Input : IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // InputActionMap
-    private readonly InputActionMap m_InputActionMap;
-    private IInputActionMapActions m_InputActionMapActionsCallbackInterface;
-    private readonly InputAction m_InputActionMap_MoveKeyStick;
-    private readonly InputAction m_InputActionMap_MoveLeft_Hand;
-    private readonly InputAction m_InputActionMap_MoveRight_Hand;
-    private readonly InputAction m_InputActionMap_RotateView;
-    private readonly InputAction m_InputActionMap_HeadMoved;
-    private readonly InputAction m_InputActionMap_Debug;
-    private readonly InputAction m_InputActionMap_InteractLeft_Hand;
-    private readonly InputAction m_InputActionMap_InteractRight_Hand;
-    private readonly InputAction m_InputActionMap_TouchLeft_Hand;
-    private readonly InputAction m_InputActionMap_TouchRight_Hand;
-    public struct InputActionMapActions
+    // VRiskExperienceInputMap
+    private readonly InputActionMap m_VRiskExperienceInputMap;
+    private IVRiskExperienceInputMapActions m_VRiskExperienceInputMapActionsCallbackInterface;
+    private readonly InputAction m_VRiskExperienceInputMap_MoveKeyStick;
+    private readonly InputAction m_VRiskExperienceInputMap_MoveLeft_Hand;
+    private readonly InputAction m_VRiskExperienceInputMap_MoveRight_Hand;
+    private readonly InputAction m_VRiskExperienceInputMap_RotateView;
+    private readonly InputAction m_VRiskExperienceInputMap_HeadMoved;
+    private readonly InputAction m_VRiskExperienceInputMap_Debug;
+    private readonly InputAction m_VRiskExperienceInputMap_InteractLeft_Hand;
+    private readonly InputAction m_VRiskExperienceInputMap_InteractRight_Hand;
+    private readonly InputAction m_VRiskExperienceInputMap_TouchLeft_Hand;
+    private readonly InputAction m_VRiskExperienceInputMap_TouchRight_Hand;
+    public struct VRiskExperienceInputMapActions
     {
         private @Input m_Wrapper;
-        public InputActionMapActions(@Input wrapper) { m_Wrapper = wrapper; }
-        public InputAction @MoveKeyStick => m_Wrapper.m_InputActionMap_MoveKeyStick;
-        public InputAction @MoveLeft_Hand => m_Wrapper.m_InputActionMap_MoveLeft_Hand;
-        public InputAction @MoveRight_Hand => m_Wrapper.m_InputActionMap_MoveRight_Hand;
-        public InputAction @RotateView => m_Wrapper.m_InputActionMap_RotateView;
-        public InputAction @HeadMoved => m_Wrapper.m_InputActionMap_HeadMoved;
-        public InputAction @Debug => m_Wrapper.m_InputActionMap_Debug;
-        public InputAction @InteractLeft_Hand => m_Wrapper.m_InputActionMap_InteractLeft_Hand;
-        public InputAction @InteractRight_Hand => m_Wrapper.m_InputActionMap_InteractRight_Hand;
-        public InputAction @TouchLeft_Hand => m_Wrapper.m_InputActionMap_TouchLeft_Hand;
-        public InputAction @TouchRight_Hand => m_Wrapper.m_InputActionMap_TouchRight_Hand;
-        public InputActionMap Get() { return m_Wrapper.m_InputActionMap; }
+        public VRiskExperienceInputMapActions(@Input wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MoveKeyStick => m_Wrapper.m_VRiskExperienceInputMap_MoveKeyStick;
+        public InputAction @MoveLeft_Hand => m_Wrapper.m_VRiskExperienceInputMap_MoveLeft_Hand;
+        public InputAction @MoveRight_Hand => m_Wrapper.m_VRiskExperienceInputMap_MoveRight_Hand;
+        public InputAction @RotateView => m_Wrapper.m_VRiskExperienceInputMap_RotateView;
+        public InputAction @HeadMoved => m_Wrapper.m_VRiskExperienceInputMap_HeadMoved;
+        public InputAction @Debug => m_Wrapper.m_VRiskExperienceInputMap_Debug;
+        public InputAction @InteractLeft_Hand => m_Wrapper.m_VRiskExperienceInputMap_InteractLeft_Hand;
+        public InputAction @InteractRight_Hand => m_Wrapper.m_VRiskExperienceInputMap_InteractRight_Hand;
+        public InputAction @TouchLeft_Hand => m_Wrapper.m_VRiskExperienceInputMap_TouchLeft_Hand;
+        public InputAction @TouchRight_Hand => m_Wrapper.m_VRiskExperienceInputMap_TouchRight_Hand;
+        public InputActionMap Get() { return m_Wrapper.m_VRiskExperienceInputMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(InputActionMapActions set) { return set.Get(); }
-        public void SetCallbacks(IInputActionMapActions instance)
+        public static implicit operator InputActionMap(VRiskExperienceInputMapActions set) { return set.Get(); }
+        public void SetCallbacks(IVRiskExperienceInputMapActions instance)
         {
-            if (m_Wrapper.m_InputActionMapActionsCallbackInterface != null)
+            if (m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface != null)
             {
-                @MoveKeyStick.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveKeyStick;
-                @MoveKeyStick.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveKeyStick;
-                @MoveKeyStick.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveKeyStick;
-                @MoveLeft_Hand.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveLeft_Hand;
-                @MoveLeft_Hand.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveLeft_Hand;
-                @MoveLeft_Hand.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveLeft_Hand;
-                @MoveRight_Hand.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveRight_Hand;
-                @MoveRight_Hand.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveRight_Hand;
-                @MoveRight_Hand.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveRight_Hand;
-                @RotateView.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnRotateView;
-                @RotateView.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnRotateView;
-                @RotateView.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnRotateView;
-                @HeadMoved.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnHeadMoved;
-                @HeadMoved.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnHeadMoved;
-                @HeadMoved.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnHeadMoved;
-                @Debug.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnDebug;
-                @Debug.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnDebug;
-                @Debug.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnDebug;
-                @InteractLeft_Hand.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnInteractLeft_Hand;
-                @InteractLeft_Hand.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnInteractLeft_Hand;
-                @InteractLeft_Hand.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnInteractLeft_Hand;
-                @InteractRight_Hand.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnInteractRight_Hand;
-                @InteractRight_Hand.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnInteractRight_Hand;
-                @InteractRight_Hand.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnInteractRight_Hand;
-                @TouchLeft_Hand.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchLeft_Hand;
-                @TouchLeft_Hand.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchLeft_Hand;
-                @TouchLeft_Hand.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchLeft_Hand;
-                @TouchRight_Hand.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchRight_Hand;
-                @TouchRight_Hand.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchRight_Hand;
-                @TouchRight_Hand.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchRight_Hand;
+                @MoveKeyStick.started -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnMoveKeyStick;
+                @MoveKeyStick.performed -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnMoveKeyStick;
+                @MoveKeyStick.canceled -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnMoveKeyStick;
+                @MoveLeft_Hand.started -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnMoveLeft_Hand;
+                @MoveLeft_Hand.performed -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnMoveLeft_Hand;
+                @MoveLeft_Hand.canceled -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnMoveLeft_Hand;
+                @MoveRight_Hand.started -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnMoveRight_Hand;
+                @MoveRight_Hand.performed -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnMoveRight_Hand;
+                @MoveRight_Hand.canceled -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnMoveRight_Hand;
+                @RotateView.started -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnRotateView;
+                @RotateView.performed -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnRotateView;
+                @RotateView.canceled -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnRotateView;
+                @HeadMoved.started -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnHeadMoved;
+                @HeadMoved.performed -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnHeadMoved;
+                @HeadMoved.canceled -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnHeadMoved;
+                @Debug.started -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnDebug;
+                @Debug.performed -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnDebug;
+                @Debug.canceled -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnDebug;
+                @InteractLeft_Hand.started -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnInteractLeft_Hand;
+                @InteractLeft_Hand.performed -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnInteractLeft_Hand;
+                @InteractLeft_Hand.canceled -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnInteractLeft_Hand;
+                @InteractRight_Hand.started -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnInteractRight_Hand;
+                @InteractRight_Hand.performed -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnInteractRight_Hand;
+                @InteractRight_Hand.canceled -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnInteractRight_Hand;
+                @TouchLeft_Hand.started -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnTouchLeft_Hand;
+                @TouchLeft_Hand.performed -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnTouchLeft_Hand;
+                @TouchLeft_Hand.canceled -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnTouchLeft_Hand;
+                @TouchRight_Hand.started -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnTouchRight_Hand;
+                @TouchRight_Hand.performed -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnTouchRight_Hand;
+                @TouchRight_Hand.canceled -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnTouchRight_Hand;
             }
-            m_Wrapper.m_InputActionMapActionsCallbackInterface = instance;
+            m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface = instance;
             if (instance != null)
             {
                 @MoveKeyStick.started += instance.OnMoveKeyStick;
@@ -537,8 +760,89 @@ public partial class @Input : IInputActionCollection2, IDisposable
             }
         }
     }
-    public InputActionMapActions @InputActionMap => new InputActionMapActions(this);
-    public interface IInputActionMapActions
+    public VRiskExperienceInputMapActions @VRiskExperienceInputMap => new VRiskExperienceInputMapActions(this);
+
+    // DataVisualiserInputMap
+    private readonly InputActionMap m_DataVisualiserInputMap;
+    private IDataVisualiserInputMapActions m_DataVisualiserInputMapActionsCallbackInterface;
+    private readonly InputAction m_DataVisualiserInputMap_MouseDelta;
+    private readonly InputAction m_DataVisualiserInputMap_PanView;
+    private readonly InputAction m_DataVisualiserInputMap_ZoomView;
+    private readonly InputAction m_DataVisualiserInputMap_RotateView;
+    private readonly InputAction m_DataVisualiserInputMap_MoveView;
+    private readonly InputAction m_DataVisualiserInputMap_FasterMovement;
+    private readonly InputAction m_DataVisualiserInputMap_ToggleOrthoPerspective;
+    public struct DataVisualiserInputMapActions
+    {
+        private @Input m_Wrapper;
+        public DataVisualiserInputMapActions(@Input wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MouseDelta => m_Wrapper.m_DataVisualiserInputMap_MouseDelta;
+        public InputAction @PanView => m_Wrapper.m_DataVisualiserInputMap_PanView;
+        public InputAction @ZoomView => m_Wrapper.m_DataVisualiserInputMap_ZoomView;
+        public InputAction @RotateView => m_Wrapper.m_DataVisualiserInputMap_RotateView;
+        public InputAction @MoveView => m_Wrapper.m_DataVisualiserInputMap_MoveView;
+        public InputAction @FasterMovement => m_Wrapper.m_DataVisualiserInputMap_FasterMovement;
+        public InputAction @ToggleOrthoPerspective => m_Wrapper.m_DataVisualiserInputMap_ToggleOrthoPerspective;
+        public InputActionMap Get() { return m_Wrapper.m_DataVisualiserInputMap; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DataVisualiserInputMapActions set) { return set.Get(); }
+        public void SetCallbacks(IDataVisualiserInputMapActions instance)
+        {
+            if (m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface != null)
+            {
+                @MouseDelta.started -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnMouseDelta;
+                @MouseDelta.performed -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnMouseDelta;
+                @MouseDelta.canceled -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnMouseDelta;
+                @PanView.started -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnPanView;
+                @PanView.performed -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnPanView;
+                @PanView.canceled -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnPanView;
+                @ZoomView.started -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnZoomView;
+                @ZoomView.performed -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnZoomView;
+                @ZoomView.canceled -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnZoomView;
+                @RotateView.started -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnRotateView;
+                @RotateView.performed -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnRotateView;
+                @RotateView.canceled -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnRotateView;
+                @MoveView.started -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnMoveView;
+                @MoveView.performed -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnMoveView;
+                @MoveView.canceled -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnMoveView;
+                @FasterMovement.started -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnFasterMovement;
+                @FasterMovement.performed -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnFasterMovement;
+                @FasterMovement.canceled -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnFasterMovement;
+                @ToggleOrthoPerspective.started -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnToggleOrthoPerspective;
+                @ToggleOrthoPerspective.performed -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnToggleOrthoPerspective;
+                @ToggleOrthoPerspective.canceled -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnToggleOrthoPerspective;
+            }
+            m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @MouseDelta.started += instance.OnMouseDelta;
+                @MouseDelta.performed += instance.OnMouseDelta;
+                @MouseDelta.canceled += instance.OnMouseDelta;
+                @PanView.started += instance.OnPanView;
+                @PanView.performed += instance.OnPanView;
+                @PanView.canceled += instance.OnPanView;
+                @ZoomView.started += instance.OnZoomView;
+                @ZoomView.performed += instance.OnZoomView;
+                @ZoomView.canceled += instance.OnZoomView;
+                @RotateView.started += instance.OnRotateView;
+                @RotateView.performed += instance.OnRotateView;
+                @RotateView.canceled += instance.OnRotateView;
+                @MoveView.started += instance.OnMoveView;
+                @MoveView.performed += instance.OnMoveView;
+                @MoveView.canceled += instance.OnMoveView;
+                @FasterMovement.started += instance.OnFasterMovement;
+                @FasterMovement.performed += instance.OnFasterMovement;
+                @FasterMovement.canceled += instance.OnFasterMovement;
+                @ToggleOrthoPerspective.started += instance.OnToggleOrthoPerspective;
+                @ToggleOrthoPerspective.performed += instance.OnToggleOrthoPerspective;
+                @ToggleOrthoPerspective.canceled += instance.OnToggleOrthoPerspective;
+            }
+        }
+    }
+    public DataVisualiserInputMapActions @DataVisualiserInputMap => new DataVisualiserInputMapActions(this);
+    public interface IVRiskExperienceInputMapActions
     {
         void OnMoveKeyStick(InputAction.CallbackContext context);
         void OnMoveLeft_Hand(InputAction.CallbackContext context);
@@ -550,5 +854,15 @@ public partial class @Input : IInputActionCollection2, IDisposable
         void OnInteractRight_Hand(InputAction.CallbackContext context);
         void OnTouchLeft_Hand(InputAction.CallbackContext context);
         void OnTouchRight_Hand(InputAction.CallbackContext context);
+    }
+    public interface IDataVisualiserInputMapActions
+    {
+        void OnMouseDelta(InputAction.CallbackContext context);
+        void OnPanView(InputAction.CallbackContext context);
+        void OnZoomView(InputAction.CallbackContext context);
+        void OnRotateView(InputAction.CallbackContext context);
+        void OnMoveView(InputAction.CallbackContext context);
+        void OnFasterMovement(InputAction.CallbackContext context);
+        void OnToggleOrthoPerspective(InputAction.CallbackContext context);
     }
 }
