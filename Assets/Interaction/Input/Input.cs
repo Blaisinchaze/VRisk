@@ -420,6 +420,15 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleOrthoPerspective"",
+                    ""type"": ""Button"",
+                    ""id"": ""04aeaf0d-72d3-4af0-89df-8b3963b05a6e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -554,6 +563,17 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""action"": ""FasterMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2f0ef551-8fa1-43da-aa5e-19a2abe27f88"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleOrthoPerspective"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -580,6 +600,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         m_DataVisualiserInputMap_RotateView = m_DataVisualiserInputMap.FindAction("RotateView", throwIfNotFound: true);
         m_DataVisualiserInputMap_MoveView = m_DataVisualiserInputMap.FindAction("MoveView", throwIfNotFound: true);
         m_DataVisualiserInputMap_FasterMovement = m_DataVisualiserInputMap.FindAction("FasterMovement", throwIfNotFound: true);
+        m_DataVisualiserInputMap_ToggleOrthoPerspective = m_DataVisualiserInputMap.FindAction("ToggleOrthoPerspective", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -750,6 +771,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
     private readonly InputAction m_DataVisualiserInputMap_RotateView;
     private readonly InputAction m_DataVisualiserInputMap_MoveView;
     private readonly InputAction m_DataVisualiserInputMap_FasterMovement;
+    private readonly InputAction m_DataVisualiserInputMap_ToggleOrthoPerspective;
     public struct DataVisualiserInputMapActions
     {
         private @Input m_Wrapper;
@@ -760,6 +782,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         public InputAction @RotateView => m_Wrapper.m_DataVisualiserInputMap_RotateView;
         public InputAction @MoveView => m_Wrapper.m_DataVisualiserInputMap_MoveView;
         public InputAction @FasterMovement => m_Wrapper.m_DataVisualiserInputMap_FasterMovement;
+        public InputAction @ToggleOrthoPerspective => m_Wrapper.m_DataVisualiserInputMap_ToggleOrthoPerspective;
         public InputActionMap Get() { return m_Wrapper.m_DataVisualiserInputMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -787,6 +810,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @FasterMovement.started -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnFasterMovement;
                 @FasterMovement.performed -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnFasterMovement;
                 @FasterMovement.canceled -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnFasterMovement;
+                @ToggleOrthoPerspective.started -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnToggleOrthoPerspective;
+                @ToggleOrthoPerspective.performed -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnToggleOrthoPerspective;
+                @ToggleOrthoPerspective.canceled -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnToggleOrthoPerspective;
             }
             m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -809,6 +835,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @FasterMovement.started += instance.OnFasterMovement;
                 @FasterMovement.performed += instance.OnFasterMovement;
                 @FasterMovement.canceled += instance.OnFasterMovement;
+                @ToggleOrthoPerspective.started += instance.OnToggleOrthoPerspective;
+                @ToggleOrthoPerspective.performed += instance.OnToggleOrthoPerspective;
+                @ToggleOrthoPerspective.canceled += instance.OnToggleOrthoPerspective;
             }
         }
     }
@@ -834,5 +863,6 @@ public partial class @Input : IInputActionCollection2, IDisposable
         void OnRotateView(InputAction.CallbackContext context);
         void OnMoveView(InputAction.CallbackContext context);
         void OnFasterMovement(InputAction.CallbackContext context);
+        void OnToggleOrthoPerspective(InputAction.CallbackContext context);
     }
 }
