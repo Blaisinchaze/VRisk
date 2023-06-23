@@ -389,7 +389,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""name"": ""ZoomView"",
                     ""type"": ""Value"",
                     ""id"": ""73da6d99-8561-4f5d-be02-ee7e7d45ddcb"",
-                    ""expectedControlType"": ""Delta"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -437,7 +437,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e1cfea72-9842-4e44-b46f-c26b2ec8d6d0"",
-                    ""path"": ""<Mouse>/scroll"",
+                    ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
