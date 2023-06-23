@@ -17,11 +17,24 @@ public class FileManager : MonoBehaviour
     
     public static string getFilePath(string[] _editor_path, string[] _android_path)
     {
+        string path;
+        
         #if UNITY_EDITOR
-            return Path.Combine(Application.dataPath, Path.Combine(_editor_path));
+            path = Path.Combine(Application.dataPath, Path.Combine(_editor_path));
         #else
-            return Path.Combine(Application.persistentDataPath, Path.Combine(_android_path));
+            path = Path.Combine(Application.persistentDataPath, Path.Combine(_android_path));
         #endif
+        
+        ensureDirectoryExists(Path.GetDirectoryName(path));
+        return path;
+    }
+    
+    private static void ensureDirectoryExists(string directoryPath)
+    {
+        if (!Directory.Exists(directoryPath))
+        {
+            Directory.CreateDirectory(directoryPath);
+        }
     }
     
     public static string[][] parseCSV(string fileContents)

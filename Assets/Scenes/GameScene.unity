@@ -13425,6 +13425,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4985704077619924400, guid: 0efaad1d0687e7e4193a3ee218bdc9fe,
         type: 3}
+      propertyPath: android_folder_path.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4985704077619924400, guid: 0efaad1d0687e7e4193a3ee218bdc9fe,
+        type: 3}
       propertyPath: editor_folder_path.Array.data[0]
       value: Editor
       objectReference: {fileID: 0}
@@ -13447,6 +13452,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _editor_folder_path.Array.data[2]
       value: TrackedDataFromEditorPlaythroughs
+      objectReference: {fileID: 0}
+    - target: {fileID: 4985704077619924400, guid: 0efaad1d0687e7e4193a3ee218bdc9fe,
+        type: 3}
+      propertyPath: android_folder_path.Array.data[0]
+      value: TrackedData
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
