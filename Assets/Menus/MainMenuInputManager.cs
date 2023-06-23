@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,94 +11,166 @@ public class MainMenuInputManager : MonoBehaviour
     public TransitionManager transitionManager;
 
     public GameObject mainMenu;
-    public GameObject SettingsMenu;
-    public GameObject TutorialMenu;
+    public GameObject settingsMenu;
+    public GameObject tutorialMenu;
+    public GameObject keyboardMenu;
     
     private MenuController mainMenuController;
     private MenuController pauseMenuController;
     private MenuController tutorialMenuController;
+    private MenuController keyboardMenuController;
 
-    [SerializeField] private Vector3 defaultPos;
-    [SerializeField] private Vector3 slidePos;
+    [SerializeField] private Vector3 mainMenuDefaultPos;
+    [SerializeField] private Vector3 mainMenuSlidePos;
+    [SerializeField] private Vector3 keyboardSlideOffset;
 
     [SerializeField] private float animationDuration = 0.5f;
     [SerializeField] private float delay = 0.5f;
 
-    private bool isOpen = false;
+    private bool settingsOpen = false;
+    private bool keyboardOpen = false;
+    private bool tutorialMenuOpen = false;
+
     private bool busy = false;
-    
+
     private void Awake()
     {
         mainMenuController = mainMenu.GetComponent<MenuController>();
-        pauseMenuController = SettingsMenu.GetComponent<MenuController>();
-        tutorialMenuController = TutorialMenu.GetComponent<MenuController>();
+        pauseMenuController = settingsMenu.GetComponent<MenuController>();
+        tutorialMenuController = tutorialMenu.GetComponent<MenuController>();
+        keyboardMenuController = keyboardMenu.GetComponent<MenuController>();
     }
 
     private void Start()
     {
-        defaultPos = mainMenu.transform.localPosition;
+        mainMenuDefaultPos = mainMenu.transform.localPosition;
     }
 
-    // Main Menu -------------------------------------------------------
+    // Settings Controls -------------------------------------------------
 
     public void OpenCloseSettings()
     {
         //Ignore input if animation is not finished
         if (busy) return;
-        StartCoroutine(OpenCloseCoroutine());
+        
+        StartCoroutine(OpenCloseSettingsCoroutine());
     }
 
     public void OpenCloseSettings(bool open)
     {
         if (busy) return;
 
-        isOpen = !open;
-        StartCoroutine(OpenCloseCoroutine());
+        settingsOpen = !open;
+        StartCoroutine(OpenCloseSettingsCoroutine());
     }
     
-    public void StartSimulation()
+    // Tutorial / keyboard controls ---------------------------------------
+
+    public void OpenCloseTutorial()
     {
-        
+        if (busy) return;
+
+        StartCoroutine(OpenCloseTutorialCoroutine());
     }
 
-    public void CloseSimulation()
+    public void MenuToKeyboard()
     {
-        //Simply closes the game
-        Application.Quit();
+        if (busy) return;
+
+        keyboardOpen = true;
+        StartCoroutine(OpenCloseKeyboardCoroutine());
+    }
+
+    public void KeyboardToMenu()
+    {
+        if (busy) return;
+
+        keyboardOpen = false;
+        StartCoroutine(OpenCloseKeyboardCoroutine());
     }
     
     // Tutorial Window -------------------------------------------------------
 
     public void SkipTutorial()
     {
-        OpenCloseSettings(false);
-        data.NextScene = (int)GameData.SceneIndex.SIMULATION;
-        transitionManager.LoadNextScene();
     }
-
 
     // -------------------------------------------------------------------
     
-    private IEnumerator OpenCloseCoroutine()
+    private IEnumerator OpenCloseSettingsCoroutine()
     {
         busy = true;
         
         //Closes/opens menu depending on the last action, uses easing for smooth motion
-        if (isOpen)
+        if (settingsOpen)
         {
             pauseMenuController.CloseMenu();
             yield return new WaitForSeconds(delay);
-            mainMenu.transform.LeanMoveLocal(defaultPos, animationDuration).setEaseInOutBack();
+            mainMenu.transform.LeanMoveLocal(mainMenuDefaultPos, animationDuration).setEaseInOutBack();
         }
         else
         {
-            mainMenu.transform.LeanMoveLocal(slidePos, animationDuration).setEaseInOutBack();
+            mainMenu.transform.LeanMoveLocal(mainMenuSlidePos, animationDuration).setEaseInOutBack();
             yield return new WaitForSeconds(delay);
             pauseMenuController.OpenMenu();
         }
 
         yield return new WaitForSeconds(delay);
-        isOpen = !isOpen;
+        settingsOpen = !settingsOpen;
+        busy = false;
+    }
+
+    private IEnumerator OpenCloseKeyboardCoroutine()
+    {
+        if (!keyboardOpen && tutorialMenuOpen)
+        {
+            tutorialMenuController.CloseMenu();
+        }
+
+        if (keyboardOpen)
+        {
+            mainMenuController.CloseMenu();
+            keyboardMenuController.OpenMenu();
+            OpenCloseSettings(false);
+            busy = true;
+        }
+        else
+        {
+            busy = true;
+            keyboardMenuController.CloseMenu();
+            yield return new WaitForSeconds(keyboardMenuController.animationTime);
+            mainMenuController.OpenMenu();
+        }
+
+        yield return new WaitForSeconds(delay);
+        keyboardOpen = !keyboardOpen;
+        busy = false;
+    }
+
+    private IEnumerator OpenCloseTutorialCoroutine()
+    {
+        busy = true;
+        
+        if (!keyboardOpen)
+        {
+            if (tutorialMenuOpen)
+            {
+                tutorialMenuController.CloseMenu();
+                yield return new WaitForSeconds(delay);
+                keyboardMenuController.targetPos = tutorialMenu.transform.localPosition;
+            }
+            else
+            {
+                var targetPos = tutorialMenu.transform.localPosition + keyboardSlideOffset;
+
+                keyboardMenuController.targetPos = targetPos;
+                yield return new WaitForSeconds(delay);
+                tutorialMenuController.OpenMenu();
+            }
+        }
+
+        yield return new WaitForSeconds(delay);
+        tutorialMenuOpen = !tutorialMenuOpen;
         busy = false;
     }
 }
