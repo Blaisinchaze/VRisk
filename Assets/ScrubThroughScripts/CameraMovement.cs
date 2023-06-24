@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -47,11 +48,9 @@ public class CameraMovement : MonoBehaviour
           action_map.PanView.started += setAction;
           action_map.PanView.performed += setAction;
           action_map.PanView.canceled += setAction;
-          
-          action_map.ZoomView.started += setAction;
-          action_map.ZoomView.performed += setAction;
-          action_map.ZoomView.canceled += setAction;
-          
+
+          action_map.ZoomView.performed += zoomCamera;
+
           action_map.RotateView.started += setAction;
           action_map.RotateView.performed += setAction;
           action_map.RotateView.canceled += setAction;
@@ -69,6 +68,7 @@ public class CameraMovement : MonoBehaviour
      {
           moving = !isActionCanceled(_context);
      }
+     
 
      private void toggleOrthoPerspective(InputAction.CallbackContext _context)
      {
@@ -130,11 +130,7 @@ public class CameraMovement : MonoBehaviour
                case CameraAction.PAN:
                     panCamera();
                     break;
-               
-               case CameraAction.ZOOM:
-                    zoomCamera();
-                    break;
-               
+
                case CameraAction.ROTATE:
                     rotateCamera(action_map.MouseDelta.ReadValue<Vector2>());
                     break;
@@ -151,12 +147,24 @@ public class CameraMovement : MonoBehaviour
 
      private void panCamera()
      {
-          
+          Vector2 input = action_map.MouseDelta.ReadValue<Vector2>();
+          float speed = faster ? panning_speed * panning_speed_modifier : panning_speed;
+    
+          // Create a pan direction vector
+          Vector3 panDirection = new Vector3(input.x, input.y, 0) * speed * Time.deltaTime;
+
+          // Multiply the direction by the distance we want to pan
+          cam.transform.Translate(panDirection, Space.Self);
      }
      
-     private void zoomCamera()
+     private void zoomCamera(InputAction.CallbackContext _context)
      {
+          float direction = _context.ReadValue<float>() / 120;
+
+          direction *= faster ? zoom_speed * zoom_speed_modifier : zoom_speed;
           
+          Vector3 new_pos = cam.transform.position + direction * cam.transform.forward;
+          cam.transform.position = new_pos;
      }
 
      private void rotateCamera(Vector2 _rotation)
@@ -171,8 +179,6 @@ public class CameraMovement : MonoBehaviour
           // Convert pitch and yaw to quaternion rotations
           Quaternion pitch_rotation = Quaternion.Euler(pitch, 0, 0);
           Quaternion yaw_rotation = Quaternion.Euler(0, yaw, 0);
-
-          Quaternion current_rotation = cam.transform.rotation;
 
           Quaternion current_pitch = Quaternion.Euler(cam.transform.eulerAngles.x, 0, 0);
           Quaternion current_yaw = Quaternion.Euler(0, cam.transform.eulerAngles.y, 0);
@@ -192,5 +198,7 @@ public class CameraMovement : MonoBehaviour
           float speed = !faster ? move_speed : move_speed * move_speed_modifier;
           Vector3 new_pos = cam.transform.position + relative_to_cam * speed;
           cam.transform.position = new_pos;
+          
+          Debug.Log("Moving");
      }
 }
