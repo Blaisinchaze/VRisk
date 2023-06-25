@@ -365,21 +365,12 @@ public partial class @Input : IInputActionCollection2, IDisposable
         },
         {
             ""name"": ""DataVisualiserInputMap"",
-            ""id"": ""da215fe0-8952-4317-9cf5-5e41762ffb9f"",
+            ""id"": ""079cee4b-f22b-4c94-a5d3-8cba01433f19"",
             ""actions"": [
-                {
-                    ""name"": ""MouseDelta"",
-                    ""type"": ""Value"",
-                    ""id"": ""591ea2ed-c2fb-4fd3-8bfb-25e52df5882a"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
                 {
                     ""name"": ""PanView"",
                     ""type"": ""Button"",
-                    ""id"": ""e3f65a64-e730-4151-90ae-2d8275e22281"",
+                    ""id"": ""4bc94a6f-b457-4c8f-bd01-d260d4b017ea"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -388,7 +379,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""ZoomView"",
                     ""type"": ""Value"",
-                    ""id"": ""73da6d99-8561-4f5d-be02-ee7e7d45ddcb"",
+                    ""id"": ""2c598cad-2a04-41bb-971e-62e7716a3470"",
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -397,7 +388,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""RotateView"",
                     ""type"": ""Button"",
-                    ""id"": ""b3081131-9581-46e7-a981-c2fd3ee2a058"",
+                    ""id"": ""984efe57-0aac-4f23-b11c-84b8354d615d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -406,16 +397,25 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""MoveView"",
                     ""type"": ""Value"",
-                    ""id"": ""50473440-9c14-4366-a0d7-87b4682bc1cc"",
+                    ""id"": ""6c3cfcc1-ad7e-441a-8e4f-9579458aec63"",
                     ""expectedControlType"": ""Vector3"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""FasterMovement"",
+                    ""name"": ""MouseDelta"",
+                    ""type"": ""Value"",
+                    ""id"": ""445a610a-e3a2-4bf2-9b60-084e9a91f6b4"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Faster"",
                     ""type"": ""Button"",
-                    ""id"": ""f160da04-e9c6-4cb2-8b64-070d264ebe72"",
+                    ""id"": ""913253b9-17fb-44d0-aac9-4ebb43fc4da2"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -424,7 +424,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""ToggleOrthoPerspective"",
                     ""type"": ""Button"",
-                    ""id"": ""04aeaf0d-72d3-4af0-89df-8b3963b05a6e"",
+                    ""id"": ""afc62ab7-9102-42b1-9226-db4015123853"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -434,7 +434,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""24f9e479-4653-4feb-93cd-c2e912c29653"",
+                    ""id"": ""63501955-32a1-416a-8ad0-afb96ec1c0b8"",
                     ""path"": ""<Mouse>/middleButton"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -445,7 +445,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""e1cfea72-9842-4e44-b46f-c26b2ec8d6d0"",
+                    ""id"": ""6cda228a-1fc4-4e25-971f-cf609eac342a"",
                     ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -456,18 +456,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""972d160f-b638-4395-840f-ae9a817b25a7"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MouseDelta"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""669db0d3-0ed6-4630-9ead-a8ea6ddc4a2c"",
+                    ""id"": ""0b60982d-f45a-4a36-87c1-08961a2259ec"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -478,7 +467,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""3D Vector"",
-                    ""id"": ""513e0d4f-e143-4dfb-84e3-fb98360cd569"",
+                    ""id"": ""105cbe37-f3ef-4dc0-8048-0ea8bb9e3447"",
                     ""path"": ""3DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -489,7 +478,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""beda9c00-ef96-4a01-991f-d03098c43ed6"",
+                    ""id"": ""7cd07f35-1bfb-4826-9e22-ba25a6a165a4"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -500,7 +489,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""e0511efd-b57a-4aa3-ac85-019a6f631c48"",
+                    ""id"": ""e42233e6-3b49-42d6-99d2-59e4087ffdfa"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -511,7 +500,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""e1278629-4377-477c-8116-78afd456357a"",
+                    ""id"": ""909daf4f-c713-485d-82e9-962a1fc76fa6"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -522,7 +511,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""5877a52d-e94c-484f-87b7-5155a17aec48"",
+                    ""id"": ""3836cbf0-0c1d-40b7-9160-83a6335e3aa6"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -533,7 +522,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""forward"",
-                    ""id"": ""c14e042f-4084-4257-a02e-a5154799320d"",
+                    ""id"": ""44aaac00-7784-4af3-882d-680698d16f17"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -544,7 +533,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""backward"",
-                    ""id"": ""e36701d0-db88-44aa-985c-d35f40e62248"",
+                    ""id"": ""2a13321f-9853-479c-9f69-63e9158e971b"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -555,18 +544,29 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""bb2c1f38-e789-4747-8d23-317bc055becb"",
-                    ""path"": ""<Keyboard>/shift"",
+                    ""id"": ""99d9e228-b399-4b30-a80b-21cb4e79d846"",
+                    ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""FasterMovement"",
+                    ""action"": ""MouseDelta"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""2f0ef551-8fa1-43da-aa5e-19a2abe27f88"",
+                    ""id"": ""506f9286-b1fc-4591-bda6-e5516cdf240b"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Faster"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""89eafe7a-769e-45a4-855e-420c582f0731"",
                     ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -594,12 +594,12 @@ public partial class @Input : IInputActionCollection2, IDisposable
         m_VRiskExperienceInputMap_TouchRight_Hand = m_VRiskExperienceInputMap.FindAction("Touch(Right_Hand)", throwIfNotFound: true);
         // DataVisualiserInputMap
         m_DataVisualiserInputMap = asset.FindActionMap("DataVisualiserInputMap", throwIfNotFound: true);
-        m_DataVisualiserInputMap_MouseDelta = m_DataVisualiserInputMap.FindAction("MouseDelta", throwIfNotFound: true);
         m_DataVisualiserInputMap_PanView = m_DataVisualiserInputMap.FindAction("PanView", throwIfNotFound: true);
         m_DataVisualiserInputMap_ZoomView = m_DataVisualiserInputMap.FindAction("ZoomView", throwIfNotFound: true);
         m_DataVisualiserInputMap_RotateView = m_DataVisualiserInputMap.FindAction("RotateView", throwIfNotFound: true);
         m_DataVisualiserInputMap_MoveView = m_DataVisualiserInputMap.FindAction("MoveView", throwIfNotFound: true);
-        m_DataVisualiserInputMap_FasterMovement = m_DataVisualiserInputMap.FindAction("FasterMovement", throwIfNotFound: true);
+        m_DataVisualiserInputMap_MouseDelta = m_DataVisualiserInputMap.FindAction("MouseDelta", throwIfNotFound: true);
+        m_DataVisualiserInputMap_Faster = m_DataVisualiserInputMap.FindAction("Faster", throwIfNotFound: true);
         m_DataVisualiserInputMap_ToggleOrthoPerspective = m_DataVisualiserInputMap.FindAction("ToggleOrthoPerspective", throwIfNotFound: true);
     }
 
@@ -765,23 +765,23 @@ public partial class @Input : IInputActionCollection2, IDisposable
     // DataVisualiserInputMap
     private readonly InputActionMap m_DataVisualiserInputMap;
     private IDataVisualiserInputMapActions m_DataVisualiserInputMapActionsCallbackInterface;
-    private readonly InputAction m_DataVisualiserInputMap_MouseDelta;
     private readonly InputAction m_DataVisualiserInputMap_PanView;
     private readonly InputAction m_DataVisualiserInputMap_ZoomView;
     private readonly InputAction m_DataVisualiserInputMap_RotateView;
     private readonly InputAction m_DataVisualiserInputMap_MoveView;
-    private readonly InputAction m_DataVisualiserInputMap_FasterMovement;
+    private readonly InputAction m_DataVisualiserInputMap_MouseDelta;
+    private readonly InputAction m_DataVisualiserInputMap_Faster;
     private readonly InputAction m_DataVisualiserInputMap_ToggleOrthoPerspective;
     public struct DataVisualiserInputMapActions
     {
         private @Input m_Wrapper;
         public DataVisualiserInputMapActions(@Input wrapper) { m_Wrapper = wrapper; }
-        public InputAction @MouseDelta => m_Wrapper.m_DataVisualiserInputMap_MouseDelta;
         public InputAction @PanView => m_Wrapper.m_DataVisualiserInputMap_PanView;
         public InputAction @ZoomView => m_Wrapper.m_DataVisualiserInputMap_ZoomView;
         public InputAction @RotateView => m_Wrapper.m_DataVisualiserInputMap_RotateView;
         public InputAction @MoveView => m_Wrapper.m_DataVisualiserInputMap_MoveView;
-        public InputAction @FasterMovement => m_Wrapper.m_DataVisualiserInputMap_FasterMovement;
+        public InputAction @MouseDelta => m_Wrapper.m_DataVisualiserInputMap_MouseDelta;
+        public InputAction @Faster => m_Wrapper.m_DataVisualiserInputMap_Faster;
         public InputAction @ToggleOrthoPerspective => m_Wrapper.m_DataVisualiserInputMap_ToggleOrthoPerspective;
         public InputActionMap Get() { return m_Wrapper.m_DataVisualiserInputMap; }
         public void Enable() { Get().Enable(); }
@@ -792,9 +792,6 @@ public partial class @Input : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface != null)
             {
-                @MouseDelta.started -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnMouseDelta;
-                @MouseDelta.performed -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnMouseDelta;
-                @MouseDelta.canceled -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnMouseDelta;
                 @PanView.started -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnPanView;
                 @PanView.performed -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnPanView;
                 @PanView.canceled -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnPanView;
@@ -807,9 +804,12 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @MoveView.started -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnMoveView;
                 @MoveView.performed -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnMoveView;
                 @MoveView.canceled -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnMoveView;
-                @FasterMovement.started -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnFasterMovement;
-                @FasterMovement.performed -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnFasterMovement;
-                @FasterMovement.canceled -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnFasterMovement;
+                @MouseDelta.started -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnMouseDelta;
+                @MouseDelta.performed -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnMouseDelta;
+                @MouseDelta.canceled -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnMouseDelta;
+                @Faster.started -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnFaster;
+                @Faster.performed -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnFaster;
+                @Faster.canceled -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnFaster;
                 @ToggleOrthoPerspective.started -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnToggleOrthoPerspective;
                 @ToggleOrthoPerspective.performed -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnToggleOrthoPerspective;
                 @ToggleOrthoPerspective.canceled -= m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface.OnToggleOrthoPerspective;
@@ -817,9 +817,6 @@ public partial class @Input : IInputActionCollection2, IDisposable
             m_Wrapper.m_DataVisualiserInputMapActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @MouseDelta.started += instance.OnMouseDelta;
-                @MouseDelta.performed += instance.OnMouseDelta;
-                @MouseDelta.canceled += instance.OnMouseDelta;
                 @PanView.started += instance.OnPanView;
                 @PanView.performed += instance.OnPanView;
                 @PanView.canceled += instance.OnPanView;
@@ -832,9 +829,12 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @MoveView.started += instance.OnMoveView;
                 @MoveView.performed += instance.OnMoveView;
                 @MoveView.canceled += instance.OnMoveView;
-                @FasterMovement.started += instance.OnFasterMovement;
-                @FasterMovement.performed += instance.OnFasterMovement;
-                @FasterMovement.canceled += instance.OnFasterMovement;
+                @MouseDelta.started += instance.OnMouseDelta;
+                @MouseDelta.performed += instance.OnMouseDelta;
+                @MouseDelta.canceled += instance.OnMouseDelta;
+                @Faster.started += instance.OnFaster;
+                @Faster.performed += instance.OnFaster;
+                @Faster.canceled += instance.OnFaster;
                 @ToggleOrthoPerspective.started += instance.OnToggleOrthoPerspective;
                 @ToggleOrthoPerspective.performed += instance.OnToggleOrthoPerspective;
                 @ToggleOrthoPerspective.canceled += instance.OnToggleOrthoPerspective;
@@ -857,12 +857,12 @@ public partial class @Input : IInputActionCollection2, IDisposable
     }
     public interface IDataVisualiserInputMapActions
     {
-        void OnMouseDelta(InputAction.CallbackContext context);
         void OnPanView(InputAction.CallbackContext context);
         void OnZoomView(InputAction.CallbackContext context);
         void OnRotateView(InputAction.CallbackContext context);
         void OnMoveView(InputAction.CallbackContext context);
-        void OnFasterMovement(InputAction.CallbackContext context);
+        void OnMouseDelta(InputAction.CallbackContext context);
+        void OnFaster(InputAction.CallbackContext context);
         void OnToggleOrthoPerspective(InputAction.CallbackContext context);
     }
 }

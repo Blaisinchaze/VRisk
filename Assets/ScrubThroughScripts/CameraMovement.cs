@@ -60,8 +60,8 @@ public class CameraMovement : MonoBehaviour
           action_map.MoveView.canceled += setMoving;
 
           action_map.ToggleOrthoPerspective.started += toggleOrthoPerspective;
-          action_map.FasterMovement.started += setFaster => faster = true;
-          action_map.FasterMovement.canceled += setFaster => faster = false;
+          action_map.Faster.started += setFaster => faster = true;
+          action_map.Faster.canceled += setFaster => faster = false;
      }
 
      private void setMoving(InputAction.CallbackContext _context)
