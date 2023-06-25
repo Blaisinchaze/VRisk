@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Camera))]
 public class CameraMovement : MonoBehaviour
@@ -49,7 +47,9 @@ public class CameraMovement : MonoBehaviour
           action_map.PanView.performed += setAction;
           action_map.PanView.canceled += setAction;
 
-          action_map.ZoomView.performed += zoomCamera;
+          action_map.ZoomView.started += setAction;
+          action_map.ZoomView.performed += setAction;
+          action_map.ZoomView.canceled += setAction;
 
           action_map.RotateView.started += setAction;
           action_map.RotateView.performed += setAction;
@@ -60,8 +60,8 @@ public class CameraMovement : MonoBehaviour
           action_map.MoveView.canceled += setMoving;
 
           action_map.ToggleOrthoPerspective.started += toggleOrthoPerspective;
-          action_map.FasterMovement.started += setFaster => faster = true;
-          action_map.FasterMovement.canceled += setFaster => faster = false;
+          action_map.Faster.started += setFaster => faster = true;
+          action_map.Faster.canceled += setFaster => faster = false;
      }
 
      private void setMoving(InputAction.CallbackContext _context)
@@ -134,6 +134,10 @@ public class CameraMovement : MonoBehaviour
                case CameraAction.ROTATE:
                     rotateCamera(action_map.MouseDelta.ReadValue<Vector2>());
                     break;
+               
+               case CameraAction.ZOOM:
+                    zoomCamera(action_map.ZoomView.ReadValue<float>() / 120);
+                    break;
 
                default:
                     break;
@@ -150,20 +154,16 @@ public class CameraMovement : MonoBehaviour
           Vector2 input = action_map.MouseDelta.ReadValue<Vector2>();
           float speed = faster ? panning_speed * panning_speed_modifier : panning_speed;
     
-          // Create a pan direction vector
-          Vector3 panDirection = new Vector3(input.x, input.y, 0) * speed * Time.deltaTime;
+          Vector3 pan_direction = new Vector3(input.x, input.y, 0) * (speed * Time.deltaTime);
 
-          // Multiply the direction by the distance we want to pan
-          cam.transform.Translate(panDirection, Space.Self);
+          cam.transform.Translate(pan_direction, Space.Self);
      }
-     
-     private void zoomCamera(InputAction.CallbackContext _context)
-     {
-          float direction = _context.ReadValue<float>() / 120;
 
-          direction *= faster ? zoom_speed * zoom_speed_modifier : zoom_speed;
-          
-          Vector3 new_pos = cam.transform.position + direction * cam.transform.forward;
+     private void zoomCamera(float _direction)
+     {
+          _direction *= faster ? zoom_speed * zoom_speed_modifier : zoom_speed;
+
+          Vector3 new_pos = cam.transform.position + _direction * cam.transform.forward;
           cam.transform.position = new_pos;
      }
 
@@ -198,7 +198,5 @@ public class CameraMovement : MonoBehaviour
           float speed = !faster ? move_speed : move_speed * move_speed_modifier;
           Vector3 new_pos = cam.transform.position + relative_to_cam * speed;
           cam.transform.position = new_pos;
-          
-          Debug.Log("Moving");
      }
 }

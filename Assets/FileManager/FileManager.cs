@@ -15,6 +15,17 @@ public class FileManager : MonoBehaviour
         return null;
     }
     
+    public static string getFileContents(string[] _editor_path)
+    {
+        string path = getFilePath(_editor_path);
+
+        if (File.Exists(path))
+        {
+            return File.ReadAllText(path);
+        }
+        return null;
+    }
+    
     public static string getFilePath(string[] _editor_path, string[] _android_path)
     {
         string path;
@@ -25,6 +36,14 @@ public class FileManager : MonoBehaviour
             path = Path.Combine(Application.persistentDataPath, Path.Combine(_android_path));
         #endif
         
+        ensureDirectoryExists(Path.GetDirectoryName(path));
+        return path;
+    }
+    
+    public static string getFilePath(string[] _editor_path)
+    {
+        string path;
+        path = Path.Combine(Application.dataPath, Path.Combine(_editor_path));
         ensureDirectoryExists(Path.GetDirectoryName(path));
         return path;
     }
