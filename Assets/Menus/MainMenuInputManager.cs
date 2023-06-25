@@ -9,12 +9,14 @@ public class MainMenuInputManager : MonoBehaviour
 {
     public GameData data;
     public TransitionManager transitionManager;
-
+    public UIAnchor uiAnchor;
+    public TutorialManager tutorialManager;
+    
     public GameObject mainMenu;
     public GameObject settingsMenu;
     public GameObject tutorialMenu;
     public GameObject keyboardMenu;
-    
+
     private MenuController mainMenuController;
     private MenuController pauseMenuController;
     private MenuController tutorialMenuController;
@@ -56,11 +58,12 @@ public class MainMenuInputManager : MonoBehaviour
         StartCoroutine(OpenCloseSettingsCoroutine());
     }
 
-    public void OpenCloseSettings(bool open)
+    //Overload of the previous function to specifically close or open 
+    public void OpenCloseSettings(bool state)
     {
         if (busy) return;
 
-        settingsOpen = !open;
+        settingsOpen = !state;
         StartCoroutine(OpenCloseSettingsCoroutine());
     }
     
@@ -73,26 +76,31 @@ public class MainMenuInputManager : MonoBehaviour
         StartCoroutine(OpenCloseTutorialCoroutine());
     }
 
-    public void MenuToKeyboard()
+    public void OpenCloseKeyboard(bool state)
     {
         if (busy) return;
 
-        keyboardOpen = true;
+        keyboardOpen = !state;
         StartCoroutine(OpenCloseKeyboardCoroutine());
     }
 
-    public void KeyboardToMenu()
-    {
-        if (busy) return;
-
-        keyboardOpen = false;
-        StartCoroutine(OpenCloseKeyboardCoroutine());
-    }
-    
     // Tutorial Window -------------------------------------------------------
 
-    public void SkipTutorial()
+    public void PlayTutorial(bool skip)
     {
+        if (busy) return;
+
+        if (skip)
+        {
+            uiAnchor.PopOut();
+            data.NextScene = (int)GameData.SceneIndex.SIMULATION;
+            transitionManager.LoadNextScene();
+        }
+        else
+        {
+            uiAnchor.PopOut();
+            tutorialManager.StartTutorial();
+        }
     }
 
     // -------------------------------------------------------------------

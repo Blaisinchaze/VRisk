@@ -13,8 +13,8 @@ public class MovementController : MonoBehaviour
     private Rigidbody rig_rb;
     
     public float min_run_input_mag = 0.7f;
-    public float walk_speed = 0.5f;
-    public float run_speed = 1.0f;
+    public float walk_speed = 0.1f;
+    public float run_speed = 0.2f;
     
     private Vector3 prev_controller_r; 
     private Vector3 prev_controller_l;
@@ -25,7 +25,7 @@ public class MovementController : MonoBehaviour
     private bool left_mov = false;
     private bool right_mov = false;
 
-    private float timer = 0.0f;
+    private float timer = 10.0f;
 
     private float speed_multiplier = 100.0f;
     public float ratio_of_motion = 0.0f;               
