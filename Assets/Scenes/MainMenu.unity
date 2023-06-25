@@ -4953,10 +4953,11 @@ MonoBehaviour:
   playerRig: {fileID: 1201583562}
   menuAnchor: {fileID: 1100139819}
   viewController: {fileID: 1704242135}
-  startPos: {x: 0, y: -100, z: 0}
+  startPos: {x: 0, y: -60, z: 0}
   targetPos: {x: 0, y: 0, z: 0}
+  yOffset: -1.5
   delay: 3
-  moveTime: 3.5
+  moveTime: 4
   scaleTime: 3.5
 --- !u!1 &698517203
 GameObject:
