@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DataTracker : MonoBehaviour
@@ -66,7 +67,10 @@ public class DataTracker : MonoBehaviour
     private void recordDataPoint()
     {
         Vector2 grid_location = getGridLocation();
-        _recorded_locations.Add(new List<string> {timer.ToString(), grid_location.ToString()});
+
+        string time = timer.ToString();
+        string grid_cell_string = grid_location.x.ToString() + "," + grid_location.y.ToString();
+        _recorded_locations.Add(new List<string> {time, grid_cell_string});
     }
 
     private Vector2 getGridLocation()
@@ -82,7 +86,8 @@ public class DataTracker : MonoBehaviour
         active = false;
 
         string survived = _survived ? "Survived" : "Died";
-        _recorded_locations.Add(new List<string> {timer.ToString(), getGridLocation().ToString(), survived});
+        recordDataPoint();
+        _recorded_locations.Last().Add(survived);
 
         DateTime date_time = DateTime.Now;
         

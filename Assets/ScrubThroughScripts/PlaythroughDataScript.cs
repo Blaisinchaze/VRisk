@@ -1,18 +1,41 @@
-using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PlaythroughDataScript : MonoBehaviour
+namespace DataVisualiser
 {
-    // Start is called before the first frame update
-    void Start()
+    public class PlaythroughDataScript : MonoBehaviour
     {
+        public Toggle selected;
         
+        public TMP_Text save_name;
+        public TMP_Text save_date;
+        public TMP_Text save_time;
+
+        public List<TimelineElement> timeline;
+        public bool survived;
+
+        public void setData(string _save_name, string _save_date, string _save_time, List<TimelineElement> _timeline, bool _survived)
+        {
+            save_name.text = _save_name;
+            save_date.text = _save_date;
+            save_time.text = _save_time;
+            timeline = _timeline;
+            survived = _survived;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    [System.Serializable]
+    public class TimelineElement
     {
-        
+        public float time;
+        public Vector2 grid_cell;
+
+        public TimelineElement(float _time, Vector2 _grid_cell)
+        {
+            time = _time;
+            grid_cell = _grid_cell;
+        }
     }
 }
