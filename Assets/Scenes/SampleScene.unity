@@ -250,7 +250,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfedd3855d1136d48a464ae4b6eccba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPos: {x: 0, y: 0, z: 0}
   animationTime: 0.5
+  lerpSpeed: 2.5
+  openMode: 0
+  closeMode: 0
+  tweenTypeOpen: 1
+  tweenTypeClose: 1
+  defaultPos: {x: 0, y: 0, z: 0}
+  awayPos: {x: 0, y: 0, z: 0}
   startOpen: 1
   open: 0
 --- !u!4 &23891261
@@ -27068,7 +27076,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfedd3855d1136d48a464ae4b6eccba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPos: {x: 0, y: 0, z: 0}
   animationTime: 0.5
+  lerpSpeed: 2.5
+  openMode: 0
+  closeMode: 0
+  tweenTypeOpen: 1
+  tweenTypeClose: 1
+  defaultPos: {x: 0, y: 0, z: 0}
+  awayPos: {x: 0, y: 0, z: 0}
   startOpen: 0
   open: 0
 --- !u!43 &1887690483
@@ -29326,7 +29342,7 @@ GameObject:
   - component: {fileID: 1971958100}
   m_Layer: 0
   m_Name: UI Camera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

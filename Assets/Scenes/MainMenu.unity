@@ -29278,7 +29278,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: BACK
+  m_text: CLOSE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6d599ec6e258cde469e7e496778d6dc3, type: 2}
   m_sharedMaterial: {fileID: 8459843465828673114, guid: 6d599ec6e258cde469e7e496778d6dc3,
@@ -31315,7 +31315,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.80005, y: 175}
-  m_SizeDelta: {x: 600, y: 66.58}
+  m_SizeDelta: {x: 622.01, y: 66.58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &761418837
 MonoBehaviour:
