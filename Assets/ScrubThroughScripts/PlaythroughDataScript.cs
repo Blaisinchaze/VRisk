@@ -12,6 +12,9 @@ namespace DataVisualiser
         public TMP_Text save_name;
         public TMP_Text save_date;
         public TMP_Text save_time;
+        public TMP_Text finish_state;
+        public TMP_Text time_to_completion;
+        public Button display_data_button;
 
         public List<TimelineElement> timeline;
         public bool survived;

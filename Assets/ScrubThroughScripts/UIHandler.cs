@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using SFB;
 using System.IO;
+using Unity.VisualScripting;
 using Debug = UnityEngine.Debug;
 
 namespace DataVisualiser
 {
     public class UIHandler : MonoBehaviour
     {
+        public PathVisualiser path_visualiser;
         public GameObject playthrough_button_prefab;
         public RectTransform playthrough_button_container;
         public float tab_gap = 5;
@@ -64,16 +66,18 @@ namespace DataVisualiser
 
             foreach (var file in csv_files)
             {
-                // Create playthrough tab and set display data (username, date, time).
-                var playthrough_data = createTab();
-                setTabDisplayData(playthrough_data, file);
-
                 // Grab the file contents and parse the csv.
                 string contents = FileManager.getFileContents(new[] {file});
                 string[][] csv_contents = FileManager.parseCSV(contents);
                 
+                // Create playthrough tab set.
+                var playthrough_data = createTab();
+                
                 // Set bool for whether or not player lived. 
                 playthrough_data.survived = csv_contents[csv_contents.Length-2][3] == "Survived\r";
+                
+                // Display data (username, date, time, completion time, completion_condition).
+                setTabDisplayData(playthrough_data, file, csv_contents[csv_contents.Length - 2][0], csv_contents[csv_contents.Length - 2][3]);
 
                 // Store timeline points.
                 for (int line_index = 0; line_index < csv_contents.Length-1; line_index++)
@@ -85,6 +89,8 @@ namespace DataVisualiser
                     
                     playthrough_data.timeline.Add(new TimelineElement(time, grid_cell));
                 }
+                
+                
             }
         }
 
@@ -97,6 +103,8 @@ namespace DataVisualiser
             GameObject playthrough_tab = Instantiate(playthrough_button_prefab, playthrough_button_container);
             PlaythroughDataScript playthrough_data = playthrough_tab.GetComponent<PlaythroughDataScript>();
             
+            playthrough_data.display_data_button.onClick.AddListener(() => path_visualiser.setData(playthrough_data));
+            
             
             // Add tab to list. 
             playthroughs.Add(new Pair<GameObject, PlaythroughDataScript>(playthrough_tab, playthrough_data));
@@ -104,17 +112,25 @@ namespace DataVisualiser
             return playthrough_data;
         }
 
-        private void setTabDisplayData(PlaythroughDataScript _script_data, string _file)
+        private void setTabDisplayData(PlaythroughDataScript _script_data, string _file, string _completion_time, string _completion_state)
         {
             string filename = Path.GetFileNameWithoutExtension(_file);
                 
             string[] parts = filename.Split(new string[] { " - " }, StringSplitOptions.None);
             string dateAndTimePart = parts[0];
-            _script_data.name = parts.Length > 1 ? parts[1] : "";
+            _script_data.save_name.text = parts.Length > 1 ? parts[1] : "";
                 
             string[] dateAndTimeParts = dateAndTimePart.Split(new char[] { '(', ')' }, StringSplitOptions.RemoveEmptyEntries);
             _script_data.save_date.text = dateAndTimeParts.Length > 0 ? dateAndTimeParts[0].Trim() : "";
             _script_data.save_time.text = dateAndTimeParts.Length > 1 ? dateAndTimeParts[1].Trim() : "";
+
+            _script_data.finish_state.text = _completion_state;
+            _script_data.finish_state.color = _script_data.survived ? Color.green : Color.red;
+
+            float completion_in_seconds = float.Parse(_completion_time);
+            float seconds = completion_in_seconds % 60;
+            float minutes = completion_in_seconds / 60;
+            _script_data.time_to_completion.text = minutes.ToString() + "mins " + seconds.ToString() + "secs";
         }
         
         public void UnloadData()
@@ -128,8 +144,7 @@ namespace DataVisualiser
             playthrough_button_container.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (tab_height + tab_gap) * (playthroughs.Count + 1) + tab_gap);
 
         }
-
-
+        
         public void setSelectionForAll(bool _select)
         {
             foreach (var playthrough in playthroughs)
