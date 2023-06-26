@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using SFB;
 using System.IO;
-using Unity.VisualScripting;
-using Debug = UnityEngine.Debug;
 
 namespace DataVisualiser
 {
@@ -53,8 +51,7 @@ namespace DataVisualiser
 
             if (paths.Length > 0)
             {
-                folder_path = paths[0];
-                Debug.Log("Selected folder: " + folder_path);
+                folder_path = paths[0]; 
             }
 
             return folder_path;
@@ -89,8 +86,6 @@ namespace DataVisualiser
                     
                     playthrough_data.timeline.Add(new TimelineElement(time, grid_cell));
                 }
-                
-                
             }
         }
 
@@ -103,9 +98,9 @@ namespace DataVisualiser
             GameObject playthrough_tab = Instantiate(playthrough_button_prefab, playthrough_button_container);
             PlaythroughDataScript playthrough_data = playthrough_tab.GetComponent<PlaythroughDataScript>();
             
+            // Add button functionality for utilising path visualiser.
             playthrough_data.display_data_button.onClick.AddListener(() => path_visualiser.setData(playthrough_data));
-            
-            
+
             // Add tab to list. 
             playthroughs.Add(new Pair<GameObject, PlaythroughDataScript>(playthrough_tab, playthrough_data));
             
@@ -128,12 +123,13 @@ namespace DataVisualiser
             _script_data.finish_state.color = _script_data.survived ? Color.green : Color.red;
 
             float completion_in_seconds = float.Parse(_completion_time);
-            float seconds = completion_in_seconds % 60;
-            float minutes = completion_in_seconds / 60;
-            _script_data.time_to_completion.text = minutes.ToString() + "mins " + seconds.ToString() + "secs";
+            int milliseconds = (int)Math.Round(completion_in_seconds * 1000) % 1000;
+            int seconds = (int)Math.Round(completion_in_seconds % 60);
+            int minutes = (int)Math.Round(completion_in_seconds / 60);
+            _script_data.time_to_completion.text = "Time: " + minutes.ToString("D2") + "m : " + seconds.ToString("D2") + "s : " + milliseconds.ToString("D3") + "ms";
         }
         
-        public void UnloadData()
+        public void unloadData()
         {
             for (int i = playthroughs.Count-1; i > -1; --i)
             {

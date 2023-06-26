@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using DataVisualiser;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 
 public class PathVisualiser : MonoBehaviour
 {
@@ -23,7 +21,14 @@ public class PathVisualiser : MonoBehaviour
     public void setData(PlaythroughDataScript _data)
     {
         clearLocations();
+        
+        if (data != null)
+        {
+            data.display_data_button.interactable = true;
+        }
+        
         data = _data;
+        data.display_data_button.interactable = false;
         
         foreach (var element in data.timeline)
         {
@@ -40,7 +45,7 @@ public class PathVisualiser : MonoBehaviour
         }
     }
 
-    private void clearLocations()
+    public void clearLocations()
     {
         for (int i = locations.Count-1; i > -1; --i)
         {

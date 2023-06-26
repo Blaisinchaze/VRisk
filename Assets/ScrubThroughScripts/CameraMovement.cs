@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Camera))]
@@ -77,34 +78,38 @@ public class CameraMovement : MonoBehaviour
 
      private void setAction(InputAction.CallbackContext _context)
      {
-          CameraAction action = string_to_camera_dictionary.TryGetValue(_context.action.name, out var value) 
-               ? value : CameraAction.NONE;
-          
-          bool action_canceled = isActionCanceled(_context);
-
-          switch (_context.phase)
+          if (!EventSystem.current.IsPointerOverGameObject())
           {
-               case InputActionPhase.Performed:
-               case InputActionPhase.Started:
-                    if (action_canceled)
-                    {
+               CameraAction action = string_to_camera_dictionary.TryGetValue(_context.action.name, out var value)
+                    ? value
+                    : CameraAction.NONE;
+
+               bool action_canceled = isActionCanceled(_context);
+
+               switch (_context.phase)
+               {
+                    case InputActionPhase.Performed:
+                    case InputActionPhase.Started:
+                         if (action_canceled)
+                         {
+                              current_action = current_action == action ? CameraAction.NONE : current_action;
+                              break;
+                         }
+
+                         current_action = action;
+                         break;
+
+                    case InputActionPhase.Canceled:
+                    case InputActionPhase.Disabled:
                          current_action = current_action == action ? CameraAction.NONE : current_action;
                          break;
-                    }
-                    
-                    current_action = action;
-                    break;
-               
-               case InputActionPhase.Canceled:
-               case InputActionPhase.Disabled:
-                    current_action = current_action == action ? CameraAction.NONE : current_action;
-                    break;
-               
-               default:
-                    throw new ArgumentOutOfRangeException();
+
+                    default:
+                         throw new ArgumentOutOfRangeException();
+               }
           }
      }
-     
+
      private bool isActionCanceled(InputAction.CallbackContext _context)
      {
           var value_type = _context.action.expectedControlType;
@@ -125,6 +130,7 @@ public class CameraMovement : MonoBehaviour
 
      private void Update()
      {
+
           switch (current_action)
           {
                case CameraAction.PAN:
@@ -134,7 +140,7 @@ public class CameraMovement : MonoBehaviour
                case CameraAction.ROTATE:
                     rotateCamera(action_map.MouseDelta.ReadValue<Vector2>());
                     break;
-               
+
                case CameraAction.ZOOM:
                     zoomCamera(action_map.ZoomView.ReadValue<float>() / 120);
                     break;
@@ -161,14 +167,23 @@ public class CameraMovement : MonoBehaviour
 
      private void zoomCamera(float _direction)
      {
-          _direction *= faster ? zoom_speed * zoom_speed_modifier : zoom_speed;
+          if (!cam.orthographic)
+          {
+               _direction *= faster ? zoom_speed * zoom_speed_modifier : zoom_speed;
 
-          Vector3 new_pos = cam.transform.position + _direction * cam.transform.forward;
-          cam.transform.position = new_pos;
+               Vector3 new_pos = cam.transform.position + _direction * cam.transform.forward;
+               cam.transform.position = new_pos;
+          }
+          else
+          {
+               cam.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - _direction * zoom_speed, 1f, 60f);
+          }
+
      }
 
      private void rotateCamera(Vector2 _rotation)
      {
+
           // Negative to ensure rotation is in the same direction as mouse movement.
           float pitch = -_rotation.y * rotate_speed;
           float yaw = _rotation.x * rotate_speed;
@@ -190,7 +205,7 @@ public class CameraMovement : MonoBehaviour
 
           cam.transform.rotation = new_rotation;
      }
-     
+
      private void moveCamera(Vector3 _direction_vect)
      {
           _direction_vect = _direction_vect.magnitude > 1 ? _direction_vect.normalized : _direction_vect;
