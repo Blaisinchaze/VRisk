@@ -6,20 +6,25 @@ public class FadeScreen : MonoBehaviour
 {
     public bool fade_on_start = true;
     public bool clear_on_start = false;
-    public float fade_duration = 2;
-    public Color fade_color;
-    private Renderer rend;
     
-    // Start is called before the first frame update
+    public float fade_duration = 2;
+    public float unfade_delay = 0.15f;
+    public Color fade_color;
+    
+    private Renderer rend;
+    private MeshRenderer mesh_rend;
+    
     void Start()
     {
         rend = GetComponent<Renderer>();
+        mesh_rend = GetComponent<MeshRenderer>();
         
         if(clear_on_start) 
         {
             Color new_color = fade_color;
             new_color.a = 0;
             rend.material.SetColor("_Color", new_color);
+            mesh_rend.enabled = false;
         }
         
         if(fade_on_start) FadeIn();
@@ -28,11 +33,13 @@ public class FadeScreen : MonoBehaviour
     public void FadeIn()
     {
         Fade(1,0);
+        StartCoroutine(DelayedRenderState(false));
     }
     
     public void FadeOut()
     {
         Fade(0,1);
+        StartCoroutine(DelayedRenderState(false));
     }
 
     public void Fade(float _alpha_in, float _alpha_out)
@@ -40,8 +47,11 @@ public class FadeScreen : MonoBehaviour
         StartCoroutine(FadeRoutine(_alpha_in, _alpha_out));
     }
 
+    // --------------------------------------------------------------------------    
+    
     public IEnumerator FadeRoutine(float _alpha_in, float _alpha_out)
     {
+        mesh_rend.enabled = true;
         float timer = 0;
 
         while (timer <= fade_duration)
@@ -58,5 +68,11 @@ public class FadeScreen : MonoBehaviour
         Color new_color2 = fade_color;
         new_color2.a = _alpha_out;
         rend.material.SetColor("_Color", new_color2);
+    }
+
+    public IEnumerator DelayedRenderState(bool _state)
+    {
+        yield return new WaitForSeconds(fade_duration + unfade_delay);
+        mesh_rend.enabled = _state;
     }
 }

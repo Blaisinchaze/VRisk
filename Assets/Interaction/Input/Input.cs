@@ -116,6 +116,15 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""5cf8b9ff-85fb-4dd9-834a-ffc80094b2f3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -360,6 +369,17 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""action"": ""Touch(Right_Hand)"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c0aec2d0-4c93-4058-a8fc-ebdfa6494db7"",
+                    ""path"": ""<XRController>{LeftHand}/menu"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -601,6 +621,19 @@ public partial class @Input : IInputActionCollection2, IDisposable
         m_DataVisualiserInputMap_MouseDelta = m_DataVisualiserInputMap.FindAction("MouseDelta", throwIfNotFound: true);
         m_DataVisualiserInputMap_Faster = m_DataVisualiserInputMap.FindAction("Faster", throwIfNotFound: true);
         m_DataVisualiserInputMap_ToggleOrthoPerspective = m_DataVisualiserInputMap.FindAction("ToggleOrthoPerspective", throwIfNotFound: true);
+        // InputActionMap
+        m_InputActionMap = asset.FindActionMap("InputActionMap", throwIfNotFound: true);
+        m_InputActionMap_MoveKeyStick = m_InputActionMap.FindAction("Move(Key/Stick)", throwIfNotFound: true);
+        m_InputActionMap_MoveLeft_Hand = m_InputActionMap.FindAction("Move(Left_Hand)", throwIfNotFound: true);
+        m_InputActionMap_MoveRight_Hand = m_InputActionMap.FindAction("Move(Right_Hand)", throwIfNotFound: true);
+        m_InputActionMap_RotateView = m_InputActionMap.FindAction("RotateView", throwIfNotFound: true);
+        m_InputActionMap_HeadMoved = m_InputActionMap.FindAction("HeadMoved", throwIfNotFound: true);
+        m_InputActionMap_Debug = m_InputActionMap.FindAction("Debug", throwIfNotFound: true);
+        m_InputActionMap_InteractLeft_Hand = m_InputActionMap.FindAction("Interact(Left_Hand)", throwIfNotFound: true);
+        m_InputActionMap_InteractRight_Hand = m_InputActionMap.FindAction("Interact(Right_Hand)", throwIfNotFound: true);
+        m_InputActionMap_TouchLeft_Hand = m_InputActionMap.FindAction("Touch(Left_Hand)", throwIfNotFound: true);
+        m_InputActionMap_TouchRight_Hand = m_InputActionMap.FindAction("Touch(Right_Hand)", throwIfNotFound: true);
+        m_InputActionMap_Pause = m_InputActionMap.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -671,6 +704,21 @@ public partial class @Input : IInputActionCollection2, IDisposable
     private readonly InputAction m_VRiskExperienceInputMap_TouchLeft_Hand;
     private readonly InputAction m_VRiskExperienceInputMap_TouchRight_Hand;
     public struct VRiskExperienceInputMapActions
+    // InputActionMap
+    private readonly InputActionMap m_InputActionMap;
+    private IInputActionMapActions m_InputActionMapActionsCallbackInterface;
+    private readonly InputAction m_InputActionMap_MoveKeyStick;
+    private readonly InputAction m_InputActionMap_MoveLeft_Hand;
+    private readonly InputAction m_InputActionMap_MoveRight_Hand;
+    private readonly InputAction m_InputActionMap_RotateView;
+    private readonly InputAction m_InputActionMap_HeadMoved;
+    private readonly InputAction m_InputActionMap_Debug;
+    private readonly InputAction m_InputActionMap_InteractLeft_Hand;
+    private readonly InputAction m_InputActionMap_InteractRight_Hand;
+    private readonly InputAction m_InputActionMap_TouchLeft_Hand;
+    private readonly InputAction m_InputActionMap_TouchRight_Hand;
+    private readonly InputAction m_InputActionMap_Pause;
+    public struct InputActionMapActions
     {
         private @Input m_Wrapper;
         public VRiskExperienceInputMapActions(@Input wrapper) { m_Wrapper = wrapper; }
@@ -685,6 +733,19 @@ public partial class @Input : IInputActionCollection2, IDisposable
         public InputAction @TouchLeft_Hand => m_Wrapper.m_VRiskExperienceInputMap_TouchLeft_Hand;
         public InputAction @TouchRight_Hand => m_Wrapper.m_VRiskExperienceInputMap_TouchRight_Hand;
         public InputActionMap Get() { return m_Wrapper.m_VRiskExperienceInputMap; }
+        public InputActionMapActions(@Input wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MoveKeyStick => m_Wrapper.m_InputActionMap_MoveKeyStick;
+        public InputAction @MoveLeft_Hand => m_Wrapper.m_InputActionMap_MoveLeft_Hand;
+        public InputAction @MoveRight_Hand => m_Wrapper.m_InputActionMap_MoveRight_Hand;
+        public InputAction @RotateView => m_Wrapper.m_InputActionMap_RotateView;
+        public InputAction @HeadMoved => m_Wrapper.m_InputActionMap_HeadMoved;
+        public InputAction @Debug => m_Wrapper.m_InputActionMap_Debug;
+        public InputAction @InteractLeft_Hand => m_Wrapper.m_InputActionMap_InteractLeft_Hand;
+        public InputAction @InteractRight_Hand => m_Wrapper.m_InputActionMap_InteractRight_Hand;
+        public InputAction @TouchLeft_Hand => m_Wrapper.m_InputActionMap_TouchLeft_Hand;
+        public InputAction @TouchRight_Hand => m_Wrapper.m_InputActionMap_TouchRight_Hand;
+        public InputAction @Pause => m_Wrapper.m_InputActionMap_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_InputActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
@@ -723,6 +784,39 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @TouchRight_Hand.started -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnTouchRight_Hand;
                 @TouchRight_Hand.performed -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnTouchRight_Hand;
                 @TouchRight_Hand.canceled -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnTouchRight_Hand;
+                @MoveKeyStick.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveKeyStick;
+                @MoveKeyStick.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveKeyStick;
+                @MoveKeyStick.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveKeyStick;
+                @MoveLeft_Hand.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveLeft_Hand;
+                @MoveLeft_Hand.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveLeft_Hand;
+                @MoveLeft_Hand.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveLeft_Hand;
+                @MoveRight_Hand.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveRight_Hand;
+                @MoveRight_Hand.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveRight_Hand;
+                @MoveRight_Hand.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnMoveRight_Hand;
+                @RotateView.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnRotateView;
+                @RotateView.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnRotateView;
+                @RotateView.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnRotateView;
+                @HeadMoved.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnHeadMoved;
+                @HeadMoved.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnHeadMoved;
+                @HeadMoved.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnHeadMoved;
+                @Debug.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnDebug;
+                @Debug.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnDebug;
+                @Debug.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnDebug;
+                @InteractLeft_Hand.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnInteractLeft_Hand;
+                @InteractLeft_Hand.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnInteractLeft_Hand;
+                @InteractLeft_Hand.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnInteractLeft_Hand;
+                @InteractRight_Hand.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnInteractRight_Hand;
+                @InteractRight_Hand.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnInteractRight_Hand;
+                @InteractRight_Hand.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnInteractRight_Hand;
+                @TouchLeft_Hand.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchLeft_Hand;
+                @TouchLeft_Hand.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchLeft_Hand;
+                @TouchLeft_Hand.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchLeft_Hand;
+                @TouchRight_Hand.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchRight_Hand;
+                @TouchRight_Hand.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchRight_Hand;
+                @TouchRight_Hand.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnTouchRight_Hand;
+                @Pause.started -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_InputActionMapActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -757,6 +851,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @TouchRight_Hand.started += instance.OnTouchRight_Hand;
                 @TouchRight_Hand.performed += instance.OnTouchRight_Hand;
                 @TouchRight_Hand.canceled += instance.OnTouchRight_Hand;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -854,6 +951,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         void OnInteractRight_Hand(InputAction.CallbackContext context);
         void OnTouchLeft_Hand(InputAction.CallbackContext context);
         void OnTouchRight_Hand(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface IDataVisualiserInputMapActions
     {
