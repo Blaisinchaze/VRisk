@@ -9,6 +9,9 @@ TagManager:
   - Beige
   - Black
   - Controller
+  - Floor
+  - Feet
+  - Debris
   layers:
   - Default
   - TransparentFX
