@@ -2,24 +2,29 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class TutorialManager : MonoBehaviour
 {
     public GameObject playerRig;
     public GameObject menuAnchor;
+    public GameObject standingPlane;
     public ViewController viewController;
 
     [SerializeField] private Vector3 startPos;
     [SerializeField] private Vector3 targetPos;
 
+    [SerializeField] private float minScaleTime = 4.0f;
+    [SerializeField] private float maxScaleTime = 6.0f;
+    
+    [SerializeField] private float increaseIntervalTime = 0.01f;
+    [SerializeField] private float increaseIntervalSize = 0.04f;
+    
     [SerializeField] private float yOffset = 2.0f;
     [SerializeField] private float delay = 3.0f;
-    [SerializeField] private float moveTime = 3.5f;
-    [SerializeField] private float scaleTime = 3.5f;
 
     private void Start()
     {
-        transform.localScale = new Vector3(0, 0, 0);
         StartCoroutine(PositionTutorial());
     }
 
@@ -30,10 +35,20 @@ public class TutorialManager : MonoBehaviour
 
     private IEnumerator StartTutorialCoroutine()
     {
-        transform.LeanScale(new Vector3(1, 1, 1), scaleTime).setEaseOutQuart();
-        transform.LeanMoveLocal(targetPos, moveTime).setEaseOutQuart();
+        StartCoroutine(SoftIncreaseCircle());
 
-        yield return new WaitForSeconds(moveTime > scaleTime ? moveTime : scaleTime);
+        yield return new WaitForSeconds(1f);
+        
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+            
+            float popUpTime = Random.Range(minScaleTime, maxScaleTime);
+
+            child.LeanScale(new Vector3(1, 1, 1), popUpTime).setEaseOutQuart();
+        }
+
+        yield return new WaitForSeconds(maxScaleTime);
         
         //Adds a rigidbody with the same stats as the one in the simulation
         var rigidBody = playerRig.AddComponent<Rigidbody>();
@@ -49,6 +64,21 @@ public class TutorialManager : MonoBehaviour
         playerRig.GetComponent<MovementController>().enabled = true;
 
         yield return null;
+    }
+
+    private IEnumerator SoftIncreaseCircle()
+    {
+        Material planeMat = standingPlane.GetComponent<Renderer>().material;
+        float currentSize = planeMat.GetFloat("_Radius");
+
+        while (currentSize < 0.9f)
+        {
+            currentSize += increaseIntervalSize;
+            
+            planeMat.SetFloat("_Radius", currentSize);
+
+            yield return new WaitForSeconds(increaseIntervalTime);
+        }
     }
 
     private IEnumerator PositionTutorial()

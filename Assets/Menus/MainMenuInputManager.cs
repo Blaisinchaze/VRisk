@@ -138,8 +138,11 @@ public class MainMenuInputManager : MonoBehaviour
         if (keyboardOpen)
         {
             mainMenuController.CloseMenu();
-            keyboardMenuController.OpenMenu();
             OpenCloseSettings(false);
+            
+            yield return new WaitForSeconds(mainMenuController.animationTime);
+            
+            keyboardMenuController.OpenMenu();
             busy = true;
         }
         else
@@ -164,15 +167,15 @@ public class MainMenuInputManager : MonoBehaviour
             if (tutorialMenuOpen)
             {
                 tutorialMenuController.CloseMenu();
-                yield return new WaitForSeconds(delay);
-                keyboardMenuController.targetPos = tutorialMenu.transform.localPosition;
+                yield return new WaitForSeconds(tutorialMenuController.animationTime);
+                keyboardMenuController.OpenMenu();
             }
             else
             {
                 var targetPos = tutorialMenu.transform.localPosition + keyboardSlideOffset;
 
-                keyboardMenuController.targetPos = targetPos;
-                yield return new WaitForSeconds(delay);
+                keyboardMenuController.CloseMenu();
+                yield return new WaitForSeconds(keyboardMenuController.animationTime);
                 tutorialMenuController.OpenMenu();
             }
         }
