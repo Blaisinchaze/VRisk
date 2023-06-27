@@ -22,7 +22,7 @@ public class PauseMenuManager : MonoBehaviour
     
     private void Start()
     {
-        pausePressed = GameManager.Instance.InputHandler.input_asset.InputActionMap.Pause;
+        pausePressed = GameManager.Instance.InputHandler.input_asset.VRiskExperienceInputMap.Pause;
     }
     
     void Update()

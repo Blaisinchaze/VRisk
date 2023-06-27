@@ -40,10 +40,10 @@ public class ControllerRaycastHandler : MonoBehaviour
         left_ray = left_controller.GetComponent<XRRayInteractor>();
         right_ray = right_controller.GetComponent<XRRayInteractor>();
         
-        trigger_left_pressed = GameManager.Instance.InputHandler.input_asset.InputActionMap.InteractLeft_Hand;
-        trigger_left_touched = GameManager.Instance.InputHandler.input_asset.InputActionMap.TouchLeft_Hand;
-        trigger_right_pressed = GameManager.Instance.InputHandler.input_asset.InputActionMap.InteractRight_Hand;
-        trigger_right_touched = GameManager.Instance.InputHandler.input_asset.InputActionMap.TouchRight_Hand;
+        trigger_left_pressed = GameManager.Instance.InputHandler.input_asset.VRiskExperienceInputMap.InteractLeft_Hand;
+        trigger_left_touched = GameManager.Instance.InputHandler.input_asset.VRiskExperienceInputMap.TouchLeft_Hand;
+        trigger_right_pressed = GameManager.Instance.InputHandler.input_asset.VRiskExperienceInputMap.InteractRight_Hand;
+        trigger_right_touched = GameManager.Instance.InputHandler.input_asset.VRiskExperienceInputMap.TouchRight_Hand;
 
         if (start_deactivated) ChangeState(false);
     }
