@@ -15,6 +15,10 @@ namespace DataVisualiser
         public float tab_height = 40;
         public float tab_width = 140;
 
+        public float UI_open_slider_right = 150f;
+        public float UI_closed_slider_right = 0f;
+        public RectTransform scroll_bar_panel;
+
         private List<Pair<GameObject, PlaythroughDataScript>> playthroughs;
 
         public GameObject menu_open;
@@ -25,17 +29,25 @@ namespace DataVisualiser
             playthroughs = new List<Pair<GameObject, PlaythroughDataScript>>();
         }
 
-        public void toggleMenu(bool _active)
+        public void toggleMenu(bool _activate)
         {
-            if (_active)
+            if (_activate)
             {
                 menu_open.SetActive(true);
                 menu_closed.SetActive(false);
+
+                Vector2 offsetMax = scroll_bar_panel.offsetMax;
+                offsetMax.x = UI_open_slider_right;
+                scroll_bar_panel.offsetMax = offsetMax;
             }
             else
             {
                 menu_open.SetActive(false);
                 menu_closed.SetActive(true);
+                
+                Vector2 offsetMax = scroll_bar_panel.offsetMax;
+                offsetMax.x = UI_closed_slider_right;
+                scroll_bar_panel.offsetMax = offsetMax;
             }
         }
 
@@ -72,9 +84,10 @@ namespace DataVisualiser
                 
                 // Set bool for whether or not player lived. 
                 playthrough_data.survived = csv_contents[csv_contents.Length-2][3] == "Survived\r";
+                playthrough_data.completion_time = float.Parse(csv_contents[csv_contents.Length - 2][0]);
                 
                 // Display data (username, date, time, completion time, completion_condition).
-                setTabDisplayData(playthrough_data, file, csv_contents[csv_contents.Length - 2][0], csv_contents[csv_contents.Length - 2][3]);
+                setTabDisplayData(playthrough_data, file, playthrough_data.completion_time.ToString(), csv_contents[csv_contents.Length - 2][3]);
 
                 // Store timeline points.
                 for (int line_index = 0; line_index < csv_contents.Length-1; line_index++)
