@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class FileManager : MonoBehaviour
 {
-    public static string getFileContents(string[] _editor_path, string[] _android_path)
+    public static string getFileContents(string[] _editor_path, string[] _build_path)
     {
-        string path = getFilePath(_editor_path, _android_path);
+        string path = getFilePath(_editor_path, _build_path);
 
         if (File.Exists(path))
         {
@@ -26,14 +26,14 @@ public class FileManager : MonoBehaviour
         return null;
     }
     
-    public static string getFilePath(string[] _editor_path, string[] _android_path)
+    public static string getFilePath(string[] _editor_path, string[] _build_path)
     {
         string path;
         
         #if UNITY_EDITOR
             path = Path.Combine(Application.dataPath, Path.Combine(_editor_path));
         #else
-            path = Path.Combine(Application.persistentDataPath, Path.Combine(_android_path));
+            path = Path.Combine(Application.persistentDataPath, Path.Combine(_build_path));
         #endif
         
         ensureDirectoryExists(Path.GetDirectoryName(path));
@@ -69,16 +69,16 @@ public class FileManager : MonoBehaviour
         return data;
     }
 
-    public static void saveToFile(string[] _editor_path, string[] _android_path, string _content)
+    public static void saveToFile(string[] _editor_path, string[] _build_path, string _content)
     {
-        string path = getFilePath(_editor_path, _android_path);
+        string path = getFilePath(_editor_path, _build_path);
 
         File.WriteAllText(path, _content);
     }
 
-    public static void saveToCSV(string[] _editor_path, string[] _android_path, string[][] _content)
+    public static void saveToCSV(string[] _editor_path, string[] _build_path, string[][] _content)
     {
-        string path = getFilePath(_editor_path, _android_path);
+        string path = getFilePath(_editor_path, _build_path);
 
         using (StreamWriter sw = new StreamWriter(path))
         {
@@ -89,7 +89,7 @@ public class FileManager : MonoBehaviour
         }
     }
 
-    public static void saveToCSV(string[] _editor_path, string[] _android_path, List<List<string>> _content)
+    public static void saveToCSV(string[] _editor_path, string[] _build_path, List<List<string>> _content)
     {
         string[][] content = new string[_content.Count][];
         
@@ -106,6 +106,6 @@ public class FileManager : MonoBehaviour
             content[row_index] = columns;
         }
 
-        saveToCSV(_editor_path, _android_path, content);
+        saveToCSV(_editor_path, _build_path, content);
     }
 }

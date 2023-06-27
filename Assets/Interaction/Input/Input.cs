@@ -116,6 +116,15 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""5cf8b9ff-85fb-4dd9-834a-ffc80094b2f3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -360,6 +369,17 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""action"": ""Touch(Right_Hand)"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c0aec2d0-4c93-4058-a8fc-ebdfa6494db7"",
+                    ""path"": ""<XRController>{LeftHand}/menu"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -435,7 +455,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""63501955-32a1-416a-8ad0-afb96ec1c0b8"",
-                    ""path"": ""<Mouse>/middleButton"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -592,6 +612,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         m_VRiskExperienceInputMap_InteractRight_Hand = m_VRiskExperienceInputMap.FindAction("Interact(Right_Hand)", throwIfNotFound: true);
         m_VRiskExperienceInputMap_TouchLeft_Hand = m_VRiskExperienceInputMap.FindAction("Touch(Left_Hand)", throwIfNotFound: true);
         m_VRiskExperienceInputMap_TouchRight_Hand = m_VRiskExperienceInputMap.FindAction("Touch(Right_Hand)", throwIfNotFound: true);
+        m_VRiskExperienceInputMap_Pause = m_VRiskExperienceInputMap.FindAction("Pause", throwIfNotFound: true);
         // DataVisualiserInputMap
         m_DataVisualiserInputMap = asset.FindActionMap("DataVisualiserInputMap", throwIfNotFound: true);
         m_DataVisualiserInputMap_PanView = m_DataVisualiserInputMap.FindAction("PanView", throwIfNotFound: true);
@@ -670,6 +691,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
     private readonly InputAction m_VRiskExperienceInputMap_InteractRight_Hand;
     private readonly InputAction m_VRiskExperienceInputMap_TouchLeft_Hand;
     private readonly InputAction m_VRiskExperienceInputMap_TouchRight_Hand;
+    private readonly InputAction m_VRiskExperienceInputMap_Pause;
     public struct VRiskExperienceInputMapActions
     {
         private @Input m_Wrapper;
@@ -684,6 +706,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         public InputAction @InteractRight_Hand => m_Wrapper.m_VRiskExperienceInputMap_InteractRight_Hand;
         public InputAction @TouchLeft_Hand => m_Wrapper.m_VRiskExperienceInputMap_TouchLeft_Hand;
         public InputAction @TouchRight_Hand => m_Wrapper.m_VRiskExperienceInputMap_TouchRight_Hand;
+        public InputAction @Pause => m_Wrapper.m_VRiskExperienceInputMap_Pause;
         public InputActionMap Get() { return m_Wrapper.m_VRiskExperienceInputMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -723,6 +746,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @TouchRight_Hand.started -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnTouchRight_Hand;
                 @TouchRight_Hand.performed -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnTouchRight_Hand;
                 @TouchRight_Hand.canceled -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnTouchRight_Hand;
+                @Pause.started -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_VRiskExperienceInputMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -757,6 +783,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @TouchRight_Hand.started += instance.OnTouchRight_Hand;
                 @TouchRight_Hand.performed += instance.OnTouchRight_Hand;
                 @TouchRight_Hand.canceled += instance.OnTouchRight_Hand;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -854,6 +883,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         void OnInteractRight_Hand(InputAction.CallbackContext context);
         void OnTouchLeft_Hand(InputAction.CallbackContext context);
         void OnTouchRight_Hand(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface IDataVisualiserInputMapActions
     {
