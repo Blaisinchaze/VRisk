@@ -60,11 +60,13 @@ public class PathVisualiser : MonoBehaviour
 
     private void Update()
     {
-        float current_time = timeline_slider.value * data.completion_time;
-        
-        Debug.Log(current_time);
-        updatePathVisuals(current_time);
-        updateSliderText(current_time, data.completion_time);
+        if (data != null)
+        {
+            float current_time = timeline_slider.value * data.completion_time;
+            
+            updatePathVisuals(current_time);
+            updateSliderText(current_time, data.completion_time);
+        }
     }
 
     public void updateSliderText(float _current_seconds_from_start, float _total_time_from_start)
