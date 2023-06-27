@@ -45,8 +45,8 @@ public class TutorialManager : MonoBehaviour
         rigidBody.freezeRotation = true;
 
         //Enables movement
-        playerRig.AddComponent<MovementController>();
         viewController.enabled = true;
+        playerRig.GetComponent<MovementController>().enabled = true;
 
         yield return null;
     }
