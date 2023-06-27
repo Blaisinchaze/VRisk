@@ -62322,7 +62322,11 @@ PrefabInstance:
       value: 767
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 6270615611721683964, guid: 5c65e66c374da104a8645b651d505548,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 992162052}
   m_SourcePrefab: {fileID: 100100000, guid: 5c65e66c374da104a8645b651d505548, type: 3}
 --- !u!33 &6405875667086511805
 MeshFilter:

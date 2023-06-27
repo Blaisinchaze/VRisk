@@ -107,7 +107,11 @@ public class CameraMovement : MonoBehaviour
                     default:
                          throw new ArgumentOutOfRangeException();
                }
+
+               return;
           }
+
+          current_action = CameraAction.NONE;
      }
 
      private bool isActionCanceled(InputAction.CallbackContext _context)

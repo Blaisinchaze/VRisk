@@ -14,12 +14,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 0
     y: 34.4
     width: 2048
     height: 1085.6
   m_ShowMode: 4
+<<<<<<< HEAD
   m_Title: Hierarchy
+=======
+  m_Title: Console
+=======
+    x: -1920
+    y: -371
+    width: 1920
+    height: 997
+  m_ShowMode: 4
+  m_Title: Scene
+>>>>>>> 44-scrubthroughtimelinescene
+>>>>>>> main
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 371}
   m_MaxSize: {x: 10000, y: 10000}
@@ -43,12 +56,25 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 30
+<<<<<<< HEAD
     width: 2048
     height: 1035.6
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
+<<<<<<< HEAD
   controlID: 96
+=======
+  controlID: 111
+=======
+    width: 1920
+    height: 947
+  m_MinSize: {x: 300, y: 200}
+  m_MaxSize: {x: 24288, y: 16192}
+  vertical: 0
+  controlID: 101
+>>>>>>> 44-scrubthroughtimelinescene
+>>>>>>> main
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -64,6 +90,7 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1564
     y: 0
     width: 484
@@ -71,6 +98,15 @@ MonoBehaviour:
   m_MinSize: {x: 275, y: 50}
   m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
+=======
+    x: 1459
+    y: 0
+    width: 461
+    height: 947
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 13}
+>>>>>>> 44-scrubthroughtimelinescene
   m_Panes:
   - {fileID: 14}
   - {fileID: 12}
@@ -93,11 +129,19 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 387.2
     height: 732
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 15}
+=======
+    width: 293
+    height: 498
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 14}
+>>>>>>> 44-scrubthroughtimelinescene
   m_Panes:
   - {fileID: 15}
   m_Selected: 0
@@ -118,12 +162,30 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 732
     width: 1564
     height: 303.59998
   m_MinSize: {x: 231, y: 271}
   m_MaxSize: {x: 10001, y: 10021}
   m_ActualView: {fileID: 13}
+=======
+<<<<<<< HEAD
+    y: 612.8
+    width: 1564
+    height: 422.8
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 18}
+=======
+    y: 498
+    width: 1459
+    height: 449
+  m_MinSize: {x: 231, y: 271}
+  m_MaxSize: {x: 10001, y: 10021}
+  m_ActualView: {fileID: 12}
+>>>>>>> 44-scrubthroughtimelinescene
+>>>>>>> main
   m_Panes:
   - {fileID: 13}
   - {fileID: 18}
@@ -149,8 +211,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 2048
     height: 1085.6
+=======
+    width: 1920
+    height: 997
+>>>>>>> 44-scrubthroughtimelinescene
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
@@ -195,8 +262,13 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 1065.6
     width: 2048
+=======
+    y: 977
+    width: 1920
+>>>>>>> 44-scrubthroughtimelinescene
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -219,12 +291,21 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 1564
     height: 1035.6
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
   controlID: 51
+=======
+    width: 1459
+    height: 947
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 16192, y: 16192}
+  vertical: 1
+  controlID: 39
+>>>>>>> 44-scrubthroughtimelinescene
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -244,12 +325,21 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 1564
     height: 732
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
   controlID: 52
+=======
+    width: 1459
+    height: 498
+  m_MinSize: {x: 200, y: 100}
+  m_MaxSize: {x: 16192, y: 8096}
+  vertical: 0
+  controlID: 40
+>>>>>>> 44-scrubthroughtimelinescene
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -265,10 +355,21 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 387.2
     y: 0
     width: 1176.8
+<<<<<<< HEAD
     height: 732
+=======
+    height: 612.8
+=======
+    x: 293
+    y: 0
+    width: 1166
+    height: 498
+>>>>>>> 44-scrubthroughtimelinescene
+>>>>>>> main
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 16}
@@ -340,10 +441,21 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 0
     y: 796.8
     width: 1563
+<<<<<<< HEAD
     height: 282.59998
+=======
+    height: 401.8
+=======
+    x: -1920
+    y: 157
+    width: 1458
+    height: 428
+>>>>>>> 44-scrubthroughtimelinescene
+>>>>>>> main
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -361,22 +473,52 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
+<<<<<<< HEAD
     - Assets/TutorialArea
+=======
+<<<<<<< HEAD
+    - Assets/Audio
+=======
+    - Assets/Scenes
+>>>>>>> 44-scrubthroughtimelinescene
+>>>>>>> main
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
+<<<<<<< HEAD
   - Assets/TutorialArea
+=======
+<<<<<<< HEAD
+  - Assets/Audio
+=======
+  - Assets/Scenes
+>>>>>>> 44-scrubthroughtimelinescene
+>>>>>>> main
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\Win 10 Install Folder\Repos\VRisk
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
+<<<<<<< HEAD
     scrollPos: {x: 0, y: 473.40002}
     m_SelectedIDs: 30720000
     m_LastClickedID: 29232
     m_ExpandedIDs: 00000000d2700000d4700000d6700000f27100006272000000ca9a3bffffff7f
+=======
+<<<<<<< HEAD
+    scrollPos: {x: 0, y: 79}
+    m_SelectedIDs: b0700000
+    m_LastClickedID: 28848
+    m_ExpandedIDs: 000000008a7000008c7000008e700000b0700000ca700000b4b9000000ca9a3bffffff7f
+=======
+    scrollPos: {x: 0, y: 296}
+    m_SelectedIDs: bc830000
+    m_LastClickedID: 33724
+    m_ExpandedIDs: 000000001e83000020830000228300002483000026830000288300002a8300002c8300002e83000000ca9a3b
+>>>>>>> 44-scrubthroughtimelinescene
+>>>>>>> main
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -404,7 +546,15 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
+<<<<<<< HEAD
     m_ExpandedIDs: 00000000d2700000d4700000d6700000
+=======
+<<<<<<< HEAD
+    m_ExpandedIDs: 000000008a7000008c7000008e700000
+=======
+    m_ExpandedIDs: 000000001e83000020830000228300002483000026830000288300002a8300002c8300002e830000
+>>>>>>> 44-scrubthroughtimelinescene
+>>>>>>> main
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -481,10 +631,17 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1564
     y: 64.8
     width: 483
     height: 1014.6
+=======
+    x: -461
+    y: -341
+    width: 460
+    height: 926
+>>>>>>> 44-scrubthroughtimelinescene
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -523,10 +680,21 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 0
     y: 64.8
     width: 386.2
+<<<<<<< HEAD
     height: 711
+=======
+    height: 591.8
+=======
+    x: -1920
+    y: -341
+    width: 292
+    height: 477
+>>>>>>> 44-scrubthroughtimelinescene
+>>>>>>> main
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -534,9 +702,19 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
       m_SelectedIDs: 
       m_LastClickedID: 0
+<<<<<<< HEAD
       m_ExpandedIDs: 68deffff64f1ffff26fbffff587400006c740000f47f00003c800000488000009a8000007e8100009e81000080bb000044bc0000aabc0000d4bc0000
+=======
+      m_ExpandedIDs: b0f5ffffc0f5ffff28fbffffa0620000ac6300003c6400006a6400004665000064650000ee6500000266000010660000
+=======
+      m_SelectedIDs: 68c9fdff
+      m_LastClickedID: -145048
+      m_ExpandedIDs: 6cc9fdffdc36ffff2a40ffffe656fffffa57ffff5e5cffff225dffff6260fffface9ffffaee9ffff72ebffff
+>>>>>>> 44-scrubthroughtimelinescene
+>>>>>>> main
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -581,10 +759,21 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 387.2
     y: 64.8
     width: 1174.8
+<<<<<<< HEAD
     height: 711
+=======
+    height: 591.8
+=======
+    x: -1627
+    y: -341
+    width: 1164
+    height: 477
+>>>>>>> 44-scrubthroughtimelinescene
+>>>>>>> main
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -605,7 +794,11 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
+<<<<<<< HEAD
       snapOffset: {x: -141, y: 149}
+=======
+      snapOffset: {x: -141, y: 104}
+>>>>>>> 44-scrubthroughtimelinescene
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 1
       id: unity-grid-and-snap-toolbar
@@ -819,9 +1012,21 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
+<<<<<<< HEAD
     m_Target: {x: -9.343018, y: 55.07315, z: -24.069645}
     speed: 2
     m_Value: {x: -9.343018, y: 55.07315, z: -24.069645}
+=======
+<<<<<<< HEAD
+    m_Target: {x: 90.24625, y: 18.686409, z: 68.8389}
+    speed: 2
+    m_Value: {x: 90.24625, y: 18.686409, z: 68.8389}
+=======
+    m_Target: {x: 582.36383, y: 228, z: 0}
+    speed: 2
+    m_Value: {x: 582.36383, y: 228, z: -0.0000338512}
+>>>>>>> 44-scrubthroughtimelinescene
+>>>>>>> main
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -869,11 +1074,27 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.23774177, y: 0.6148532, z: -0.20177697, w: -0.72439396}
     speed: 2
+<<<<<<< HEAD
     m_Value: {x: -0.23773868, y: 0.6148452, z: -0.20177434, w: -0.72438455}
+=======
+<<<<<<< HEAD
+    m_Value: {x: -0.14472213, y: 0.7740333, z: -0.19114406, w: -0.5859965}
+>>>>>>> main
   m_Size:
     m_Target: 0.08942107
     speed: 2
+<<<<<<< HEAD
     m_Value: 0.0855704
+=======
+    m_Value: 0.028471885
+=======
+    m_Value: {x: 0, y: -0.00000065538734, z: 0, w: 0.99999994}
+  m_Size:
+    m_Target: 248.46245
+    speed: 2
+    m_Value: 260.1701
+>>>>>>> 44-scrubthroughtimelinescene
+>>>>>>> main
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -919,10 +1140,21 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 387.2
     y: 64.8
     width: 1174.8
+<<<<<<< HEAD
     height: 711
+=======
+    height: 591.8
+=======
+    x: -1627
+    y: -341
+    width: 1164
+    height: 477
+>>>>>>> 44-scrubthroughtimelinescene
+>>>>>>> main
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -933,7 +1165,15 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
+<<<<<<< HEAD
   m_TargetSize: {x: 1174.8, y: 690}
+=======
+<<<<<<< HEAD
+  m_TargetSize: {x: 1174.8, y: 570.8}
+=======
+  m_TargetSize: {x: 1164, y: 456}
+>>>>>>> 44-scrubthroughtimelinescene
+>>>>>>> main
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -953,10 +1193,22 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
+<<<<<<< HEAD
     m_HBaseRangeMin: -469.92
     m_HBaseRangeMax: 469.92
+<<<<<<< HEAD
     m_VBaseRangeMin: -276
     m_VBaseRangeMax: 276
+=======
+    m_VBaseRangeMin: -228.31999
+    m_VBaseRangeMax: 228.31999
+=======
+    m_HBaseRangeMin: -582
+    m_HBaseRangeMax: 582
+    m_VBaseRangeMin: -228
+    m_VBaseRangeMax: 228
+>>>>>>> 44-scrubthroughtimelinescene
+>>>>>>> main
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -974,23 +1226,48 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
+<<<<<<< HEAD
       width: 1174.8
       height: 690
     m_Scale: {x: 1, y: 1}
+<<<<<<< HEAD
     m_Translation: {x: 587.4, y: 345}
+=======
+    m_Translation: {x: 587.4, y: 285.4}
+=======
+      width: 1164
+      height: 456
+    m_Scale: {x: 1, y: 1}
+    m_Translation: {x: 582, y: 228}
+>>>>>>> 44-scrubthroughtimelinescene
+>>>>>>> main
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
+<<<<<<< HEAD
       x: -587.4
       y: -345
       width: 1174.8
       height: 690
     m_MinimalGUI: 1
   m_defaultScale: 1
+<<<<<<< HEAD
   m_LastWindowPixelSize: {x: 1468.5, y: 888.75}
+=======
+  m_LastWindowPixelSize: {x: 1468.5, y: 739.75}
+=======
+      x: -582
+      y: -228
+      width: 1164
+      height: 456
+    m_MinimalGUI: 1
+  m_defaultScale: 1
+  m_LastWindowPixelSize: {x: 1164, y: 477}
+>>>>>>> 44-scrubthroughtimelinescene
+>>>>>>> main
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -1019,10 +1296,21 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 0
     y: 796.8
     width: 1563
+<<<<<<< HEAD
     height: 282.59998
+=======
+    height: 401.8
+=======
+    x: 1280
+    y: 634
+    width: 1459
+    height: 485
+>>>>>>> 44-scrubthroughtimelinescene
+>>>>>>> main
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
