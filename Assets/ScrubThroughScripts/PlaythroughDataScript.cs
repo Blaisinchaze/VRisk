@@ -18,6 +18,7 @@ namespace DataVisualiser
 
         public List<TimelineElement> timeline;
         public bool survived;
+        public float completion_time;
     }
 
     [System.Serializable]
