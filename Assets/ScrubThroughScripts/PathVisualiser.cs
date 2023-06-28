@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using DataVisualiser;
 using TMPro;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(LineRenderer))]
 public class PathVisualiser : MonoBehaviour
 {
     public PlaythroughDataScript data;
@@ -15,24 +15,23 @@ public class PathVisualiser : MonoBehaviour
     public Transform grid_origin;
     public Vector2 grid_cell_size;
     public GameObject location_marker_prefab;
-
+        
     public Slider timeline_slider;
     public TMP_Text time_display;
 
     private LineRenderer line_renderer;
-    [SerializeField] private float total_line_segments;
-    [SerializeField] private float current_line_segment;
-    [SerializeField] private int last_whole_segment;
 
     private void Start()
     {
         grid_cell_size = new Vector2(GameManager.Instance.Data.grid_cell_size_x,
             GameManager.Instance.Data.grid_cell_size_y);
+
+        line_renderer = GetComponent<LineRenderer>();
     }
 
     public void setData(PlaythroughDataScript _data)
     {
-        clearLocations();
+        clearPathVisualiserData();
         
         if (data != null)
         {
@@ -71,25 +70,57 @@ public class PathVisualiser : MonoBehaviour
 
     public void updateSliderText(float _current_seconds_from_start, float _total_time_from_start)
     {
-        int total_minutes = (int) Math.Round(_total_time_from_start / 60);
-        int total_seconds = (int)Math.Round(_total_time_from_start % 60);
-        int total_milliseconds = (int)Math.Round(_total_time_from_start * 1000) % 1000;
+        int total_minutes = (int)(_total_time_from_start / 60);
+        int total_seconds = (int)(_total_time_from_start % 60);
+        int total_milliseconds = (int)(_total_time_from_start * 1000) % 1000;
         string total_time = total_minutes.ToString("D2") + "m : " + total_seconds.ToString("D2") + "s : " + total_milliseconds.ToString("D3") + "ms";
 
-        int current_minutes = (int) Math.Round(_current_seconds_from_start / 60);;
-        int current_seconds = (int)Math.Round(_current_seconds_from_start % 60);;
-        int current_milliseconds = (int)Math.Round(_current_seconds_from_start * 1000) % 1000;
-        string current_time = current_minutes.ToString("D2") + "m : " + current_seconds.ToString("D2") + "s : " + current_milliseconds.ToString("D3") + "ms";;
+        int current_minutes = (int)(_current_seconds_from_start / 60);
+        int current_seconds = (int)(_current_seconds_from_start % 60);
+        int current_milliseconds = (int)(_current_seconds_from_start * 1000) % 1000;
+        string current_time = current_minutes.ToString("D2") + "m : " + current_seconds.ToString("D2") + "s : " + current_milliseconds.ToString("D3") + "ms";
 
         time_display.text = current_time + " / " + total_time;
     }
 
     public void updatePathVisuals(float _time)
     {
+        int total_line_segments = locations.Count - 1;
         
+        // cycle through locations and find one that's timeframe is just below that point.
+        // take the index;
+        
+        int last_line_point = 0;
+        for (int i = locations.Count - 1; i > 0; --i)
+        {
+            if (locations[i].first <= _time)
+            {
+                last_line_point = i + 1; 
+                break;
+            }
+        }
+        
+        int line_renderer_points_required = last_line_point - line_renderer.positionCount;
+
+        //Line renderer needs more points. 
+        if (line_renderer_points_required > 0)
+        {
+            for (int i = line_renderer_points_required; i > 0; --i)
+            {
+                line_renderer.positionCount += 1;
+                line_renderer.SetPosition(line_renderer.positionCount - 1, locations[last_line_point - i].second.transform.position);
+            }
+        }
+        // Line renderer needs less points
+        else if (line_renderer_points_required < 0)
+        {
+            line_renderer.positionCount += line_renderer_points_required;
+        }
+
+        // handle any half point / interpolation.
     }
 
-    public void clearLocations()
+    public void clearPathVisualiserData()
     {
         for (int i = locations.Count-1; i > -1; --i)
         {
@@ -97,5 +128,10 @@ public class PathVisualiser : MonoBehaviour
         }
         
         locations.Clear();
+        line_renderer.positionCount = 0;
+        
+        updateSliderText(0.0f, 0.0f);
+
+        data = null;
     }
 }

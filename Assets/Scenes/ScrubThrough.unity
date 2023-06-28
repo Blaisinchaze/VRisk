@@ -2402,7 +2402,7 @@ Mesh:
     - stream: 0
       offset: 0
       format: 0
-      dimension: 0
+clearPathVisualiserDatan: 0
     - stream: 0
       offset: 0
       format: 0
@@ -2881,7 +2881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 0}
   locations: []
-  height_offset: 0
+  height_offset: 1
   grid_origin: {fileID: 2023326881}
   grid_cell_size: {x: 0, y: 0}
   location_marker_prefab: {fileID: 8808652746074365156, guid: a0a7a79fcc1e83542b5866d18dfbe4ef,
@@ -2889,7 +2889,7 @@ MonoBehaviour:
   timeline_slider: {fileID: 1168015463}
   time_display: {fileID: 1871520337}
   total_line_segments: 0
-  current_line_segment: 0
+  current_line_point: 0
   last_whole_segment: 0
 --- !u!120 &389413816
 LineRenderer:
@@ -2933,7 +2933,8 @@ LineRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Positions: []
+  m_Positions:
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -2942,13 +2943,13 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
+        value: 0.08860779
+        inSlope: -0.16886795
+        outSlope: -0.16886795
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0.12658209
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
