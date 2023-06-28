@@ -15,7 +15,8 @@ public class TimelineManager : MonoBehaviour
     [SerializeField] private float timer = 0;
 
     private int debrisTimelineIndex = 0;
-    
+    public EarlyWarningSystem siren_system;
+
     void Awake()
     {
         ReadCSV();
@@ -25,6 +26,8 @@ public class TimelineManager : MonoBehaviour
 
     private void Start()
     {
+        /*siren_system.triggerWarningSiren(30);
+        GameManager.Instance.BuildingManager.triggerGlobalShake(10,10,10);*/
         ///TEMP
         GameManager.Instance.BuildingManager.triggerGlobalShake(0.2f, 0.05f, 30);
         
