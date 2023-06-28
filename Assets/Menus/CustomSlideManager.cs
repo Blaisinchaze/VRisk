@@ -9,10 +9,18 @@ using UnityEngine.UI;
 
 public class CustomSlideManager : MonoBehaviour
 {
+    private enum SliderType
+    {
+        VOLUME,
+        TURN_SPEED
+    }
+
+    public GameData data;
     public TextMeshProUGUI meshText;
     public Slider slider;
-
-    public float increaseValue = 1.0f;
+    
+    [SerializeField] private SliderType sliderType;
+    [SerializeField] private float increaseValue = 1.0f;
 
     private void Start()
     {

@@ -45,7 +45,7 @@ public class MovementController : MonoBehaviour
         rig_rb = GetComponent<Rigidbody>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         gesture_control_moving = GestureControl();
 
@@ -121,7 +121,7 @@ public class MovementController : MonoBehaviour
 
     private bool GestureControl()
     {
-        timer += Time.fixedDeltaTime;
+        timer += Time.deltaTime;
 
         Vector3 controller_r = GameManager.Instance.InputHandler.input_asset.VRiskExperienceInputMap.MoveRight_Hand.ReadValue<Vector3>();
         Vector3 controller_l = GameManager.Instance.InputHandler.input_asset.VRiskExperienceInputMap.MoveLeft_Hand.ReadValue<Vector3>();

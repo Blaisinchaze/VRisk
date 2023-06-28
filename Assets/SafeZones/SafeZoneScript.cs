@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SafeZoneScript : MonoBehaviour
@@ -5,7 +8,12 @@ public class SafeZoneScript : MonoBehaviour
     public GameObject head;
     public NavigationArrow nav_arrow;
     public GameObject celebration_effects;
-    
+
+    public GameData data;
+    public TransitionManager transitionManager;
+
+    [SerializeField] private float transitionDelay = 2.0f;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -16,8 +24,8 @@ public class SafeZoneScript : MonoBehaviour
 
             nav_arrow.navigating = false;
             GameManager.Instance.DataTracker.recordTime(true);
-            // TRIGGER TRANSITION.
-            
+            StartCoroutine(DelayToTransition());
+
             Debug.Log("transition");
         }
     }
@@ -28,5 +36,13 @@ public class SafeZoneScript : MonoBehaviour
         {
             nav_arrow.navigating = true;
         }
+    }
+
+    private IEnumerator DelayToTransition()
+    {
+        yield return new WaitForSeconds(transitionDelay);
+
+        data.NextScene = (int) GameData.SceneIndex.END_MENU;
+        transitionManager.LoadNextScene();
     }
 }
