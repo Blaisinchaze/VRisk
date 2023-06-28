@@ -32,12 +32,7 @@ public class PathVisualiser : MonoBehaviour
     public void setData(PlaythroughDataScript _data)
     {
         clearPathVisualiserData();
-        
-        if (data != null)
-        {
-            data.display_data_button.interactable = true;
-        }
-        
+
         data = _data;
         data.display_data_button.interactable = false;
         
@@ -85,21 +80,25 @@ public class PathVisualiser : MonoBehaviour
 
     public void updatePathVisuals(float _time)
     {
-        int total_line_segments = locations.Count - 1;
+        // Remove interpolated line.
+        if (line_renderer.positionCount > 0 && line_renderer.positionCount <= locations.Count)
+        {
+            line_renderer.positionCount -= 1;
+        }
         
-        // cycle through locations and find one that's timeframe is just below that point.
-        // take the index;
-        
+        // Cycle through locations and find one that's timeframe is just below that point.
         int last_line_point = 0;
-        for (int i = locations.Count - 1; i > 0; --i)
+        for (int i = locations.Count - 1; i >= 0; --i)
         {
             if (locations[i].first <= _time)
             {
+                // Offset as indexing starts at zero so that we can add the first point.
                 last_line_point = i + 1; 
                 break;
             }
         }
         
+        // Calculate how many points need to be added or removed from the line renderer.
         int line_renderer_points_required = last_line_point - line_renderer.positionCount;
 
         //Line renderer needs more points. 
@@ -118,10 +117,29 @@ public class PathVisualiser : MonoBehaviour
         }
 
         // handle any half point / interpolation.
+
+        if (last_line_point > 0 && last_line_point < locations.Count)
+        {
+            float time_between_points = mapRange(_time, locations[last_line_point - 1].first,
+                locations[last_line_point].first, 0, 1);
+
+            Vector3 interpolated_point = Vector3.Lerp(locations[last_line_point - 1].second.transform.position,
+                locations[last_line_point].second.transform.position,
+                time_between_points);
+
+            line_renderer.positionCount += 1;
+            line_renderer.SetPosition(line_renderer.positionCount - 1, interpolated_point);
+        }
     }
 
     public void clearPathVisualiserData()
     {
+        if (data != null)
+        {
+            data.display_data_button.interactable = true;
+            
+        }
+        
         for (int i = locations.Count-1; i > -1; --i)
         {
             Destroy(locations[i].second);
@@ -130,8 +148,12 @@ public class PathVisualiser : MonoBehaviour
         locations.Clear();
         line_renderer.positionCount = 0;
         
-        updateSliderText(0.0f, 0.0f);
-
         data = null;
+        updateSliderText(0.0f, 0.0f);
+    }
+    
+    public static float mapRange(float _value, float _from_min, float _from_max, float _to_min, float _to_max)
+    {
+        return (_value - _from_min) / (_from_max - _from_min) * (_to_max - _to_min) + _to_min;
     }
 }
