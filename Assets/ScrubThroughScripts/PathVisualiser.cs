@@ -18,6 +18,7 @@ public class PathVisualiser : MonoBehaviour
         
     public Slider timeline_slider;
     public TMP_Text time_display;
+    public GameObject end_marker;
 
     private LineRenderer line_renderer;
 
@@ -50,6 +51,7 @@ public class PathVisualiser : MonoBehaviour
         }
         
         updateSliderText(0.0f, data.completion_time);
+        end_marker.transform.position = locations[0].second.transform.position;
     }
 
     private void Update()
@@ -130,14 +132,38 @@ public class PathVisualiser : MonoBehaviour
             line_renderer.positionCount += 1;
             line_renderer.SetPosition(line_renderer.positionCount - 1, interpolated_point);
         }
+        
+        setEndMarker(last_line_point);
     }
 
+    private void setEndMarker(int _last_line_point)
+    {
+        if (_last_line_point < locations.Count - 1 && _last_line_point > 0)
+        {
+            Vector3 next_location = locations[_last_line_point].second.transform.position;
+            end_marker.transform.LookAt(next_location);
+        }
+        else if (_last_line_point == 0)
+        {
+            end_marker.transform.LookAt(locations[1].second.transform.position);
+        }
+
+        if (line_renderer.positionCount > 0)
+        {
+            Vector3 marker_position = line_renderer.GetPosition(line_renderer.positionCount - 1);
+            end_marker.transform.position = marker_position;
+        }
+        else
+        {
+            end_marker.transform.position = locations[0].second.transform.position;
+        }
+    }
+    
     public void clearPathVisualiserData()
     {
         if (data != null)
         {
             data.display_data_button.interactable = true;
-            
         }
         
         for (int i = locations.Count-1; i > -1; --i)
