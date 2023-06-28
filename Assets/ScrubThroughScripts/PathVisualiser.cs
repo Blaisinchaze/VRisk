@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using DataVisualiser;
 using TMPro;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(LineRenderer))]
 public class PathVisualiser : MonoBehaviour
 {
     public PlaythroughDataScript data;
@@ -15,19 +16,21 @@ public class PathVisualiser : MonoBehaviour
     public Transform grid_origin;
     public Vector2 grid_cell_size;
     public GameObject location_marker_prefab;
-
+        
     public Slider timeline_slider;
     public TMP_Text time_display;
 
     private LineRenderer line_renderer;
     [SerializeField] private float total_line_segments;
-    [SerializeField] private float current_line_segment;
+    [SerializeField] private float current_line_point;
     [SerializeField] private int last_whole_segment;
 
     private void Start()
     {
         grid_cell_size = new Vector2(GameManager.Instance.Data.grid_cell_size_x,
             GameManager.Instance.Data.grid_cell_size_y);
+
+        line_renderer = GetComponent<LineRenderer>();
     }
 
     public void setData(PlaythroughDataScript _data)
@@ -86,7 +89,40 @@ public class PathVisualiser : MonoBehaviour
 
     public void updatePathVisuals(float _time)
     {
+        total_line_segments = locations.Count - 1;
         
+        // cycle through locations and find one that's timeframe is just below that point.
+        // take the index;
+        
+        int last_line_point = 0;
+        for (int i = locations.Count - 1; i > 0; --i)
+        {
+            if (locations[i].first <= _time)
+            {
+                last_line_point = i + 1; 
+                break;
+            }
+        }
+        
+        int line_renderer_points_required = last_line_point - (line_renderer.positionCount);
+
+        //Line renderer needs more points. 
+        if (line_renderer_points_required > 0)
+        {
+            for (int i = line_renderer_points_required; i > 0; --i)
+            {
+                line_renderer.positionCount += 1;
+                line_renderer.SetPosition(line_renderer.positionCount - 1,
+                    locations[last_line_point - i].second.transform.position);
+            }
+        }
+        // Line renderer needs less points
+        else if (line_renderer_points_required < 0)
+        {
+            line_renderer.positionCount += line_renderer_points_required;
+        }
+
+        // handle any half point / interpolation.
     }
 
     public void clearLocations()
@@ -97,5 +133,6 @@ public class PathVisualiser : MonoBehaviour
         }
         
         locations.Clear();
+        line_renderer.positionCount = 0;
     }
 }
