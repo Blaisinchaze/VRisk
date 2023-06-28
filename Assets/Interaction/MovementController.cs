@@ -161,7 +161,7 @@ public class MovementController : MonoBehaviour
             if (contact.otherCollider.gameObject.GetComponent<DebrisScript>().falling)
             {
                 GameManager.Instance.AudioManager.PlaySound(false, false, head.transform.position, AudioManager.SoundID.LOSE);
-                GameManager.Instance.DataTracker.recordTime(false);
+                GameManager.Instance.DataTracker.startSavingProcess(false);
                 Debug.Log("die");
             }
         }

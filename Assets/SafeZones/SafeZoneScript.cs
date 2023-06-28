@@ -15,7 +15,7 @@ public class SafeZoneScript : MonoBehaviour
             celebration_effects.SetActive(true);
 
             nav_arrow.navigating = false;
-            GameManager.Instance.DataTracker.recordTime(true);
+            GameManager.Instance.DataTracker.startSavingProcess(true);
             // TRIGGER TRANSITION.
             
             Debug.Log("transition");
