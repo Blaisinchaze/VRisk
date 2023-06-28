@@ -64043,6 +64043,27 @@ PrefabInstance:
       propertyPath: CSVTimeline
       value: 
       objectReference: {fileID: 4900000, guid: 1ceb2348ada43d64690fc454144c2a21, type: 3}
+    - target: {fileID: 8755711737267541722, guid: 00f962a14c8c80c4d827a2b1c236d5b5,
+        type: 3}
+      propertyPath: debrisTimeline
+      value: 
+      objectReference: {fileID: 11400000, guid: 053973cf03ac1dc4e81113e28dbf80e4,
+        type: 2}
+    - target: {fileID: 8755711737267541722, guid: 00f962a14c8c80c4d827a2b1c236d5b5,
+        type: 3}
+      propertyPath: editorFilepath.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8755711737267541722, guid: 00f962a14c8c80c4d827a2b1c236d5b5,
+        type: 3}
+      propertyPath: editorFilepath.Array.data[0]
+      value: Timeline
+      objectReference: {fileID: 0}
+    - target: {fileID: 8755711737267541722, guid: 00f962a14c8c80c4d827a2b1c236d5b5,
+        type: 3}
+      propertyPath: editorFilepath.Array.data[1]
+      value: VRiskTimelineCSV.csv
+      objectReference: {fileID: 0}
     - target: {fileID: 8755711737287191580, guid: 00f962a14c8c80c4d827a2b1c236d5b5,
         type: 3}
       propertyPath: m_Name
