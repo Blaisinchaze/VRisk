@@ -62322,11 +62322,7 @@ PrefabInstance:
       value: 767
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 6270615611721683964, guid: 5c65e66c374da104a8645b651d505548,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 992162052}
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c65e66c374da104a8645b651d505548, type: 3}
 --- !u!33 &6405875667086511805
 MeshFilter:
@@ -64042,6 +64038,11 @@ PrefabInstance:
       propertyPath: right_controller
       value: 
       objectReference: {fileID: 1795569358}
+    - target: {fileID: 8755711737267541722, guid: 00f962a14c8c80c4d827a2b1c236d5b5,
+        type: 3}
+      propertyPath: CSVTimeline
+      value: 
+      objectReference: {fileID: 4900000, guid: 1ceb2348ada43d64690fc454144c2a21, type: 3}
     - target: {fileID: 8755711737287191580, guid: 00f962a14c8c80c4d827a2b1c236d5b5,
         type: 3}
       propertyPath: m_Name
