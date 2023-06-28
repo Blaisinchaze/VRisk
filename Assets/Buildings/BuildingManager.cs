@@ -62,7 +62,7 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
-    public void damageBuilding(int _building_id, float _intensity, float _shaking_reposition_interval, float _duration, float _impact_shake_duration, float _affect_radius)
+    public void damageBuilding(int _building_id, float _intensity, float _shaking_reposition_interval, float _impact_shake_duration, float _affect_radius)
     {
         // Grab reference to desired building. 
         var building = buildings[_building_id];
@@ -70,7 +70,24 @@ public class BuildingManager : MonoBehaviour
         // If building is not collapsed, initiate damage transition.
         if (building.third.state > 0)
         {
-            StartCoroutine(collapseBuilding(building.third, _intensity, _shaking_reposition_interval, _duration, _impact_shake_duration, _affect_radius));
+            var building_data = building.third;
+            building_data.state--;
+
+            //_building_data.mesh_filter.mesh = _building_data.building_map.states[(int) _building_data.state].second;
+            //_building_data.collider.sharedMesh = _building_data.building_map.states[(int) _building_data.state].second;
+
+            // Temporary - Above is the code for swapping meshes and colliders, but don't have meshes yet.
+            // Below like is temp until we have meshes. 
+            building_data.gameObject.transform.Translate(0, -2, 0);
+        
+            AudioManager.SoundID sound_id = building_data.state == BuildingState.COLLAPSED
+                ? AudioManager.SoundID.BUILDING_COLLAPSE
+                : AudioManager.SoundID.BUILDING_DAMAGE;
+        
+            GameManager.Instance.AudioManager.PlaySound(false, false, building_data.original_position, sound_id);
+            GameManager.Instance.ParticleManager.triggerBuildingCollapseEffect(ParticleManager.ParticleID.BUILDING_DAMAGE, building_data.mesh_renderer);
+
+            triggerLocalisedShake(building_data.gameObject, _intensity, _shaking_reposition_interval, _impact_shake_duration, _affect_radius);
         }
     }
 
@@ -111,36 +128,6 @@ public class BuildingManager : MonoBehaviour
                 GameManager.Instance.HapticFeedbackHandler.triggerCosIntensityHapticFeedback(1 - distance/_affect_radius, _duration);
             }
         }
-    }
-
-    private IEnumerator collapseBuilding(BuildingData _building_data, float _intensity, float _shaking_reposition_interval, float _transition_duration, float _impact_shake_duration, float _affect_radius)
-    {
-        float elapsed = 0;
-
-        while (elapsed < _transition_duration)
-        {
-            elapsed += Time.deltaTime;
-             yield return null;      
-        }
-
-        _building_data.state--;
-
-        //_building_data.mesh_filter.mesh = _building_data.building_map.states[(int) _building_data.state].second;
-        //_building_data.collider.sharedMesh = _building_data.building_map.states[(int) _building_data.state].second;
-
-        // Temporary - Above is the code for swapping meshes and colliders, but don't have meshes yet.
-        // Below like is temp until we have meshes. 
-        _building_data.gameObject.transform.Translate(0, -2, 0);
-        
-        
-        AudioManager.SoundID sound_id = _building_data.state == BuildingState.COLLAPSED
-            ? AudioManager.SoundID.BUILDING_COLLAPSE
-            : AudioManager.SoundID.BUILDING_DAMAGE;
-        
-        GameManager.Instance.AudioManager.PlaySound(false, false, _building_data.original_position, sound_id);
-        GameManager.Instance.ParticleManager.triggerBuildingCollapseEffect(ParticleManager.ParticleID.BUILDING_DAMAGE, _building_data.mesh_renderer);
-
-        triggerLocalisedShake(_building_data.gameObject, _intensity, _shaking_reposition_interval, _impact_shake_duration, _affect_radius);
     }
 
     /// <summary>

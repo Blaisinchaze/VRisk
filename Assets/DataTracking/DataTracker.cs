@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 
 public class DataTracker : MonoBehaviour
@@ -81,7 +82,7 @@ public class DataTracker : MonoBehaviour
         return grid_location;
     }
 
-    public void recordTime(bool _survived)
+    public void startSavingProcess(bool _survived)
     {
         active = false;
 
@@ -96,7 +97,13 @@ public class DataTracker : MonoBehaviour
 
         editor_file_path[editor_file_path.Length - 1] = file_name;
         android_file_path[android_file_path.Length - 1] = file_name;
-        
-        FileManager.saveToCSV(editor_file_path, android_file_path ,_recorded_locations);
+
+        Thread saving_thread = new Thread(() => save(editor_file_path, android_file_path ,_recorded_locations));
+        saving_thread.Start();
+    }
+
+    private void save(string[] _editor_file_path, string[] _android_file_path, List<List<string>> _recorded_locations)
+    {
+        FileManager.saveToCSV(_editor_file_path, _android_file_path ,_recorded_locations);
     }
 }

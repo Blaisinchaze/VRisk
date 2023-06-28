@@ -52,7 +52,7 @@ public class TimelineManager : MonoBehaviour
             
             // Prompts building manager!
             // Need to replace with values read in, as opposed to hard coding them.
-            //GameManager.Instance.BuildingManager.damageBuilding(current.buildingId, current.intensity, current.shakingRepositionInterval,5, 40);
+            GameManager.Instance.BuildingManager.damageBuilding(current.buildingId, current.intensity, current.shakingRepositionInterval,5, 40);
             // needs to trigger start of quake and start of siren.
         
             timeline.RemoveAt(0);
