@@ -31,6 +31,17 @@ public class CustomSlideManager : MonoBehaviour
     {
         var value = slider.value;
         meshText.text = value.ToString(CultureInfo.InvariantCulture);
+
+        switch (sliderType)
+        {
+            case SliderType.VOLUME:
+                data.volume = (int)value;
+                break;
+            
+            case SliderType.TURN_SPEED:
+                data.turnSpeed = (int)value;
+                break;
+        }
     }
 
     public void OnValueIncrease()

@@ -18,8 +18,9 @@ public class GameData : ScriptableObject
     }
 
     // Transition Data
+    public int totalTime = 0;
     public int NextScene = 1;
-    
+
     // Scene data
     public float record_position_interval = 0;
     public float grid_cell_size_x = 0;

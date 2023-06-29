@@ -119,7 +119,7 @@ public class MainMenuInputManager : MonoBehaviour
         else
         {
             mainMenu.transform.LeanMoveLocal(mainMenuSlidePos, animationDuration).setEaseInOutBack();
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(animationDuration);
             pauseMenuController.OpenMenu();
         }
 
