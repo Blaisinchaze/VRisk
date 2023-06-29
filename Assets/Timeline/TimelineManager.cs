@@ -11,11 +11,20 @@ public class TimelineManager : MonoBehaviour
     
     public DebrisTimeline debrisTimeline;
     public List<BuildingTimeslot> timeline = new List<BuildingTimeslot>();
+    public EarlyWarningSystem siren_system;
 
     [SerializeField] private float timer = 0;
 
+    // Global data available for the earthquake3
+    [SerializeField] private float sirenStartTime;
+    [SerializeField] private float quakeStartTime;
+    [SerializeField] private float maxGlobalIntensity;
+    [SerializeField] private float shakingRepositionInterval;
+    [SerializeField] private float globalDuration;
+
+    private bool sirenTriggered = false;
+    private bool quakeTriggered = false;
     private int debrisTimelineIndex = 0;
-    public EarlyWarningSystem siren_system;
 
     void Awake()
     {
@@ -26,20 +35,35 @@ public class TimelineManager : MonoBehaviour
 
     private void Start()
     {
-        /*siren_system.triggerWarningSiren(30);
-        GameManager.Instance.BuildingManager.triggerGlobalShake(10,10,10);*/
-        ///TEMP
-        GameManager.Instance.BuildingManager.triggerGlobalShake(0.2f, 0.05f, 30);
-        
-        // For testing - remove later when the start of the rumble audio is triggered by the timeline manager. 
-        GameManager.Instance.AudioManager.PlaySound(true, false, Vector3.zero,
-            GameObject.FindGameObjectWithTag("MainCamera").transform, true, AudioManager.SoundID.SEISMIC_RUMBLE, 
-            GameManager.earthquakeIntensityCurve, 30);
+        // /*siren_system.triggerWarningSiren(30);
+        // GameManager.Instance.BuildingManager.triggerGlobalShake(10,10,10);*/
+        // ///TEMP
+        // GameManager.Instance.BuildingManager.triggerGlobalShake(0.2f, 0.05f, 30);
+        //
+        // // For testing - remove later when the start of the rumble audio is triggered by the timeline manager. 
+        // GameManager.Instance.AudioManager.PlaySound(true, false, Vector3.zero,
+        //     GameObject.FindGameObjectWithTag("MainCamera").transform, true, AudioManager.SoundID.SEISMIC_RUMBLE, 
+        //     GameManager.earthquakeIntensityCurve, 30);
     }
 
     private void FixedUpdate()
     {
         timer += Time.fixedDeltaTime;
+
+        if (sirenStartTime < timer && !sirenTriggered)
+        {
+            siren_system.triggerWarningSiren(globalDuration + Mathf.Abs(quakeStartTime - sirenStartTime));
+            sirenTriggered = true;
+        }
+
+        if (quakeStartTime < timer && !quakeTriggered)
+        {
+            GameManager.Instance.BuildingManager.triggerGlobalShake(maxGlobalIntensity, shakingRepositionInterval, globalDuration);
+            GameManager.Instance.AudioManager.PlaySound(true, false, Vector3.zero,
+                GameObject.FindGameObjectWithTag("MainCamera").transform, true, AudioManager.SoundID.SEISMIC_RUMBLE, 
+                GameManager.earthquakeIntensityCurve, globalDuration);
+            quakeTriggered = true;
+        }
 
         updateBuildingTimeline();
         updateDebrisTimeline();
@@ -49,15 +73,13 @@ public class TimelineManager : MonoBehaviour
     {
         if (timeline.Count == 0) return;
         
-        if (timeline.First().triggerTime < timer)
+        if (timeline.First().triggerTime + quakeStartTime < timer)
         {
             var current = timeline.First();
             
             // Prompts building manager!
             // Need to replace with values read in, as opposed to hard coding them.
             GameManager.Instance.BuildingManager.damageBuilding(current.buildingId, current.intensity, current.shakingRepositionInterval,5, 40);
-            // needs to trigger start of quake and start of siren.
-        
             timeline.RemoveAt(0);
         }
     }
@@ -79,7 +101,16 @@ public class TimelineManager : MonoBehaviour
     {
         string[] entries = FileManager.parseCSVtoRows(editorFilepath, androidFilepath);
 
-        for (int i = 1; i < entries.Length; i++)
+        //Gathers the global variables
+        string[] globalRow = entries[1].Split(new string[] { "," }, StringSplitOptions.None);
+        sirenStartTime = float.Parse(globalRow[0]);
+        quakeStartTime = float.Parse(globalRow[1]);
+        maxGlobalIntensity = float.Parse(globalRow[2]);
+        shakingRepositionInterval = float.Parse(globalRow[3]);
+        globalDuration = float.Parse(globalRow[4]);
+        
+        //starts at 4 to gather the timeline data
+        for (int i = 4; i < entries.Length; i++)
         {
             string[] row = entries[i].Split(new string[] { "," }, StringSplitOptions.None);
 
