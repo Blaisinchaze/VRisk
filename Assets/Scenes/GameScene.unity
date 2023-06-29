@@ -10935,6 +10935,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 975829744}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1010854044 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7819635530544664694, guid: baefdfe8508f99a4a88734ffcd8a16e5,
+    type: 3}
+  m_PrefabInstance: {fileID: 7819635530389758513}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3324fec19a58cb24baeed88374fb6e7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1020257195
 Mesh:
   m_ObjectHideFlags: 0
@@ -62322,11 +62334,7 @@ PrefabInstance:
       value: 767
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 6270615611721683964, guid: 5c65e66c374da104a8645b651d505548,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 992162052}
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c65e66c374da104a8645b651d505548, type: 3}
 --- !u!33 &6405875667086511805
 MeshFilter:
@@ -64042,6 +64050,37 @@ PrefabInstance:
       propertyPath: right_controller
       value: 
       objectReference: {fileID: 1795569358}
+    - target: {fileID: 8755711737267541722, guid: 00f962a14c8c80c4d827a2b1c236d5b5,
+        type: 3}
+      propertyPath: CSVTimeline
+      value: 
+      objectReference: {fileID: 4900000, guid: 1ceb2348ada43d64690fc454144c2a21, type: 3}
+    - target: {fileID: 8755711737267541722, guid: 00f962a14c8c80c4d827a2b1c236d5b5,
+        type: 3}
+      propertyPath: siren_system
+      value: 
+      objectReference: {fileID: 1010854044}
+    - target: {fileID: 8755711737267541722, guid: 00f962a14c8c80c4d827a2b1c236d5b5,
+        type: 3}
+      propertyPath: debrisTimeline
+      value: 
+      objectReference: {fileID: 11400000, guid: 053973cf03ac1dc4e81113e28dbf80e4,
+        type: 2}
+    - target: {fileID: 8755711737267541722, guid: 00f962a14c8c80c4d827a2b1c236d5b5,
+        type: 3}
+      propertyPath: editorFilepath.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8755711737267541722, guid: 00f962a14c8c80c4d827a2b1c236d5b5,
+        type: 3}
+      propertyPath: editorFilepath.Array.data[0]
+      value: Timeline
+      objectReference: {fileID: 0}
+    - target: {fileID: 8755711737267541722, guid: 00f962a14c8c80c4d827a2b1c236d5b5,
+        type: 3}
+      propertyPath: editorFilepath.Array.data[1]
+      value: VRiskTimelineCSV.csv
+      objectReference: {fileID: 0}
     - target: {fileID: 8755711737287191580, guid: 00f962a14c8c80c4d827a2b1c236d5b5,
         type: 3}
       propertyPath: m_Name
