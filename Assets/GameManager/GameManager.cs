@@ -5,7 +5,6 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
-    public int seed = 0;
     public string[] game_data_filepath_editor;
     public string[] game_data_filepath_android;
     public static GameManager Instance { get; private set; }
@@ -43,8 +42,6 @@ public class GameManager : MonoBehaviour
         DataTracker = GetComponentInChildren<DataTracker>();
 
         Player = GameObject.FindWithTag("Player");
-
-        Random.InitState(seed);
 
         populateGameDataFromFile(game_data_filepath_editor, game_data_filepath_android);
     }
