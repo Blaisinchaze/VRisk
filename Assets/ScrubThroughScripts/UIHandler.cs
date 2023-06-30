@@ -83,11 +83,11 @@ namespace DataVisualiser
                 var playthrough_data = createTab();
                 
                 // Set bool for whether or not player lived. 
-                playthrough_data.survived = csv_contents[csv_contents.Length-2][3] == "Survived\r";
+                playthrough_data.survived = csv_contents[csv_contents.Length-2][6] == "Survived\r";
                 playthrough_data.completion_time = float.Parse(csv_contents[csv_contents.Length - 2][0]);
                 
                 // Display data (username, date, time, completion time, completion_condition).
-                setTabDisplayData(playthrough_data, file, playthrough_data.completion_time.ToString(), csv_contents[csv_contents.Length - 2][3]);
+                setTabDisplayData(playthrough_data, file, playthrough_data.completion_time.ToString(), csv_contents[csv_contents.Length - 2][6]);
 
                 // Store timeline points.
                 for (int line_index = 0; line_index < csv_contents.Length-1; line_index++)
@@ -96,8 +96,9 @@ namespace DataVisualiser
                     
                     float time = float.Parse(line[0]);
                     Vector2 grid_cell = new Vector2(float.Parse(line[1]), float.Parse(line[2]));
+                    Vector3 facing_direction = new Vector3(float.Parse(line[3]), float.Parse(line[4]), float.Parse(line[5]));
                     
-                    playthrough_data.timeline.Add(new TimelineElement(time, grid_cell));
+                    playthrough_data.timeline.Add(new TimelineElement(time, grid_cell, facing_direction));
                 }
             }
         }

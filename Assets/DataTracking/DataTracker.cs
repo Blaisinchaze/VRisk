@@ -14,6 +14,8 @@ public class DataTracker : MonoBehaviour
     public GameObject map_origin;
     public Vector2 grid_cell_size;
 
+    public Camera head_cam;
+
     private bool active = true;
     private List<List<string>> _recorded_locations;
 
@@ -70,8 +72,13 @@ public class DataTracker : MonoBehaviour
         Vector2 grid_location = getGridLocation();
 
         string time = timer.ToString();
-        string grid_cell_string = grid_location.x.ToString() + "," + grid_location.y.ToString();
-        _recorded_locations.Add(new List<string> {time, grid_cell_string});
+        string grid_cell_string = grid_location.x + "," + grid_location.y;
+
+        Vector3 forwards_vect = head_cam.transform.forward;
+        string forwards = forwards_vect.x + "," + forwards_vect.y + "," + forwards_vect.z;
+        Debug.Log(forwards);
+        
+        _recorded_locations.Add(new List<string> {time, grid_cell_string, forwards});
     }
 
     private Vector2 getGridLocation()
