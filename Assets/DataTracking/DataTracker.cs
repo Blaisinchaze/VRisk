@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 
 public class DataTracker : MonoBehaviour
@@ -12,6 +13,8 @@ public class DataTracker : MonoBehaviour
     public float record_position_timer;
     public GameObject map_origin;
     public Vector2 grid_cell_size;
+
+    public Camera head_cam;
 
     private bool active = true;
     private List<List<string>> _recorded_locations;
@@ -69,8 +72,13 @@ public class DataTracker : MonoBehaviour
         Vector2 grid_location = getGridLocation();
 
         string time = timer.ToString();
-        string grid_cell_string = grid_location.x.ToString() + "," + grid_location.y.ToString();
-        _recorded_locations.Add(new List<string> {time, grid_cell_string});
+        string grid_cell_string = grid_location.x + "," + grid_location.y;
+
+        Vector3 forwards_vect = head_cam.transform.forward;
+        string forwards = forwards_vect.x + "," + forwards_vect.y + "," + forwards_vect.z;
+        Debug.Log(forwards);
+        
+        _recorded_locations.Add(new List<string> {time, grid_cell_string, forwards});
     }
 
     private Vector2 getGridLocation()
@@ -81,7 +89,7 @@ public class DataTracker : MonoBehaviour
         return grid_location;
     }
 
-    public void recordTime(bool _survived)
+    public void startSavingProcess(bool _survived)
     {
         active = false;
 
@@ -96,7 +104,13 @@ public class DataTracker : MonoBehaviour
 
         editor_file_path[editor_file_path.Length - 1] = file_name;
         android_file_path[android_file_path.Length - 1] = file_name;
-        
-        FileManager.saveToCSV(editor_file_path, android_file_path ,_recorded_locations);
+
+        Thread saving_thread = new Thread(() => save(editor_file_path, android_file_path ,_recorded_locations));
+        saving_thread.Start();
+    }
+
+    private void save(string[] _editor_file_path, string[] _android_file_path, List<List<string>> _recorded_locations)
+    {
+        FileManager.saveToCSV(_editor_file_path, _android_file_path ,_recorded_locations);
     }
 }
