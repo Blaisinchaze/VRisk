@@ -25,6 +25,12 @@ public class TutorialManager : MonoBehaviour
 
     private void Start()
     {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+            child.localScale = new Vector3(0, 0, 0);
+        }
+        
         StartCoroutine(PositionTutorial());
     }
 

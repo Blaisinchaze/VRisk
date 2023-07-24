@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 public class UIAnchor : MonoBehaviour
 {
-    public GameObject camera;
+    public GameObject cameraGO;
     public float animation_time = 0.8f;
 
     [SerializeField] private bool start_unactive = false;
@@ -50,7 +50,7 @@ public class UIAnchor : MonoBehaviour
     private void Update()
     {
         //Finds out where the anchor should be located based on camera posiion
-        Vector3 camera_pos = camera.transform.position;
+        Vector3 camera_pos = cameraGO.transform.position;
         anchor_pos = new Vector3(camera_pos.x, default_pos.y + camera_pos.y, camera_pos.z);
         
         //If the player has gotten fairly away from the menu, it gets re-moved in range of the player
@@ -71,7 +71,7 @@ public class UIAnchor : MonoBehaviour
             if (!VectorHelper.ApproximatelyEqual(transform.position, anchor_pos, walk_area)) reset_pos = true;
         }
         
-        Quaternion camera_rot = Quaternion.Euler(0, camera.transform.eulerAngles.y, 0);
+        Quaternion camera_rot = Quaternion.Euler(0, cameraGO.transform.eulerAngles.y, 0);
         Quaternion anchor_rot = Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
         //Checks if the menu should be moved to face the player again
@@ -100,10 +100,10 @@ public class UIAnchor : MonoBehaviour
     //Positions the menu in front of the player and pops it out with an animation
     public void PopIn()
     {
-        Quaternion camera_rot = Quaternion.Euler(0, camera.transform.eulerAngles.y, 0);
+        Quaternion camera_rot = Quaternion.Euler(0, cameraGO.transform.eulerAngles.y, 0);
         transform.rotation = camera_rot;
         
-        Vector3 camera_pos = camera.transform.position;
+        Vector3 camera_pos = cameraGO.transform.position;
         var new_pos = new Vector3(camera_pos.x, default_pos.y + camera_pos.y, camera_pos.z);
         anchor_pos = new_pos;
         transform.position = new_pos;

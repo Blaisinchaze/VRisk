@@ -15,12 +15,13 @@ public class TimelineManager : MonoBehaviour
 
     [SerializeField] private float timer = 0;
 
-    // Global data available for the earthquake3
+    // Global data available for the earthquake
     [SerializeField] private float sirenStartTime;
     [SerializeField] private float quakeStartTime;
     [SerializeField] private float maxGlobalIntensity;
     [SerializeField] private float shakingRepositionInterval;
     [SerializeField] private float globalDuration;
+    [SerializeField] private bool sirenEnable = false;
 
     private bool sirenTriggered = false;
     private bool quakeTriggered = false;
@@ -114,16 +115,15 @@ public class TimelineManager : MonoBehaviour
         {
             string[] row = entries[i].Split(new string[] { "," }, StringSplitOptions.None);
 
-            if (row.Length != 5) continue;
+            if (row.Length != 4) continue;
             
             int buildingId = int.Parse(row[0]);
             float triggerTime = float.Parse(row[1]);
             float intensity = float.Parse(row[2]);
             float shakingRepositionInterval = float.Parse(row[3]);
-            float duration = float.Parse(row[4]);
             //Debug.Log($"Row: {row[0]}, {row[1]}, {row[2]}, {row[3]}, {row[4]}");
 
-            var buildingData = new BuildingTimeslot(buildingId, triggerTime, intensity, shakingRepositionInterval, duration);
+            var buildingData = new BuildingTimeslot(buildingId, triggerTime, intensity, shakingRepositionInterval);
             timeline.Add(buildingData);
         }
     }

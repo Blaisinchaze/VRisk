@@ -7,8 +7,7 @@ using TMPro;
 public class LoadingAnim : MonoBehaviour
 {
     private TextMeshProUGUI text_mesh;
-
-    [SerializeField] private float section_time = 1.0f;
+    
     [SerializeField] private int section_amount = 3;
     
     private float timer;

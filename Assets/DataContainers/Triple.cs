@@ -45,14 +45,12 @@ public struct BuildingTimeslot
     public float triggerTime;
     public float intensity;
     public float shakingRepositionInterval;
-    public float duration;
 
-    public BuildingTimeslot(int _buildingId, float _triggerTime, float _intensity, float _shakingRepositionInterval, float _duration)
+    public BuildingTimeslot(int _buildingId, float _triggerTime, float _intensity, float _shakingRepositionInterval)
     {
         buildingId = _buildingId;
         triggerTime = _triggerTime;
         intensity = _intensity;
         shakingRepositionInterval = _shakingRepositionInterval;
-        duration = _duration;
     }
 }
