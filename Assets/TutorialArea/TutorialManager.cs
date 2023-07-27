@@ -51,7 +51,7 @@ public class TutorialManager : MonoBehaviour
             
             float popUpTime = Random.Range(minScaleTime, maxScaleTime);
 
-            child.LeanScale(new Vector3(1, 1, 1), popUpTime).setEaseOutQuart();
+            child.LeanScale(new Vector3(72, 72, 72), popUpTime).setEaseOutQuart();
         }
 
         yield return new WaitForSeconds(maxScaleTime);
