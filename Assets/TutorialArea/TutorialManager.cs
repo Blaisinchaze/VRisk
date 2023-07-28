@@ -9,29 +9,23 @@ public class TutorialManager : MonoBehaviour
     public GameObject playerRig;
     public GameObject menuAnchor;
     public GameObject standingPlane;
+    public FadeScreen screenFade;
     public ViewController viewController;
 
     [SerializeField] private Vector3 startPos;
     [SerializeField] private Vector3 targetPos;
 
-    [SerializeField] private float minScaleTime = 4.0f;
-    [SerializeField] private float maxScaleTime = 6.0f;
-    
     [SerializeField] private float increaseIntervalTime = 0.01f;
     [SerializeField] private float increaseIntervalSize = 0.04f;
     
     [SerializeField] private float yOffset = 2.0f;
     [SerializeField] private float delay = 3.0f;
+    [SerializeField] private float fadeDelay = 1.0f;
 
     private void Start()
     {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            Transform child = transform.GetChild(i);
-            child.localScale = new Vector3(0, 0, 0);
-        }
-        
         StartCoroutine(PositionTutorial());
+        SetChildren(false);
     }
 
     public void StartTutorial()
@@ -42,19 +36,9 @@ public class TutorialManager : MonoBehaviour
     private IEnumerator StartTutorialCoroutine()
     {
         StartCoroutine(SoftIncreaseCircle());
-
-        yield return new WaitForSeconds(1f);
         
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            Transform child = transform.GetChild(i);
-            
-            float popUpTime = Random.Range(minScaleTime, maxScaleTime);
-
-            child.LeanScale(new Vector3(72, 72, 72), popUpTime).setEaseOutQuart();
-        }
-
-        yield return new WaitForSeconds(maxScaleTime);
+        screenFade.FadeOut(true);
+        yield return new WaitForSeconds(fadeDelay);
         
         //Adds a rigidbody with the same stats as the one in the simulation
         var rigidBody = playerRig.AddComponent<Rigidbody>();
@@ -68,8 +52,10 @@ public class TutorialManager : MonoBehaviour
         //Enables movement
         viewController.enabled = true;
         playerRig.GetComponent<MovementController>().enabled = true;
-
-        yield return null;
+        SetChildren(true);
+        
+        yield return new WaitForSeconds(fadeDelay);
+        screenFade.FadeIn();
     }
 
     private IEnumerator SoftIncreaseCircle()
@@ -84,6 +70,15 @@ public class TutorialManager : MonoBehaviour
             planeMat.SetFloat("_Radius", currentSize);
 
             yield return new WaitForSeconds(increaseIntervalTime);
+        }
+    }
+
+    private void SetChildren(bool active)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+            child.gameObject.SetActive(active);
         }
     }
 

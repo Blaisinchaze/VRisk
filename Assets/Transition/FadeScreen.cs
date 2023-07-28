@@ -36,10 +36,10 @@ public class FadeScreen : MonoBehaviour
         StartCoroutine(DelayedRenderState(false));
     }
     
-    public void FadeOut()
+    public void FadeOut(bool renderAfter = false)
     {
         Fade(0,1);
-        StartCoroutine(DelayedRenderState(false));
+        StartCoroutine(DelayedRenderState(renderAfter));
     }
 
     public void Fade(float _alpha_in, float _alpha_out)

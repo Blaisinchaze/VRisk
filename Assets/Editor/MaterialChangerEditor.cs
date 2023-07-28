@@ -6,12 +6,19 @@ public class MaterialChangerEditor : UnityEditor.Editor
 {
     public override void OnInspectorGUI()
     {
-        DrawDefaultInspector();
-
         SetNewMaterial script = (SetNewMaterial)target;
-        if (GUILayout.Button("Set Material"))
+
+        EditorGUI.BeginChangeCheck();
+        
+        script.setMat((SetNewMaterial.MaterialSelection)EditorGUILayout.EnumPopup("Material", script.getMat()));
+
+        bool hasChanged = EditorGUI.EndChangeCheck();
+        
+        if (hasChanged)
         {
             script.ChangeMaterial();
         }
+        
+        DrawDefaultInspector();
     }
 }
