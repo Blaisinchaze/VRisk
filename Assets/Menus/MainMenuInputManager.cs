@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -11,6 +12,9 @@ public class MainMenuInputManager : MonoBehaviour
     public TransitionManager transitionManager;
     public UIAnchor uiAnchor;
     public TutorialManager tutorialManager;
+
+    public GameObject warningText;
+    public TextMeshProUGUI inputField;
     
     public GameObject mainMenu;
     public GameObject settingsMenu;
@@ -71,8 +75,15 @@ public class MainMenuInputManager : MonoBehaviour
 
     public void OpenCloseTutorial()
     {
+        if (inputField.text.Length < 2)
+        {
+            warningText.SetActive(true);
+            return;
+        }
+
         if (busy) return;
 
+        warningText.SetActive(false);
         StartCoroutine(OpenCloseTutorialCoroutine());
     }
 
@@ -114,11 +125,11 @@ public class MainMenuInputManager : MonoBehaviour
         {
             pauseMenuController.CloseMenu();
             yield return new WaitForSeconds(delay);
-            mainMenu.transform.LeanMoveLocal(mainMenuDefaultPos, animationDuration).setEaseInOutBack();
+            mainMenuController.OpenMenu();
         }
         else
         {
-            mainMenu.transform.LeanMoveLocal(mainMenuSlidePos, animationDuration).setEaseInOutBack();
+            mainMenuController.CloseMenu();
             yield return new WaitForSeconds(delay);
             pauseMenuController.OpenMenu();
         }
@@ -138,7 +149,7 @@ public class MainMenuInputManager : MonoBehaviour
         if (keyboardOpen)
         {
             mainMenuController.CloseMenu();
-            OpenCloseSettings(false);
+            pauseMenuController.CloseMenu();
             
             yield return new WaitForSeconds(mainMenuController.animationTime);
             
