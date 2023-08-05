@@ -11,7 +11,8 @@ public class TimelineManager : MonoBehaviour
     
     public DebrisTimeline debrisTimeline;
     public List<BuildingTimeslot> timeline = new List<BuildingTimeslot>();
-    public EarlyWarningSystem siren_system;
+    public List<float> debrisAccumulationStages;
+    public EarlyWarningSystem sirenSystem;
 
     [SerializeField] private float timer = 0;
 
@@ -21,7 +22,7 @@ public class TimelineManager : MonoBehaviour
     [SerializeField] private float maxGlobalIntensity;
     [SerializeField] private float shakingRepositionInterval;
     [SerializeField] private float globalDuration;
-    [SerializeField] private bool sirenEnable = false;
+    [SerializeField] private bool sirenEnabled = false;
 
     private bool sirenTriggered = false;
     private bool quakeTriggered = false;
@@ -31,6 +32,7 @@ public class TimelineManager : MonoBehaviour
     {
         ReadCSV();
         timeline.Sort((x, y) => x.triggerTime.CompareTo(y.triggerTime));
+        debrisAccumulationStages.Sort();
         debrisTimeline.timeline.Sort((x, y) => x.first.CompareTo(y.first));
     }
 
@@ -53,7 +55,7 @@ public class TimelineManager : MonoBehaviour
 
         if (sirenStartTime < timer && !sirenTriggered)
         {
-            siren_system.triggerWarningSiren(globalDuration + Mathf.Abs(quakeStartTime - sirenStartTime));
+            sirenSystem.triggerWarningSiren(globalDuration + Mathf.Abs(quakeStartTime - sirenStartTime));
             sirenTriggered = true;
         }
 
@@ -66,6 +68,7 @@ public class TimelineManager : MonoBehaviour
             quakeTriggered = true;
         }
 
+        UpdateDebrisFloorTimeline();
         updateBuildingTimeline();
         updateDebrisTimeline();
     }
@@ -96,6 +99,18 @@ public class TimelineManager : MonoBehaviour
         }
     }
 
+    private void UpdateDebrisFloorTimeline()
+    {
+        if (debrisAccumulationStages.Count == 0) return;      
+        
+        if (debrisAccumulationStages.First() + quakeStartTime <= timer)
+        {
+            // stuff
+            Debug.Log(debrisAccumulationStages.First());
+            debrisAccumulationStages.RemoveAt(0);
+        }
+    }
+
     // Importing the CSV from the document -----------------------------------------------------
     
     void ReadCSV()
@@ -104,12 +119,23 @@ public class TimelineManager : MonoBehaviour
 
         //Gathers the global variables
         string[] globalRow = entries[1].Split(new string[] { "," }, StringSplitOptions.None);
+        
+        //Splits by comma and saves
         sirenStartTime = float.Parse(globalRow[0]);
         quakeStartTime = float.Parse(globalRow[1]);
         maxGlobalIntensity = float.Parse(globalRow[2]);
         shakingRepositionInterval = float.Parse(globalRow[3]);
         globalDuration = float.Parse(globalRow[4]);
-        
+        sirenEnabled = float.Parse(globalRow[5]) != 0;
+
+        //Gathers the accumulation stages in time of the debris
+        string[] stagesRow = entries[4].Split(new string[] { "," }, StringSplitOptions.None);
+        //Adds it to a list
+        foreach (var timeframe in stagesRow)
+        {
+            debrisAccumulationStages.Add(float.Parse(timeframe));
+        }
+
         //starts at 4 to gather the timeline data
         for (int i = 4; i < entries.Length; i++)
         {
