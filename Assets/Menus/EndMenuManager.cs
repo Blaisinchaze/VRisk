@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class EndMenuManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameData data;
+    public TransitionManager transitionManager;
+
+    void ExitApplication()
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    void BackToMainMenu()
     {
-        
+        data.NextScene = (int)GameData.SceneIndex.SIMULATION;
+        transitionManager.LoadNextScene();
     }
 }

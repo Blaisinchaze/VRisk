@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PresetManager : MonoBehaviour
 {
+    public GameData data;
     public Button joystickBT;
     public Button gestureBT;
 
@@ -15,15 +16,11 @@ public class PresetManager : MonoBehaviour
     {
         if (useGestures)
         {
-            useGestures = true;
-            joystickBT.interactable = true;
-            gestureBT.interactable = false;
+            GestureSelected();
         }
         else
         {
-            useGestures = false;
-            joystickBT.interactable = false;
-            gestureBT.interactable = true;
+            JoystickSelected();
         }
     }
 
@@ -32,6 +29,7 @@ public class PresetManager : MonoBehaviour
         useGestures = false;
         joystickBT.interactable = false;
         gestureBT.interactable = true;
+        data.movementType = GameData.MovementType.JOYSTICK;
     }
 
     public void GestureSelected()
@@ -39,5 +37,6 @@ public class PresetManager : MonoBehaviour
         useGestures = true;
         joystickBT.interactable = true;
         gestureBT.interactable = false;
+        data.movementType = GameData.MovementType.GESTURE;
     }
 }
