@@ -62,7 +62,7 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
-    public void damageBuilding(int _building_id, float _intensity, float _shaking_reposition_interval, float _impact_shake_duration, float _affect_radius)
+    public void damageBuilding(int _building_id, float _intensity, float _shaking_reposition_interval, float _duration, float _impact_shake_duration, float _affect_radius)
     {
         // Grab reference to desired building. 
         var building = buildings[_building_id];

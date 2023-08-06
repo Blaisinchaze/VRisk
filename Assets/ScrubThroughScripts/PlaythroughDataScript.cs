@@ -26,11 +26,13 @@ namespace DataVisualiser
     {
         public float time;
         public Vector2 grid_cell;
+        public Vector3 facing_direction;
 
-        public TimelineElement(float _time, Vector2 _grid_cell)
+        public TimelineElement(float _time, Vector2 _grid_cell, Vector3 _facing_direction)
         {
             time = _time;
             grid_cell = _grid_cell;
+            facing_direction = _facing_direction;
         }
     }
 }

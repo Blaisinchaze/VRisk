@@ -1,7 +1,7 @@
-using System;
 using System.Collections.Generic;
 using DataVisualiser;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,15 +18,17 @@ public class PathVisualiser : MonoBehaviour
         
     public Slider timeline_slider;
     public TMP_Text time_display;
+    public GameObject end_marker;
 
-    private LineRenderer line_renderer;
+    private LineRenderer path_line_renderer;
+    public LineRenderer forward_line_renderer;
 
     private void Start()
     {
         grid_cell_size = new Vector2(GameManager.Instance.Data.grid_cell_size_x,
             GameManager.Instance.Data.grid_cell_size_y);
 
-        line_renderer = GetComponent<LineRenderer>();
+        path_line_renderer = GetComponent<LineRenderer>();
     }
 
     public void setData(PlaythroughDataScript _data)
@@ -50,6 +52,7 @@ public class PathVisualiser : MonoBehaviour
         }
         
         updateSliderText(0.0f, data.completion_time);
+        end_marker.transform.position = locations[0].second.transform.position;
     }
 
     private void Update()
@@ -81,9 +84,9 @@ public class PathVisualiser : MonoBehaviour
     public void updatePathVisuals(float _time)
     {
         // Remove interpolated line.
-        if (line_renderer.positionCount > 0 && line_renderer.positionCount <= locations.Count)
+        if (path_line_renderer.positionCount > 0 && path_line_renderer.positionCount <= locations.Count)
         {
-            line_renderer.positionCount -= 1;
+            path_line_renderer.positionCount -= 1;
         }
         
         // Cycle through locations and find one that's timeframe is just below that point.
@@ -99,21 +102,21 @@ public class PathVisualiser : MonoBehaviour
         }
         
         // Calculate how many points need to be added or removed from the line renderer.
-        int line_renderer_points_required = last_line_point - line_renderer.positionCount;
+        int line_renderer_points_required = last_line_point - path_line_renderer.positionCount;
 
         //Line renderer needs more points. 
         if (line_renderer_points_required > 0)
         {
             for (int i = line_renderer_points_required; i > 0; --i)
             {
-                line_renderer.positionCount += 1;
-                line_renderer.SetPosition(line_renderer.positionCount - 1, locations[last_line_point - i].second.transform.position);
+                path_line_renderer.positionCount += 1;
+                path_line_renderer.SetPosition(path_line_renderer.positionCount - 1, locations[last_line_point - i].second.transform.position);
             }
         }
         // Line renderer needs less points
         else if (line_renderer_points_required < 0)
         {
-            line_renderer.positionCount += line_renderer_points_required;
+            path_line_renderer.positionCount += line_renderer_points_required;
         }
 
         // handle any half point / interpolation.
@@ -127,17 +130,53 @@ public class PathVisualiser : MonoBehaviour
                 locations[last_line_point].second.transform.position,
                 time_between_points);
 
-            line_renderer.positionCount += 1;
-            line_renderer.SetPosition(line_renderer.positionCount - 1, interpolated_point);
+            path_line_renderer.positionCount += 1;
+            path_line_renderer.SetPosition(path_line_renderer.positionCount - 1, interpolated_point);
         }
+        
+        setEndMarker(last_line_point);
     }
 
+    private void setEndMarker(int _last_line_point)
+    {
+        _last_line_point -= 1;
+        Vector3 forward = Vector3.zero;
+        
+        if (_last_line_point < data.timeline.Count && _last_line_point >= 0)
+        {
+            forward = data.timeline[_last_line_point].facing_direction;
+        }
+        else if (_last_line_point < 0)
+        {
+            forward = data.timeline[1].facing_direction;
+        }
+
+        Quaternion rotation = Quaternion.LookRotation(forward);
+        end_marker.transform.rotation = rotation;
+
+        forward_line_renderer.positionCount = 2;
+
+        Vector3 end_marker_head_pos = end_marker.transform.position + Vector3.up * 1.68f;
+        forward_line_renderer.SetPosition(0, end_marker_head_pos);
+        forward_line_renderer.SetPosition(1, end_marker_head_pos + (forward * 2f));
+
+
+        if (path_line_renderer.positionCount > 0)
+        {
+            Vector3 marker_position = path_line_renderer.GetPosition(path_line_renderer.positionCount - 1);
+            end_marker.transform.position = marker_position;
+        }
+        else
+        {
+            end_marker.transform.position = locations[0].second.transform.position;
+        }
+    }
+    
     public void clearPathVisualiserData()
     {
         if (data != null)
         {
             data.display_data_button.interactable = true;
-            
         }
         
         for (int i = locations.Count-1; i > -1; --i)
@@ -146,7 +185,7 @@ public class PathVisualiser : MonoBehaviour
         }
         
         locations.Clear();
-        line_renderer.positionCount = 0;
+        path_line_renderer.positionCount = 0;
         
         data = null;
         updateSliderText(0.0f, 0.0f);
