@@ -26,7 +26,7 @@ public class EarlyWarningSystem : MonoBehaviour
     {
         foreach (var source in sources)
         {
-            GameManager.Instance.AudioManager.PlaySound(source, true, false, source.transform.position, AudioManager.SoundID.WARNING_SIREN, _duration);
+            //GameManager.Instance.AudioManager.PlaySound(source, true, false, source.transform.position, AudioManager.SoundID.WARNING_SIREN, _duration);
         }
     }
 }

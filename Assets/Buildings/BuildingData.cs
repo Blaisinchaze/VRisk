@@ -15,9 +15,9 @@ public class BuildingData : MonoBehaviour
 
     private void Awake()
     {
-        building_collider = GetComponent<MeshCollider>();
+        //building_collider = GetComponent<MeshCollider>();
         mesh_renderer = GetComponent<MeshRenderer>();
-        mesh_filter = GetComponent<MeshFilter>();
+        //mesh_filter = GetComponent<MeshFilter>();
 
         original_position = transform.position;
     }
