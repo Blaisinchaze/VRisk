@@ -23,7 +23,7 @@ public class SafeZoneScript : MonoBehaviour
             celebration_effects.SetActive(true);
 
             nav_arrow.navigating = false;
-            GameManager.Instance.DataTracker.recordTime(true);
+            //GameManager.Instance.DataTracker.recordTime(true);
             StartCoroutine(DelayToTransition());
 
             Debug.Log("transition");

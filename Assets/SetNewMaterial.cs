@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SetNewMaterial : MonoBehaviour
 {
     public MeshRenderer meshRend;
+    public GameObject pavement;
 
     public enum MaterialSelection : int
     {
@@ -17,6 +19,7 @@ public class SetNewMaterial : MonoBehaviour
         YELLOW
     }
 
+    private bool pavementEnabled = true;
     private MaterialSelection selectedMaterial;
     [SerializeField] private Material cyanMat;
     [SerializeField] private Material greenMat;
@@ -24,7 +27,17 @@ public class SetNewMaterial : MonoBehaviour
     [SerializeField] private Material pinkMat;
     [SerializeField] private Material whiteMat;
     [SerializeField] private Material yellowMat;
-    
+
+    public void setPavement(bool visible)
+    {
+        pavementEnabled = visible;
+    }
+
+    public bool getPavement()
+    {
+        return pavementEnabled;
+    }
+
     public void setMat(MaterialSelection selection)
     {
         selectedMaterial = selection;
@@ -48,5 +61,7 @@ public class SetNewMaterial : MonoBehaviour
             MaterialSelection.YELLOW => yellowMat,
             _ => meshRend.material
         };
+        
+        pavement.SetActive(pavementEnabled);
     }
 }
