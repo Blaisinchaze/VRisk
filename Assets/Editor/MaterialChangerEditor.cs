@@ -38,6 +38,8 @@ public class ColorChangerEditor : UnityEditor.Editor
         script.SetColor((SetNewMaterial.MaterialSelection)EditorGUILayout.EnumPopup("Color", script.GetColor()));
         script.SetPavement(EditorGUILayout.Toggle("Pavement", script.GetPavement()));
         script.SetState((SetCompositeBuildingProperties.BuildingState)EditorGUILayout.EnumPopup("Starting State", script.GetState()));
+        script.SetDebrisSpawn(EditorGUILayout.Toggle("Spawn Debris when damaged", script.GetDebrisSpawn()));
+
 
         EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
         
@@ -47,6 +49,7 @@ public class ColorChangerEditor : UnityEditor.Editor
         {
             script.ChangeProperties();
             script.SetCurrentState();
+            script.SetDebrisSpawning();
         }
         
         DrawDefaultInspector();

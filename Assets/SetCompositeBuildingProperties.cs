@@ -6,8 +6,9 @@ using UnityEngine.Serialization;
 
 public class SetCompositeBuildingProperties : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> buildings;
-    [SerializeField] private int nOfChildren = 4;
+    [SerializeField] private List<GameObject> debrisGroup;
+    [SerializeField] private List<GameObject> buildingGroup;
+    [SerializeField] private int nOfElements = 7;
 
     public enum BuildingState : int
     {
@@ -56,6 +57,18 @@ public class SetCompositeBuildingProperties : MonoBehaviour
         return pavement;
     }
 
+    private bool SpawnDebris = true;
+
+    public void SetDebrisSpawn(bool state)
+    {
+        SpawnDebris = state;
+    }
+
+    public bool GetDebrisSpawn()
+    {
+        return SpawnDebris;
+    }
+    
     private void Start()
     {
         GroupBuildings();
@@ -65,15 +78,38 @@ public class SetCompositeBuildingProperties : MonoBehaviour
     private void GroupBuildings()
     {
         // Does not group if already grouped
-        if (buildings.Count == nOfChildren) return;
-        buildings.Clear();
+        if ((buildingGroup.Count + debrisGroup.Count) == nOfElements) return;
+        buildingGroup.Clear();
+        debrisGroup.Clear();
 
         foreach (Transform building in transform)
         {
             if (!building.gameObject.CompareTag("Ignore"))
             {
-                buildings.Add(building.gameObject);
+                //if child is a building
+                buildingGroup.Add(building.gameObject);
             }
+        }
+
+        //Scouts the buildings for their debris
+        foreach (GameObject building in buildingGroup)
+        {
+            foreach (Transform child in building.transform)
+            {
+                if (child.gameObject.CompareTag("FloorDebris"))
+                {
+                    debrisGroup.Add(child.gameObject);
+                }
+            }
+        }
+    }
+
+    //Prepares the debris in front of damaged buildings
+    public void SetDebrisSpawning()
+    {
+        foreach (GameObject debrisGameObject in debrisGroup)
+        {
+            debrisGameObject.SetActive(SpawnDebris);
         }
     }
 
@@ -82,7 +118,7 @@ public class SetCompositeBuildingProperties : MonoBehaviour
     {
         GroupBuildings();
 
-        foreach (GameObject building in buildings)
+        foreach (GameObject building in buildingGroup)
         {
             SetNewMaterial script = building.GetComponent<SetNewMaterial>();
             script.setMat(color);
@@ -96,10 +132,10 @@ public class SetCompositeBuildingProperties : MonoBehaviour
     {
         GroupBuildings();
 
-        foreach (GameObject building in buildings)
+        foreach (GameObject building in buildingGroup)
         {
             building.SetActive(false);
         }
-        buildings[(int)currentState].SetActive(true);
+        buildingGroup[(int)currentState].SetActive(true);
     }
 }
