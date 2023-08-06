@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -67,6 +68,11 @@ public class FileManager : MonoBehaviour
         }
 
         return data;
+    }
+
+    public static string[] parseCSVtoRows(string[] editor_path, string[] android_path)
+    {
+        return getFileContents(editor_path, android_path).Split(new string[] { "\n" }, StringSplitOptions.None);
     }
 
     public static void saveToFile(string[] _editor_path, string[] _build_path, string _content)

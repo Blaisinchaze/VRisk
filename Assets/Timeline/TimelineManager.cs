@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class TimelineManager : MonoBehaviour
 {
@@ -78,7 +79,9 @@ public class TimelineManager : MonoBehaviour
         
         if (timeline.First().triggerTime + quakeStartTime < timer)
         {
-            //Prompts building manager!
+            var current = timeline.First();
+            
+            // Prompts building manager!
             // Need to replace with values read in, as opposed to hard coding them.
             GameManager.Instance.BuildingManager.damageBuilding(current.buildingId, current.intensity, current.shakingRepositionInterval,5, 40);
             timeline.RemoveAt(0);
@@ -87,12 +90,12 @@ public class TimelineManager : MonoBehaviour
 
     private void updateDebrisTimeline()
     {
-        if (debris_timeline == null || debris_timeline_index >= debris_timeline.timeline.Count  || debris_timeline.timeline.Count < debris_timeline_index ) return;
-
-        if (debris_timeline.timeline[debris_timeline_index].first < timer)
+        if (debrisTimeline == null || debrisTimelineIndex >= debrisTimeline.timeline.Count  || debrisTimeline.timeline.Count < debrisTimelineIndex ) return;
+        
+        if (debrisTimeline.timeline[debrisTimelineIndex].first < timer)
         {
-            GameManager.Instance.DebrisHandler.triggerDebris(debris_timeline.timeline[debris_timeline_index].second);
-            debris_timeline_index++;
+            GameManager.Instance.DebrisHandler.triggerDebris(debrisTimeline.timeline[debrisTimelineIndex].second);
+            debrisTimelineIndex++;
         }
     }
 
