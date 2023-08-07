@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 public class BuildingData : MonoBehaviour
 {
+    public bool overRideData = true;
     public int id;
     public MeshBuildingStateMap building_map;
 
@@ -15,10 +17,11 @@ public class BuildingData : MonoBehaviour
 
     private void Awake()
     {
-        //building_collider = GetComponent<MeshCollider>();
-        mesh_renderer = GetComponent<MeshRenderer>();
-        //mesh_filter = GetComponent<MeshFilter>();
-
         original_position = transform.position;
+        if (!overRideData) return;
+        
+        building_collider = GetComponent<MeshCollider>();
+        mesh_renderer = GetComponent<MeshRenderer>();
+        mesh_filter = GetComponent<MeshFilter>();
     }
 }

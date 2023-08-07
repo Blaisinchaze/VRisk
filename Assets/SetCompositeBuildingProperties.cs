@@ -131,11 +131,25 @@ public class SetCompositeBuildingProperties : MonoBehaviour
     public void SetCurrentState()
     {
         GroupBuildings();
+        DamageBuild((int)currentState);
+    }
 
+    //Ticks building health down
+    public void LoadNextState()
+    {
+        if (currentState >= BuildingState.GRADE3) return;
+        
+        currentState--;
+        DamageBuild((int)currentState);
+    }
+
+    public void DamageBuild(int newState)
+    {
         foreach (GameObject building in buildingGroup)
         {
             building.SetActive(false);
         }
-        buildingGroup[(int)currentState].SetActive(true);
+        buildingGroup[newState].SetActive(true);
     }
+
 }

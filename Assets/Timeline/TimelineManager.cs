@@ -70,7 +70,7 @@ public class TimelineManager : MonoBehaviour
 
         UpdateDebrisFloorTimeline();
         updateBuildingTimeline();
-        updateDebrisTimeline();
+        //updateDebrisTimeline();
     }
 
     private void updateBuildingTimeline()
@@ -83,6 +83,7 @@ public class TimelineManager : MonoBehaviour
             
             // Prompts building manager!
             // Need to replace with values read in, as opposed to hard coding them.
+            //Debug.Log(current.buildingId);
             GameManager.Instance.BuildingManager.damageBuilding(current.buildingId, current.intensity, current.shakingRepositionInterval,5, 40);
             timeline.RemoveAt(0);
         }
@@ -99,6 +100,7 @@ public class TimelineManager : MonoBehaviour
         }
     }
 
+    //Atm unused
     private void UpdateDebrisFloorTimeline()
     {
         if (debrisAccumulationStages.Count == 0) return;      
@@ -136,12 +138,12 @@ public class TimelineManager : MonoBehaviour
             debrisAccumulationStages.Add(float.Parse(timeframe));
         }
 
-        //starts at 4 to gather the timeline data
-        for (int i = 4; i < entries.Length; i++)
+        //starts at 7 to gather the timeline data
+        for (int i = 7; i < entries.Length; i++)
         {
             string[] row = entries[i].Split(new string[] { "," }, StringSplitOptions.None);
-
-            if (row.Length != 4) continue;
+            
+            if (row.Length != 6) continue;
             
             int buildingId = int.Parse(row[0]);
             float triggerTime = float.Parse(row[1]);

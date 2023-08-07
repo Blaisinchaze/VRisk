@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4461def962b8b7f40a6f3e609a070026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game_scene: 1
 --- !u!1 &2073369824438870710
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,10 +311,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76dc443b4aa4d7b46b0981ab9d4c65db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CSV_timeline: {fileID: 4900000, guid: 4e043b694da47984d85e332d33a2f4c1, type: 3}
-  debris_timeline: {fileID: 11400000, guid: 053973cf03ac1dc4e81113e28dbf80e4, type: 2}
+  editorFilepath: []
+  androidFilepath: []
+  debrisTimeline: {fileID: 0}
   timeline: []
+  debrisAccumulationStages: []
+  sirenSystem: {fileID: 0}
   timer: 0
+  sirenStartTime: 0
+  quakeStartTime: 0
+  maxGlobalIntensity: 0
+  shakingRepositionInterval: 0
+  globalDuration: 0
+  sirenEnabled: 0
 --- !u!1 &2073369825241551974
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,7 +383,6 @@ GameObject:
   - component: {fileID: 2073369825302991535}
   - component: {fileID: 2073369825302991568}
   - component: {fileID: 2073369825302991569}
-  - component: {fileID: 2073369825302991533}
   m_Layer: 0
   m_Name: GameManagerBall
   m_TagString: Untagged
@@ -395,7 +404,7 @@ Transform:
   m_Children:
   - {fileID: 2073369825349645168}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2073369825302991535
 MeshFilter:
@@ -460,26 +469,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2073369825302991533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2073369825302991570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a984c3ed58e8045b50899e03fb4ae1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 0
-  building_map: {fileID: 11400000, guid: 6231616930b440c448f260ae8671dc61, type: 2}
-  type: 0
-  state: 3
-  original_position: {x: 0, y: 0, z: 0}
-  building_collider: {fileID: 0}
-  mesh_filter: {fileID: 0}
-  mesh_renderer: {fileID: 0}
 --- !u!1 &2073369825349645169
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,3 +576,7 @@ MonoBehaviour:
   record_position_interval: 0
   record_position_timer: 0
   map_origin: {fileID: 0}
+  grid_cell_size: {x: 0, y: 0}
+  head_cam: {fileID: 0}
+  editor_folder_path: []
+  android_folder_path: []

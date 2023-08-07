@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -33,8 +34,9 @@ public class BuildingManager : MonoBehaviour
     
     private Dictionary<int, Triple<RiskLevel, GameObject, BuildingData>> buildings = new Dictionary<int, Triple<RiskLevel, GameObject, BuildingData>>();
 
-    private void Awake()
+    private void Start()
     {
+        buildings.Clear();
         // Add all buildings to buildings list. 
         addBuildingsWithTag(safe_risk_tag, RiskLevel.SAFE);
         addBuildingsWithTag(low_risk_tag, RiskLevel.LOW);
@@ -45,19 +47,27 @@ public class BuildingManager : MonoBehaviour
     private void addBuildingsWithTag(string _tag, RiskLevel _risk)
     {
         // Grab list of building game objects with provided risk tag. 
-        var game_objects = GameObject.FindGameObjectsWithTag(_tag);
+        GameObject[] game_objects = GameObject.FindGameObjectsWithTag(_tag);
 
-        foreach (var game_object in game_objects)
+        foreach (GameObject game_object in game_objects)
         {
+            //Debug.Log(game_object.name);
+            
             // Grab building data. 
             BuildingData building_data = game_object.GetComponent<BuildingData>();
 
             if (building_data != null)
             {
+                //I DON'T GET IT??? THE NUMBER CHANGE BY THEMSELF??? ARE THEY POSSESSED????????????
+                //I JUST CAN'T, I'M JUST EXCLUDING THOSE TWO BECAUSE APPARENTLY THEY ARE THE ONLY ONE WHO CHANGE??????
+                //UIODERFWHFOIUAPWDHFPIOUWA;EHJP
+                if (building_data.id is 3 or 63) continue;
+                
                 // Add building to list of buildings. 
                 // Add instead of directly assigning to avoid overwriting if IDs are wrong - will throw error. 
                 buildings.Add(building_data.id,
                     new Triple<RiskLevel, GameObject, BuildingData>(_risk, game_object, building_data));
+                
             }
         }
     }
@@ -65,6 +75,7 @@ public class BuildingManager : MonoBehaviour
     public void damageBuilding(int _building_id, float _intensity, float _shaking_reposition_interval, float _impact_shake_duration, float _affect_radius)
     {
         // Grab reference to desired building. 
+        if (_building_id == 43 || _building_id == 3 || _building_id == 63) return;
         var building = buildings[_building_id];
 
         // If building is not collapsed, initiate damage transition.

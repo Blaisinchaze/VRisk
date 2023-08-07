@@ -76,7 +76,7 @@ public class DataTracker : MonoBehaviour
 
         Vector3 forwards_vect = head_cam.transform.forward;
         string forwards = forwards_vect.x + "," + forwards_vect.y + "," + forwards_vect.z;
-        Debug.Log(forwards);
+        //Debug.Log(forwards);
         
         _recorded_locations.Add(new List<string> {time, grid_cell_string, forwards});
     }
